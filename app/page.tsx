@@ -8,6 +8,10 @@ import {
 } from "framer-motion";
 import ZoomPanel from "../components/ZoomPanel";
 import { AVATARS } from "@/constants";
+import PixelShelf from "@/components/PixelShelf";
+import RetroArsenal from "@/components/RetroArsenal";
+import ComicArsenal from "@/components/ComicAresenal";
+import PixelRoadmap from "@/components/PixelRoadmap";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +53,7 @@ export default function Home() {
 		},
 		{
 			id: "jump",
-			title: "Grid for XP",
+			title: "Grind for XP",
 			desc: "Climbing the ranks, taking on fresh challenges, and leveling up with every move I make!",
 			color: "bg-yellow-400",
 			avatar: AVATARS.JUMP,
@@ -223,36 +227,41 @@ export default function Home() {
 										CLOSE [X]
 									</motion.button>
 
-									<div className="flex flex-col justify-center min-h-full">
-										<motion.h2
-											layoutId={`title-${panel.id}`}
-											className="text-6xl md:text-[12rem] font-black text-white uppercase italic leading-none"
-										>
-											{panel.title}
-										</motion.h2>
+									<div className="flex flex-row justify-center min-h-full">
+										<div>
+											<motion.h2
+												layoutId={`title-${panel.id}`}
+												className="text-6xl md:text-[12rem] font-black text-white uppercase italic leading-none"
+											>
+												{panel.title}
+											</motion.h2>
+											<motion.p
+												layoutId={`desc-${panel.id}`}
+												className="mt-8 text-white text-2xl md:text-4xl max-w-4xl leading-tight"
+											>
+												{panel.desc}
+											</motion.p>
 
-										<motion.p
-											layoutId={`desc-${panel.id}`}
-											className="mt-8 text-white text-2xl md:text-4xl max-w-4xl leading-tight"
-										>
-											{panel.desc}
-										</motion.p>
-
-										<motion.div
-											initial={{ opacity: 0, y: 30 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ delay: 0.1 }}
-											className="mt-12 text-white/80"
-										>
-											<h3 className="text-3xl font-bold mb-4">
-												Mission Details
-											</h3>
-											<p className="text-xl max-w-2xl">
-												Additional details about this
-												specific project or skill go
-												here...
-											</p>
-										</motion.div>
+											<motion.div
+												initial={{ opacity: 0, y: 30 }}
+												animate={{ opacity: 1, y: 0 }}
+												transition={{ delay: 0.1 }}
+												className="mt-12 text-white/80"
+											>
+												<h3 className="text-3xl font-bold mb-4">
+													Mission Details
+												</h3>
+												<p className="text-xl max-w-2xl">
+													Additional details about
+													this specific project or
+													skill go here...
+												</p>
+											</motion.div>
+										</div>
+										{/* <PixelShelf /> */}
+										{/* <RetroArsenal /> */}
+										{/* <ComicArsenal /> */}
+										<PixelRoadmap />
 									</div>
 								</motion.div>
 							))}
