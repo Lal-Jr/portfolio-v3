@@ -13,6 +13,12 @@ const steps = [
 		icon: "📜",
 		color: "bg-yellow-400",
 	},
+	{
+		title: "React",
+		desc: "Building the Party",
+		icon: "🛡️",
+		color: "bg-blue-400",
+	},
 ];
 
 export default function PixelRoadmap() {
