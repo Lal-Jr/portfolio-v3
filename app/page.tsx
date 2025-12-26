@@ -13,6 +13,7 @@ import RetroArsenal from "@/components/RetroArsenal";
 import ComicArsenal from "@/components/ComicAresenal";
 import PixelRoadmap from "@/components/PixelRoadmap";
 import ComicPostBox from "@/components/ComicPostBox";
+import AboutMeSelection from "@/components/AboutMeSelection";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -263,7 +264,8 @@ export default function Home() {
 										{/* <RetroArsenal /> */}
 										{/* <ComicArsenal /> */}
 										{/* <PixelRoadmap /> */}
-										<ComicPostBox />
+										{/* <ComicPostBox /> */}
+										<AboutMeSelection />
 									</div>
 								</motion.div>
 							))}
