@@ -12,6 +12,7 @@ import PixelShelf from "@/components/PixelShelf";
 import RetroArsenal from "@/components/RetroArsenal";
 import ComicArsenal from "@/components/ComicAresenal";
 import PixelRoadmap from "@/components/PixelRoadmap";
+import ComicPostBox from "@/components/ComicPostBox";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -261,7 +262,8 @@ export default function Home() {
 										{/* <PixelShelf /> */}
 										{/* <RetroArsenal /> */}
 										{/* <ComicArsenal /> */}
-										<PixelRoadmap />
+										{/* <PixelRoadmap /> */}
+										<ComicPostBox />
 									</div>
 								</motion.div>
 							))}
