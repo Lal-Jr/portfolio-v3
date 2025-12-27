@@ -15,6 +15,7 @@ import PixelRoadmap from "@/components/PixelRoadmap";
 import ComicPostBox from "@/components/ComicPostBox";
 import AboutMeSelection from "@/components/AboutMeSelection";
 import AspirationWall from "@/components/AspirationWall";
+import Controller from "@/components/Controller";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -262,11 +263,12 @@ export default function Home() {
 											</motion.div>
 										</div> */}
 										{/* <PixelShelf /> */}
-										<ComicArsenal />
+										{/* <ComicArsenal /> */}
 										{/* <PixelRoadmap /> */}
 										{/* <ComicPostBox /> */}
 										{/* <AboutMeSelection /> */}
 										{/* <AspirationWall /> */}
+										<Controller />
 									</div>
 								</motion.div>
 							))}
