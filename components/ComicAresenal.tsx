@@ -1,56 +1,114 @@
 "use client";
 import { motion } from "framer-motion";
 
-const SKILLS = [
-	{ name: "React", level: "90", color: "bg-cyan-400", label: "CORE" },
-	{ name: "Next.js", level: "85", color: "bg-white", label: "ENGINE" },
-	{ name: "Tailwind", level: "95", color: "bg-teal-300", label: "STYLING" },
-	{ name: "Framer", level: "80", color: "bg-fuchsia-500", label: "MOTION" },
+const ARSENAL = [
+	{
+		id: "M-01",
+		name: "React",
+		level: 90,
+		accent: "bg-[#e11d48]",
+		text: "text-[#e11d48]",
+		label: "PRIMARY_FRAME",
+	},
+	{
+		id: "M-02",
+		name: "Next.js",
+		level: 85,
+		accent: "bg-[#2563eb]",
+		text: "text-[#2563eb]",
+		label: "PROPULSION",
+	},
+	{
+		id: "M-03",
+		name: "Tailwind",
+		level: 95,
+		accent: "bg-[#059669]",
+		text: "text-[#059669]",
+		label: "SURFACE_SHIELD",
+	},
+	{
+		id: "M-04",
+		name: "Framer",
+		level: 80,
+		accent: "bg-[#d97706]",
+		text: "text-[#d97706]",
+		label: "KINETIC_DRIVE",
+	},
 ];
 
-export default function ComicArsenal() {
+export default function SolidArsenal() {
 	return (
-		<div className="bg-yellow-400 p-8 font-black">
-			<div className="max-w-5xl mx-auto">
-				{/* The Grid */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-					{SKILLS.map((skill, i) => (
+		<div className="p-10 font-mono text-black">
+			{/* Heavy Construction Background Grid */}
+			<div className="fixed inset-0 bg-[radial-gradient(#d1d1d1_1.5px,transparent_1.5px)] [background-size:24px_24px] pointer-events-none" />
+
+			<div className="max-w-6xl mx-auto relative z-10">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+					{ARSENAL.map((item) => (
 						<motion.div
-							key={skill.name}
-							whileHover={{ y: -5, x: -5 }}
-							className="relative w-64 bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group"
+							key={item.id}
+							whileHover={{ y: -8 }}
+							className="relative bg-white border-[6px] border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] group"
 						>
-							{/* Category Label */}
-							<div className="absolute -top-4 -right-2 bg-red-500 text-white px-2 py-1 border-2 border-black text-xs rotate-12 group-hover:rotate-0 transition-transform">
-								{skill.label}
+							{/* Tool Category Vertical Bar */}
+							<div
+								className={`absolute top-0 left-0 bottom-0 w-3 ${item.accent} border-r-[3px] border-black`}
+							/>
+
+							<div className="p-8 pl-10">
+								<div className="flex justify-between items-start mb-6">
+									<div>
+										<span className="text-xs font-black uppercase tracking-widest text-zinc-400">
+											Inventory_ID
+										</span>
+										<h3 className="text-2xl font-black tracking-tighter leading-none">
+											{item.id}
+										</h3>
+									</div>
+									<div
+										className={`w-12 h-12 border-4 border-black flex items-center justify-center font-black text-xl group-hover:bg-black group-hover:text-white transition-colors`}
+									>
+										+
+									</div>
+								</div>
+
+								<h2 className="text-5xl font-black uppercase tracking-tighter mb-2 italic">
+									{item.name}
+								</h2>
+								<div className="flex items-center gap-2 mb-8">
+									<span
+										className={`px-2 py-0.5 text-[10px] font-black text-white uppercase ${item.accent}`}
+									>
+										{item.label}
+									</span>
+									<div className="h-[2px] flex-1 bg-black" />
+								</div>
+
+								{/* Mechanical Gauge */}
+								<div className="space-y-3">
+									<div className="flex justify-between font-black text-xs uppercase tracking-widest">
+										<span>Performance Output</span>
+										<span>{item.level}%</span>
+									</div>
+
+									<div className="h-10 border-4 border-black p-1 bg-zinc-100 relative">
+										<motion.div
+											initial={{ width: 0 }}
+											whileInView={{
+												width: `${item.level}%`,
+											}}
+											transition={{
+												duration: 1,
+												ease: "easeOut",
+											}}
+											className={`h-full ${item.accent} border-r-4 border-black relative`}
+										>
+											{/* Diagonal Caution Stripes */}
+											<div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#000_10px,#000_20px)]" />
+										</motion.div>
+									</div>
+								</div>
 							</div>
-
-							{/* Title */}
-							<h3 className="text-2xl uppercase mb-4 mt-2">
-								{skill.name}
-							</h3>
-
-							{/* Comic Progress Bar (Segmented) */}
-							<div className="flex gap-1 h-8 border-2 border-black p-1 bg-zinc-100">
-								{[...Array(10)].map((_, step) => (
-									<motion.div
-										key={step}
-										initial={{ opacity: 0 }}
-										whileInView={{ opacity: 1 }}
-										transition={{
-											delay: i * 0.1 + step * 0.05,
-										}}
-										className={`h-full flex-1 ${
-											step < parseInt(skill.level) / 10
-												? skill.color
-												: "bg-zinc-300"
-										} border-r border-black last:border-0`}
-									/>
-								))}
-							</div>
-
-							{/* Halftone Texture Overlay (Pure CSS) */}
-							<div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#000_1px,transparent_0)] [background-size:4px_4px] group-hover:opacity-20 transition-opacity" />
 						</motion.div>
 					))}
 				</div>

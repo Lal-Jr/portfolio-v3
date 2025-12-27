@@ -262,8 +262,8 @@ export default function Home() {
 											</motion.div>
 										</div> */}
 										{/* <PixelShelf /> */}
-										{/* <ComicArsenal /> */}
-										<PixelRoadmap />
+										<ComicArsenal />
+										{/* <PixelRoadmap /> */}
 										{/* <ComicPostBox /> */}
 										{/* <AboutMeSelection /> */}
 										{/* <AspirationWall /> */}
