@@ -3,115 +3,122 @@ import { motion } from "framer-motion";
 
 const ARSENAL = [
 	{
-		id: "M-01",
+		id: "R",
 		name: "React",
-		level: 90,
-		accent: "bg-[#e11d48]",
-		text: "text-[#e11d48]",
-		label: "PRIMARY_FRAME",
+		level: "90",
+		suit: "◈",
+		color: "text-rose-600",
+		border: "border-rose-600",
+		bg: "bg-rose-50",
 	},
 	{
-		id: "M-02",
+		id: "N",
 		name: "Next.js",
-		level: 85,
-		accent: "bg-[#2563eb]",
-		text: "text-[#2563eb]",
-		label: "PROPULSION",
+		level: "85",
+		suit: "▲",
+		color: "text-blue-600",
+		border: "border-blue-600",
+		bg: "bg-blue-50",
 	},
 	{
-		id: "M-03",
+		id: "T",
 		name: "Tailwind",
-		level: 95,
-		accent: "bg-[#059669]",
-		text: "text-[#059669]",
-		label: "SURFACE_SHIELD",
+		level: "95",
+		suit: "◆",
+		color: "text-emerald-600",
+		border: "border-emerald-600",
+		bg: "bg-emerald-50",
 	},
 	{
-		id: "M-04",
+		id: "F",
 		name: "Framer",
-		level: 80,
-		accent: "bg-[#d97706]",
-		text: "text-[#d97706]",
-		label: "KINETIC_DRIVE",
+		level: "80",
+		suit: "⬢",
+		color: "text-amber-600",
+		border: "border-amber-600",
+		bg: "bg-amber-50",
 	},
 ];
 
-export default function SolidArsenal() {
+export default function CardDeckArsenal() {
 	return (
-		<div className="p-10 font-mono text-black">
-			{/* Heavy Construction Background Grid */}
-			<div className="fixed inset-0 bg-[radial-gradient(#d1d1d1_1.5px,transparent_1.5px)] [background-size:24px_24px] pointer-events-none" />
-
-			<div className="max-w-6xl mx-auto relative z-10">
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-					{ARSENAL.map((item) => (
-						<motion.div
-							key={item.id}
-							whileHover={{ y: -8 }}
-							className="relative bg-white border-[6px] border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] group"
+		<div className="w-full p-10 font-serif flex items-center justify-center overflow-hidden">
+			<div className="relative flex flex-wrap justify-center gap-6 max-w-5xl">
+				{ARSENAL.map((card, index) => (
+					<motion.div
+						key={card.id}
+						initial={{ y: 1000, rotate: 45, opacity: 0 }}
+						animate={{
+							y: 0,
+							rotate: (index - 1.5) * 8, // Fanned out rotation
+							x: (index - 1.5) * 20,
+						}}
+						whileInView={{ opacity: 1 }}
+						transition={{
+							type: "spring",
+							stiffness: 50,
+							delay: index * 0.1,
+						}}
+						whileHover={{
+							y: -40,
+							rotate: 0,
+							scale: 1.1,
+							zIndex: 50,
+							transition: { duration: 0.2 },
+						}}
+						className={`relative w-56 h-80 bg-white rounded-xl border-[8px] border-white shadow-2xl cursor-pointer overflow-hidden select-none`}
+					>
+						{/* Inner Border / Frame */}
+						<div
+							className={`absolute inset-2 border-2 ${card.border} rounded-lg flex flex-col justify-between p-4`}
 						>
-							{/* Tool Category Vertical Bar */}
+							{/* Top Corner Suit */}
 							<div
-								className={`absolute top-0 left-0 bottom-0 w-3 ${item.accent} border-r-[3px] border-black`}
-							/>
-
-							<div className="p-8 pl-10">
-								<div className="flex justify-between items-start mb-6">
-									<div>
-										<span className="text-xs font-black uppercase tracking-widest text-zinc-400">
-											Inventory_ID
-										</span>
-										<h3 className="text-2xl font-black tracking-tighter leading-none">
-											{item.id}
-										</h3>
-									</div>
-									<div
-										className={`w-12 h-12 border-4 border-black flex items-center justify-center font-black text-xl group-hover:bg-black group-hover:text-white transition-colors`}
-									>
-										+
-									</div>
-								</div>
-
-								<h2 className="text-5xl font-black uppercase tracking-tighter mb-2 italic">
-									{item.name}
-								</h2>
-								<div className="flex items-center gap-2 mb-8">
-									<span
-										className={`px-2 py-0.5 text-[10px] font-black text-white uppercase ${item.accent}`}
-									>
-										{item.label}
-									</span>
-									<div className="h-[2px] flex-1 bg-black" />
-								</div>
-
-								{/* Mechanical Gauge */}
-								<div className="space-y-3">
-									<div className="flex justify-between font-black text-xs uppercase tracking-widest">
-										<span>Performance Output</span>
-										<span>{item.level}%</span>
-									</div>
-
-									<div className="h-10 border-4 border-black p-1 bg-zinc-100 relative">
-										<motion.div
-											initial={{ width: 0 }}
-											whileInView={{
-												width: `${item.level}%`,
-											}}
-											transition={{
-												duration: 1,
-												ease: "easeOut",
-											}}
-											className={`h-full ${item.accent} border-r-4 border-black relative`}
-										>
-											{/* Diagonal Caution Stripes */}
-											<div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#000_10px,#000_20px)]" />
-										</motion.div>
-									</div>
-								</div>
+								className={`flex flex-col items-center w-fit ${card.color}`}
+							>
+								<span className="text-2xl font-bold leading-none">
+									{card.id}
+								</span>
+								<span className="text-xl leading-none">
+									{card.suit}
+								</span>
 							</div>
-						</motion.div>
-					))}
-				</div>
+
+							{/* Center Illustration Area */}
+							<div className="flex-1 flex flex-col items-center justify-center text-center px-2">
+								<div className={`text-6xl mb-2 ${card.color}`}>
+									{card.suit}
+								</div>
+								<h2
+									className={`text-3xl font-black uppercase tracking-tighter ${card.color}`}
+								>
+									{card.name}
+								</h2>
+								<div className="h-[1px] w-12 bg-zinc-300 my-2" />
+							</div>
+
+							{/* Bottom Corner Suit (Inverted) */}
+							<div
+								className={`flex flex-col items-center w-fit self-end rotate-180 ${card.color}`}
+							>
+								<span className="text-2xl font-bold leading-none">
+									{card.id}
+								</span>
+								<span className="text-xl leading-none">
+									{card.suit}
+								</span>
+							</div>
+
+							{/* Fine Print / Serial */}
+							<div className="absolute bottom-1 right-8 rotate-90 origin-right text-[8px] text-zinc-300 font-sans uppercase tracking-[0.3em]">
+								Arsenal_Collection_2025
+							</div>
+						</div>
+
+						{/* Card Gloss Effect */}
+						<div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
+					</motion.div>
+				))}
 			</div>
 		</div>
 	);
