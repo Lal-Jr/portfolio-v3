@@ -231,7 +231,7 @@ export default function Home() {
 									</motion.button>
 
 									<div className="flex flex-row justify-center min-h-full">
-										<div>
+										{/* <div>
 											<motion.h2
 												layoutId={`title-${panel.id}`}
 												className="text-6xl md:text-[12rem] font-black text-white uppercase italic leading-none"
@@ -260,13 +260,13 @@ export default function Home() {
 													skill go here...
 												</p>
 											</motion.div>
-										</div>
+										</div> */}
 										{/* <PixelShelf /> */}
 										{/* <ComicArsenal /> */}
-										{/* <PixelRoadmap /> */}
+										<PixelRoadmap />
 										{/* <ComicPostBox /> */}
 										{/* <AboutMeSelection /> */}
-										<AspirationWall />
+										{/* <AspirationWall /> */}
 									</div>
 								</motion.div>
 							))}
