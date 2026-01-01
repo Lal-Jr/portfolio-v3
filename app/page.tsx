@@ -270,6 +270,74 @@ export default function Home() {
 										{/* <AspirationWall /> */}
 										<Controller />
 									</div>
+									{/* ... Inside the expanded motion.div (after the min-h-full div) ... */}
+
+									{/* MINIATURE PANEL PAGINATION */}
+									<div className="absolute bottom-8 left-0 w-full flex justify-center px-4 z-50">
+										<div className="flex items-end gap-3 p-3 bg-black/20 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl">
+											{panels.map((p) => {
+												const isActive =
+													p.id === selectedId;
+												return (
+													<button
+														key={`nav-${p.id}`}
+														onClick={(e) => {
+															e.stopPropagation();
+															setSelectedId(p.id);
+														}}
+														className="relative group outline-none"
+													>
+														{/* Tooltip Label */}
+														<span className="absolute -top-12 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-white text-black text-[10px] font-black px-2 py-1 rounded-md uppercase whitespace-nowrap shadow-lg">
+															{p.title}
+														</span>
+
+														{/* The Miniature Card */}
+														<motion.div
+															animate={{
+																height: isActive
+																	? 80
+																	: 60,
+																width: isActive
+																	? 60
+																	: 45,
+																y: isActive
+																	? -10
+																	: 0,
+																scale: isActive
+																	? 1.1
+																	: 1,
+															}}
+															whileHover={{
+																scale: 1.1,
+																y: -5,
+															}}
+															className={`${p.color} rounded-xl border-2 border-white/40 shadow-inner overflow-hidden flex flex-col items-center justify-center p-1 transition-all`}
+														>
+															{/* Avatar Miniature */}
+															<div className="w-full h-full relative opacity-80 group-hover:opacity-100 transition-opacity">
+																<img
+																	src={
+																		p.avatar
+																	}
+																	alt=""
+																	className="w-full h-full object-contain"
+																/>
+															</div>
+
+															{/* Active Glow Strip */}
+															{isActive && (
+																<motion.div
+																	layoutId="nav-glow"
+																	className="absolute bottom-1 w-1/2 h-1 bg-white rounded-full blur-[2px]"
+																/>
+															)}
+														</motion.div>
+													</button>
+												);
+											})}
+										</div>
+									</div>
 								</motion.div>
 							))}
 					</div>
