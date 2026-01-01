@@ -93,7 +93,7 @@ export default function ComicHeroScene() {
 				>
 					{/* Main PNG Avatar */}
 					<ThreeImage
-						url="/avatars/IMG_7729.png" // Pointing to your PNG
+						url="/avatars/IMG_7739.png" // Pointing to your PNG
 						transparent
 						scale={[3, 5]} // Adjust scale to match your PNG's aspect ratio
 					/>

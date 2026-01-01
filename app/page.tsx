@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import {
 	AnimatePresence,
 	motion,
+	useMotionValueEvent,
 	useScroll,
 	useTransform,
 } from "framer-motion";
@@ -110,8 +111,26 @@ export default function Home() {
 		["none", "none", "auto"]
 	);
 
+	const PanelContent = ({ id }: { id: string }) => {
+		switch (id) {
+			case "move":
+				return <PixelShelf />;
+			case "hands":
+				return <AspirationWall />;
+			case "aresenal":
+				return <ComicArsenal />;
+			case "peace":
+				return <AboutMeSelection />;
+			case "jump":
+				return <PixelRoadmap />;
+			case "signal":
+				return <ComicPostBox />;
+			default:
+				return <Controller />;
+		}
+	};
 	return (
-		<div ref={containerRef} className="relative h-[250vh]">
+		<div ref={containerRef} className="relative h-[600vh]">
 			{/* WRAPPER OVERLAY */}
 			<div
 				style={{ pointerEvents: overlayPointerEvents }} // Toggle pointer events here
@@ -175,7 +194,15 @@ export default function Home() {
 			{/* REVEALED CONTENT GRID */}
 			<div className="sticky top-0 h-screen flex items-center justify-center p-4">
 				<motion.div
-					style={{ pointerEvents: contentPointerEvents }} // Only clickable when visible
+					style={{
+						pointerEvents: contentPointerEvents,
+						// Add a subtle scale-up as we reach the auto-expand point
+						scale: useTransform(
+							scrollYProgress,
+							[0.5, 0.95],
+							[0.9, 1]
+						),
+					}}
 					className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[260px] w-full max-w-7xl"
 				>
 					{panels.map((panel) => (
@@ -232,13 +259,7 @@ export default function Home() {
 									</motion.button>
 
 									<div className="flex flex-row justify-center min-h-full">
-										{/* <div>
-											<motion.h2
-												layoutId={`title-${panel.id}`}
-												className="text-6xl md:text-[12rem] font-black text-white uppercase italic leading-none"
-											>
-												{panel.title}
-											</motion.h2>
+										<div>
 											<motion.p
 												layoutId={`desc-${panel.id}`}
 												className="mt-8 text-white text-2xl md:text-4xl max-w-4xl leading-tight"
@@ -261,14 +282,8 @@ export default function Home() {
 													skill go here...
 												</p>
 											</motion.div>
-										</div> */}
-										{/* <PixelShelf /> */}
-										{/* <ComicArsenal /> */}
-										{/* <PixelRoadmap /> */}
-										{/* <ComicPostBox /> */}
-										{/* <AboutMeSelection /> */}
-										{/* <AspirationWall /> */}
-										<Controller />
+										</div>
+										<PanelContent id={selectedId} />
 									</div>
 									{/* ... Inside the expanded motion.div (after the min-h-full div) ... */}
 
