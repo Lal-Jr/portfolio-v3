@@ -41,12 +41,13 @@ export default function BlackOverlay({ scrollYProgress }: BlackOverlayProps) {
 				style={{ y: textY, opacity: textOpacity }}
 				className="text-center px-4"
 			>
-				<h1 className="text-white text-5xl md:text-8xl font-black uppercase tracking-tighter">
-					The Next Chapter
-				</h1>
 				<p className="text-zinc-500 mt-4 text-2xl font-light">
-					You've passed the grid. Welcome to the deep dive.
+					The surface level doesn't do it justice. To really get it,
+					you need the full story
 				</p>
+				<h1 className="text-white text-5xl md:text-8xl font-black uppercase tracking-tighter">
+					and it goes like this
+				</h1>
 			</motion.div>
 		</motion.div>
 	);
