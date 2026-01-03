@@ -10,7 +10,7 @@ export default function WrapperOverlay({
 	// 1. Tearing Animations with "Resistance"
 	const leftX = useTransform(
 		scrollYProgress,
-		[0, 0.1, 0.5],
+		[0, 0.02, 0.2],
 		["0%", "-1%", "-100%"]
 	);
 	const leftY = useTransform(scrollYProgress, [0, 0.5], ["0%", "6%"]);
@@ -18,22 +18,21 @@ export default function WrapperOverlay({
 
 	const rightX = useTransform(
 		scrollYProgress,
-		[0, 0.1, 0.5],
+		[0, 0.02, 0.2],
 		["0%", "1%", "100%"]
 	);
 	const rightY = useTransform(scrollYProgress, [0, 0.5], ["0%", "-6%"]);
 	const rightRotate = useTransform(scrollYProgress, [0, 0.5], [0, 12]);
 
-	// 1. Create a transform that maps scroll progress to CSS pointer events
-	// At 0% to 45% scroll, it's 'auto' (blocking). At 50%, it becomes 'none'.
-	const overlayPointerEvents = useTransform(
+	const contentPointerEvents = useTransform(
 		scrollYProgress,
-		[0, 0.45, 0.5],
+		[0, 0.2, 0.25],
 		["auto", "auto", "none"]
 	);
+
 	return (
 		<div
-			style={{ pointerEvents: overlayPointerEvents }} // Toggle pointer events here
+			style={{ pointerEvents: contentPointerEvents }} // Toggle pointer events here
 			className="fixed inset-0 z-50 pointer-events-none overflow-hidden"
 		>
 			{/* LEFT PANEL */}

@@ -2,8 +2,6 @@ import { AVATARS } from "@/constants";
 import ZoomPanel from "./ZoomPanel";
 
 import { motion, useTransform, MotionValue } from "framer-motion";
-
-// Defined the interface for the props
 interface ContentGridProps {
 	scrollYProgress: MotionValue<number>;
 }
@@ -64,7 +62,7 @@ export default function ContentGrid({ scrollYProgress }: ContentGridProps) {
 
 	const contentPointerEvents = useTransform(
 		scrollYProgress,
-		[0, 0.45, 0.5],
+		[0, 0.2, 0.25],
 		["none", "none", "auto"]
 	);
 
@@ -73,8 +71,7 @@ export default function ContentGrid({ scrollYProgress }: ContentGridProps) {
 			<motion.div
 				style={{
 					pointerEvents: contentPointerEvents,
-					// Add a subtle scale-up as we reach the auto-expand point
-					scale: useTransform(scrollYProgress, [0.5, 0.95], [0.9, 1]),
+					scale: useTransform(scrollYProgress, [0.2, 0.25], [0.9, 1]),
 				}}
 				className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[260px] w-full max-w-7xl"
 			>
