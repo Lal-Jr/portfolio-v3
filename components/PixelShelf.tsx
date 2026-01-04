@@ -1,180 +1,266 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Ultra-snappy physics
-const snapTransition = {
-	type: "spring",
-	stiffness: 500,
-	damping: 38,
-	mass: 0.6,
-};
-
-const books = [
+// Update this to your real project data
+const projects = [
 	{
 		id: 1,
-		title: "The Old Glitch",
-		content: "The sky was the color of a crashed OS...",
+		title: "Neural-Link",
+		year: "2024",
+		tech: ["Next.js", "PyTorch", "Tailwind"],
 		color: "#e63946",
 		h: "h-64",
-		w: "w-12",
-		rotate: 5,
-		author: "A. Kernel",
+		w: "w-14",
+		desc: "A deep-learning interface for real-time data visualization.",
 	},
 	{
 		id: 2,
-		title: "8-Bit Dreams",
-		content: "In a world of squares, he was a circle.",
+		title: "Pixel-Shop",
+		year: "2023",
+		tech: ["React", "Stripe", "Three.js"],
 		color: "#2a9d8f",
 		h: "h-48",
-		w: "w-14",
-		rotate: 0,
-		author: "Pixel Pete",
+		w: "w-16",
+		desc: "An immersive 3D e-commerce experience for digital assets.",
 	},
 	{
 		id: 3,
-		title: "Root Access",
-		content: "Password: ********. Access Denied.",
+		title: "Grid-OS",
+		year: "2024",
+		tech: ["Rust", "Wasm", "Vite"],
 		color: "#f4a261",
-		h: "h-40",
-		w: "w-10",
-		rotate: -4,
-		author: "Sudo",
+		h: "h-56",
+		w: "w-12",
+		desc: "Low-level system monitoring dashboard built for the web.",
 	},
 	{
 		id: 4,
-		title: "Buffer Over",
-		content: "Overflowing with pixelated emotions.",
+		title: "Echo-Base",
+		year: "2022",
+		tech: ["Node", "Redis", "Socket.io"],
 		color: "#8d99ae",
-		h: "h-56",
-		w: "w-16",
-		rotate: 2,
-		author: "Stack",
+		h: "h-52",
+		w: "w-14",
+		desc: "Real-time collaborative workspace for distributed teams.",
 	},
 	{
 		id: 5,
-		title: "Logic Gate",
-		content: "If true then heart, else null.",
+		title: "Lumina-UI",
+		year: "2024",
+		tech: ["Framer", "CSS", "TypeScript"],
 		color: "#457b9d",
 		h: "h-60",
-		w: "w-12",
-		rotate: -3,
-		author: "Boolean",
-	},
-	{
-		id: 6,
-		title: "Hard Drive",
-		content: "Deep storage for shallow memories.",
-		color: "#1d3557",
-		h: "h-52",
-		w: "w-14",
-		rotate: 0,
-		author: "SATA",
+		w: "w-10",
+		desc: "Design system focusing on micro-interactions and accessibility.",
 	},
 ];
 
-export default function PixelShelf() {
-	const [selectedBook, setSelectedBook] = useState(null);
-
-	// Close on Escape key
-	useEffect(() => {
-		const handleKeyDown = (e) =>
-			e.key === "Escape" && setSelectedBook(null);
-		window.addEventListener("keydown", handleKeyDown);
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, []);
+export default function ProjectShelf() {
+	const [hoveredProject, setHoveredProject] = useState(null);
+	const [selectedProject, setSelectedProject] = useState(null);
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-[#f0f0f0] p-4 font-serif">
-			{/* The Shelf */}
-			<div className="relative flex items-end px-12 pb-3 bg-[#3e2723] border-b-[20px] border-[#2d1b18] rounded-sm gap-2 shadow-2xl scale-190">
-				{books.map((book) => (
-					<motion.div
-						key={book.id}
-						layoutId={`book-${book.id}`}
-						onClick={() => setSelectedBook(book)}
-						className={`relative cursor-pointer ${book.h} ${book.w} origin-bottom border-t-2 border-black/10`}
-						style={{
-							backgroundColor: book.color,
-							rotate: book.rotate,
-						}}
-						whileHover={{
-							y: -15,
-							rotate: 0,
-							scale: 1.05,
-							transition: { duration: 0.1 },
-						}}
-					>
-						<div className="absolute top-2 left-0 right-0 h-1 bg-black/20" />
-						<div className="absolute bottom-4 left-0 right-0 h-4 bg-black/10" />
-					</motion.div>
-				))}
+		<div className="relative min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-between p-8 overflow-hidden font-mono">
+			{/* --- TOP SECTION: DYNAMIC PROJECT DATA --- */}
+			<div className="w-full max-w-6xl flex justify-between items-start z-10">
+				<div className="flex flex-col gap-1">
+					<div className="flex items-center gap-2 text-emerald-500 text-xs">
+						<span className="animate-pulse">●</span>
+						<span className="tracking-widest uppercase">
+							Portfolio Index v4.0
+						</span>
+					</div>
+					<h1 className="text-4xl font-bold tracking-tighter">
+						PROJECT_ARCHIVE
+					</h1>
+				</div>
+
+				{/* Hover State Info: Fills the top empty space meaningfully */}
+				<AnimatePresence mode="wait">
+					{hoveredProject && (
+						<motion.div
+							key={hoveredProject.id}
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: -20 }}
+							className="text-right"
+						>
+							<div className="text-3xl font-black italic">
+								{hoveredProject.title}
+							</div>
+							<div className="flex gap-2 justify-end mt-1">
+								{hoveredProject.tech.map((t) => (
+									<span
+										key={t}
+										className="text-[10px] border border-white/20 px-2 py-0.5 rounded-full text-white/60 uppercase"
+									>
+										{t}
+									</span>
+								))}
+							</div>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</div>
 
+			{/* --- MIDDLE SECTION: THE SHELF --- */}
+			<div className="relative flex flex-col items-center">
+				<div className="relative flex items-end px-12 pb-3 bg-[#3e2723] border-b-[20px] border-[#2d1b18] rounded-sm gap-2 shadow-2xl scale-190">
+					{projects.map((proj) => (
+						<motion.div
+							key={proj.id}
+							layoutId={`proj-${proj.id}`}
+							onMouseEnter={() => setHoveredProject(proj)}
+							onMouseLeave={() => setHoveredProject(null)}
+							onClick={() => setSelectedProject(proj)}
+							className={`relative cursor-pointer ${proj.h} ${proj.w} origin-bottom border-t-2 border-white/5 transition-colors`}
+							style={{ backgroundColor: proj.color }}
+							whileHover={{ y: -30, scale: 1.05 }}
+						>
+							{/* Spine Text: Displays the Year */}
+							<div className="absolute inset-0 flex flex-col items-center justify-between py-4 pointer-events-none">
+								{/* Optional: Adjust or remove this decorative bar if it's in the way */}
+								<div className="absolute top-2 left-0 right-0 h-1 bg-black/20" />
+
+								{/* Changed top-4 to top-24 to move it further down */}
+								<span className="absolute bottom-10 rotate-90 left-0 right-0 text-center text-[10px] font-bold tracking-widest text-black/40">
+									{proj.year}
+								</span>
+
+								<div className="absolute bottom-4 left-0 right-0 h-4 bg-black/10" />
+							</div>
+						</motion.div>
+					))}
+				</div>
+			</div>
+
+			{/* --- BOTTOM SECTION: THE TERMINAL / NAV --- */}
+			<div className="w-full max-w-6xl border-t border-white/10 pt-6 flex justify-between items-end z-10">
+				<div className="text-[10px] text-white/30 max-w-xs">
+					[SYSTEM_LOG]: Hover over a volume to retrieve repository
+					metadata. Select a volume to initialize full project
+					documentation.
+				</div>
+
+				<div className="flex gap-8">
+					<div className="text-right">
+						<div className="text-[10px] text-white/40 uppercase">
+							Location
+						</div>
+						<div className="text-xs">40.7128° N, 74.0060° W</div>
+					</div>
+					<div className="text-right">
+						<div className="text-[10px] text-white/40 uppercase">
+							Built With
+						</div>
+						<div className="text-xs font-bold text-emerald-500 underline underline-offset-4">
+							Framer Motion
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* MODAL: Full Project View */}
 			<AnimatePresence>
-				{selectedBook && (
+				{selectedProject && (
 					<div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12">
-						{/* Overlay */}
+						{/* Dimmed Backdrop */}
 						<motion.div
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							transition={{
-								duration: 0.05, // Only 3-5 frames of animation
-								ease: "linear",
-							}}
-							onClick={() => setSelectedBook(null)}
-							className="absolute inset-0 bg-black/80"
-							style={{ pointerEvents: "auto" }} // Ensures immediate click capture
+							onClick={() => setSelectedProject(null)}
+							className="absolute inset-0 bg-black/95 backdrop-blur-md"
 						/>
 
-						{/* The Open Book - Massive Size */}
 						<motion.div
-							layoutId={`book-${selectedBook.id}`}
-							transition={snapTransition}
-							className="relative flex w-full max-w-6xl h-[80vh] z-10 shadow-[40px_40px_0px_rgba(0,0,0,0.3)] bg-white border-[12px] border-black overflow-hidden"
+							layoutId={`proj-${selectedProject.id}`}
+							className="relative flex w-full max-w-7xl h-[85vh] z-10 bg-[#fdfaf3] shadow-[40px_40px_0px_rgba(0,0,0,0.4)] border-l-[1px] border-black/10 overflow-hidden"
 						>
-							{/* LEFT PAGE */}
-							<div className="flex-1 bg-[#fdfaf3] p-8 md:p-16 flex flex-col justify-center items-center text-center border-r-2 border-black/20">
-								<h3 className="text-xs uppercase tracking-[0.3em] mb-6 text-gray-400 font-sans">
-									Special Edition
-								</h3>
-								<h2 className="text-5xl md:text-7xl font-black text-gray-900 leading-none mb-6 italic tracking-tight">
-									{selectedBook.title}
-								</h2>
-								<div className="w-20 h-2 bg-black mb-6" />
-								<p className="text-xl text-gray-600 uppercase tracking-widest font-sans">
-									{selectedBook.author}
-								</p>
-							</div>
+							{/* LEFT PAGE: All Content & Details */}
+							<div className="relative flex-1 p-10 md:p-20 flex flex-col justify-between bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] overflow-y-auto">
+								<div className="space-y-12">
+									<header className="flex justify-between items-start">
+										<div className="space-y-1">
+											<span className="text-[10px] uppercase tracking-[0.5em] text-emerald-700 font-bold block">
+												Archive // 00
+												{selectedProject.id}
+											</span>
+											<span className="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium block">
+												Project: {selectedProject.year}
+											</span>
+										</div>
+									</header>
 
-							{/* CENTER GUTTER */}
-							<div className="w-6 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 shadow-inner z-20" />
+									<section>
+										<h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-[0.85] text-black">
+											{selectedProject.title}
+										</h2>
 
-							{/* RIGHT PAGE */}
-							<div className="flex-1 bg-[#fdfaf3] p-8 md:p-16 relative overflow-y-auto">
-								<button
-									onClick={() => setSelectedBook(null)}
-									className="absolute top-6 right-8 text-sm font-black font-sans hover:text-red-500 transition-colors"
-								>
-									CLOSE [X]
-								</button>
+										<div className="mt-12 max-w-lg">
+											<p className="text-2xl md:text-3xl leading-relaxed text-gray-800 font-serif italic">
+												{/* Drop Cap for that book feel */}
+												<span className="text-8xl font-black float-left mr-4 mt-2 leading-[0.6] text-black not-italic">
+													{selectedProject.desc.charAt(
+														0
+													)}
+												</span>
+												{selectedProject.desc.slice(1)}
+											</p>
+										</div>
 
-								<div className="max-w-prose">
-									<p className="text-2xl md:text-3xl leading-relaxed text-gray-800 first-letter:text-7xl first-letter:font-black first-letter:mr-3 first-letter:float-left">
-										{selectedBook.content}
-									</p>
-									<p className="mt-8 text-xl md:text-2xl leading-relaxed text-gray-700">
-										The pixels danced across the screen in a
-										rhythmic pattern, echoing the sound of
-										the cooling fan humming in the
-										background. Every frame was a memory,
-										every glitch a story untold.
-									</p>
+										<div className="mt-12 space-y-4">
+											<div className="flex gap-4">
+												<button className="bg-black text-white px-8 py-4 text-xs font-bold hover:bg-emerald-800 transition-all uppercase tracking-widest">
+													Live Demo
+												</button>
+												<button className="border-2 border-black px-8 py-4 text-xs font-bold hover:bg-black hover:text-white transition-all uppercase tracking-widest">
+													Source Code
+												</button>
+											</div>
+											<p className="text-[10px] font-mono text-gray-400 pt-4 border-t border-black/5 uppercase">
+												Stack:{" "}
+												{selectedProject.tech.join(
+													" • "
+												)}
+											</p>
+										</div>
+									</section>
 								</div>
 
-								<div className="mt-12 text-sm font-mono text-gray-400">
-									SECTION II • PAGE 124
+								<footer className="mt-20 flex justify-between items-end border-t border-black/10 pt-6">
+									<div className="text-lg font-serif italic text-gray-300">
+										P. {selectedProject.id + 24}
+									</div>
+								</footer>
+							</div>
+
+							{/* CENTER GUTTER: Realistic Spine Depth */}
+							<div className="absolute left-1/2 top-0 bottom-0 w-[60px] -ml-[30px] z-20 pointer-events-none bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+							<div className="absolute left-1/2 top-0 bottom-0 w-[1px] -ml-[0.5px] z-30 bg-black/10" />
+
+							{/* RIGHT PAGE: Full Image Plate */}
+							<div className="relative flex-1 bg-[#ebe8e0] overflow-hidden group">
+								<motion.img
+									initial={{ scale: 1.1, opacity: 0 }}
+									animate={{ scale: 1, opacity: 1 }}
+									src={selectedProject.image}
+									alt="Project Showcase"
+									className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000"
+								/>
+
+								{/* Paper Texture Overlay for Image */}
+								<div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] opacity-30 pointer-events-none" />
+
+								{/* Image Caption - "The Plate Label" */}
+								<div className="absolute bottom-10 right-10 bg-white/90 backdrop-blur-md p-4 border border-black/10 shadow-xl max-w-xs">
+									<p className="text-[9px] font-mono leading-tight text-gray-600 uppercase">
+										Fig. 0{selectedProject.id} — Visual
+										representation of{" "}
+										{selectedProject.title} interface logic
+										and aesthetics.
+									</p>
 								</div>
 							</div>
 						</motion.div>

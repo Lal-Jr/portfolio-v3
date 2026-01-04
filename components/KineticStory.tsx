@@ -122,13 +122,24 @@ export default function KineticStory({
 				<div className="flex-1 h-[90vh] relative">
 					<div className="bg-white border-[6px] border-black w-full h-full shadow-[20px_20px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden">
 						{/* Header */}
-						<div className="bg-black text-white p-2 px-6 flex justify-between items-center shrink-0">
-							<span className="text-[10px] font-mono text-red-500 animate-pulse">
+						<div className="bg-black text-white p-2 px-6 flex justify-between items-center shrink-0 gap-4">
+							<span className="text-[10px] font-mono text-red-500 animate-pulse whitespace-nowrap">
 								● LIVE_VIEW
 							</span>
-							<span className="text-[10px] font-mono">
-								INDEX: 0{activeIndex + 1}
-							</span>
+
+							{/* Progress Bar Container */}
+							<div className="flex items-center gap-3 flex-1 max-w-[150px]">
+								<div className="h-3 w-full bg-white/20 rounded-full overflow-hidden">
+									<div
+										className="h-full bg-white transition-all duration-500 ease-out"
+										style={{
+											width: `${
+												((activeIndex + 1) / 6) * 100
+											}%`,
+										}}
+									/>
+								</div>
+							</div>
 						</div>
 
 						{/* Content Area  */}
