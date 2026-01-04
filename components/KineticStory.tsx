@@ -27,6 +27,8 @@ export default function KineticStory({
 	sortedPanels,
 	activeIndex,
 }: KineticStoryProps) {
+	const nextIndex = (activeIndex + 1) % sortedPanels.length;
+	const nextPanel = sortedPanels[nextIndex];
 	return (
 		<div className="relative min-h-screen w-full bg-[#0a0a0a] overflow-hidden flex items-center">
 			{/* 1. OPTIMIZED BACKGROUND: Removed blur, used opacity for speed */}
@@ -50,7 +52,6 @@ export default function KineticStory({
 						if (distance < -1 || distance > 5) return null;
 
 						const isActive = index === activeIndex;
-						const isBehind = distance > 0;
 
 						return (
 							<motion.div
@@ -100,6 +101,12 @@ export default function KineticStory({
 										{panel.title}
 									</h4>
 								</div>
+								{/* MIDDLE: Descriptive Text (The "Explanation") */}
+								<div className="relative z-10 flex-1 py-4 px-2">
+									<p className="font-comic text-[11px] leading-tight font-bold text-black uppercase tracking-tighter line-clamp-4 italic">
+										{panel.desc}
+									</p>
+								</div>
 
 								<img
 									src={panel.avatar}
@@ -140,6 +147,14 @@ export default function KineticStory({
 									</div>
 								</motion.div>
 							</AnimatePresence>
+
+							{/* PRELOADER: Render the next panel invisibly */}
+							{nextPanel && nextPanel.id !== activePanel.id && (
+								<PanelContent
+									id={nextPanel.id}
+									isHidden={true}
+								/>
+							)}
 						</div>
 					</div>
 				</div>
@@ -148,25 +163,40 @@ export default function KineticStory({
 	);
 }
 
-const PanelContent = ({ id }: { id: string }) => {
-	switch (id) {
-		case "move":
-			return <PixelShelf />;
-		case "hands":
-			return <AspirationWall />;
-		case "aresenal":
-			return <ComicArsenal />;
-		case "peace":
-			return <AboutMeSelection />;
-		case "jump":
-			return <PixelRoadmap />;
-		case "signal":
-			return <ComicPostBox />;
-		default:
-			return (
-				<div className="text-4xl italic text-zinc-700">
-					Select a chapter
-				</div>
-			);
-	}
+const PanelContent = ({
+	id,
+	isHidden = false,
+}: {
+	id: string;
+	isHidden?: boolean;
+}) => {
+	// Wrap in a div that keeps it out of sight but in the DOM
+	return (
+		<div
+			style={
+				isHidden
+					? { display: "none", pointerEvents: "none" }
+					: { height: "100%", width: "100%" }
+			}
+		>
+			{(() => {
+				switch (id) {
+					case "move":
+						return <PixelShelf />;
+					case "hands":
+						return <AspirationWall />;
+					case "aresenal":
+						return <ComicArsenal />;
+					case "peace":
+						return <AboutMeSelection />;
+					case "jump":
+						return <PixelRoadmap />;
+					case "signal":
+						return <ComicPostBox />;
+					default:
+						return null;
+				}
+			})()}
+		</div>
+	);
 };
