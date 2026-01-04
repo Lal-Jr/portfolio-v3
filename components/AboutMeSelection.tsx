@@ -1,124 +1,107 @@
 "use client";
-import React, { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import {
-	Image as ThreeImage,
-	ContactShadows,
-	Html,
-	Environment,
-	Billboard,
-} from "@react-three/drei";
-import * as THREE from "three";
+import React from "react";
 
 const STRENGTHS = [
-	{ text: "CRITICAL THINKER", color: "#facc15" },
-	{ text: "PIXEL PERFECT", color: "#22d3ee" },
-	{ text: "TS WIZARD", color: "#4ade80" },
-	{ text: "COFFEE ADDICT", color: "#ef4444" },
-	{ text: "NIGHT OWL", color: "#a855f7" },
+	{
+		text: "CRITICAL THINKER",
+		color: "#facc15",
+		top: "20%",
+		left: "12%",
+		trailPos: "bottom-[-20px] right-0",
+	},
+	{
+		text: "PIXEL PERFECT",
+		color: "#22d3ee",
+		top: "45%",
+		left: "8%",
+		trailPos: "top-[-10px] right-[-10px]",
+	},
+	{
+		text: "TS WIZARD",
+		color: "#4ade80",
+		top: "25%",
+		right: "12%",
+		trailPos: "bottom-[-20px] left-0",
+	},
+	{
+		text: "COFFEE ADDICT",
+		color: "#ef4444",
+		top: "52%",
+		right: "8%",
+		trailPos: "top-[-10px] left-[-10px]",
+	},
+	{
+		text: "NIGHT OWL",
+		color: "#a855f7",
+		top: "10%",
+		left: "42%",
+		trailPos: "bottom-[-30px] left-1/2",
+	},
 ];
-
-function OrbitingStrengths() {
-	const groupRef = useRef<THREE.Group>(null!);
-
-	useFrame((state) => {
-		// Rotating the group makes everything inside it orbit the center (0,0,0)
-		groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.5;
-	});
-
-	return (
-		<group ref={groupRef} position={[0, 0.5, 0]}>
-			{STRENGTHS.map((item, i) => {
-				const angle = (i / STRENGTHS.length) * Math.PI * 2;
-				const radius = 3.5; // Adjusted to be closer to the character
-				const x = Math.cos(angle) * radius;
-				const z = Math.sin(angle) * radius;
-
-				return (
-					<group key={i} position={[x, 0, z]}>
-						{/* Billboard inside the orbit ensures the text always faces the user while moving */}
-						<Billboard>
-							<Html
-								occlude
-								center
-								distanceFactor={10} // Adjusts scale based on distance
-							>
-								<div
-									className="p-3 border-4 border-black shadow-[4px_4px_0px_#000] font-black italic uppercase whitespace-nowrap select-none pointer-events-none"
-									style={{
-										backgroundColor: item.color,
-										transform: "skewX(-10deg)", // Added a comic-book lean
-									}}
-								>
-									{item.text}
-								</div>
-							</Html>
-						</Billboard>
-					</group>
-				);
-			})}
-		</group>
-	);
-}
 
 export default function ComicHeroScene() {
 	return (
-		<div className="w-full">
-			<Canvas camera={{ position: [8, 5, 10], fov: 35 }}>
-				<ambientLight intensity={0.7} />
-				<pointLight position={[10, 10, 10]} />
+		<div className="relative w-full h-[65vh] flex items-end justify-center overflow-hidden">
+			{/* --- THOUGHT BUBBLES --- */}
+			<div className="absolute inset-0 max-w-6xl mx-auto pointer-events-none">
+				{STRENGTHS.map((item, i) => (
+					<div
+						key={i}
+						className="absolute animate-bounce"
+						style={{
+							top: item.top,
+							left: item.left,
+							right: item.right,
+							animationDelay: `${i * 0.15}s`,
+							animationDuration: "4s",
+						}}
+					>
+						<div className="relative">
+							{/* Thought Trail (The little circles) */}
+							<div
+								className={`absolute ${item.trailPos} flex flex-col items-center gap-1`}
+							>
+								<div
+									className="w-4 h-4 rounded-full border-[3px] border-black shadow-[2px_2px_0px_#000]"
+									style={{ backgroundColor: item.color }}
+								/>
+								<div
+									className="w-2 h-2 rounded-full border-[2px] border-black shadow-[1px_1px_0px_#000]"
+									style={{ backgroundColor: item.color }}
+								/>
+							</div>
 
-				{/* --- 1. THE 3D PODIUM (Horizontal Plane) --- */}
-				<group position={[0, -2, 0]}>
-					<mesh receiveShadow>
-						<cylinderGeometry args={[3, 3.2, 0.8, 24]} />
-						<meshStandardMaterial color="white" />
-					</mesh>
-					{/* Black Outline for the Podium */}
-					<mesh scale={[1.02, 1, 1.02]}>
-						<cylinderGeometry args={[3, 3.2, 0.75, 24]} />
-						<meshBasicMaterial
-							color="black"
-							side={THREE.BackSide}
-						/>
-					</mesh>
-				</group>
+							{/* Bubble Body */}
+							<div
+								className="px-8 py-3 border-[4px] border-black shadow-[6px_6px_0px_#000] font-black italic uppercase whitespace-nowrap"
+								style={{
+									backgroundColor: item.color,
+									borderRadius: "100px", // Cloud-like rounded shape
+									fontSize: "1.1rem",
+									transform: "skewX(-5deg)",
+								}}
+							>
+								{item.text}
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
 
-				<Billboard
-					follow={true} // Always faces the camera
-					lockX={false}
-					lockY={false}
-					lockZ={false}
-					position={[0, 0.5, 0]}
-				>
-					{/* Main PNG Avatar */}
-					<ThreeImage
-						url="/avatars/IMG_7739.png" // Pointing to your PNG
-						transparent
-						scale={[3, 5]} // Adjust scale to match your PNG's aspect ratio
-					/>
-
-					<meshBasicMaterial
-						color="black"
-						transparent={true}
-						opacity={0.5} // 0.5 is 50% see-through
-					/>
-				</Billboard>
-
-				{/* --- 3. THE PERPENDICULAR ORBIT --- */}
-				<OrbitingStrengths />
-
-				{/* Realistic Shadows on the Podium */}
-				<ContactShadows
-					position={[0, -1.6, 0]}
-					opacity={0.4}
-					scale={10}
-					blur={2}
-					far={4}
+			{/* --- THE HERO IMAGE --- */}
+			<div className="relative z-10 w-full max-w-md mb-[-10px]">
+				<img
+					src="/avatars/IMG_7739.png"
+					alt="Hero Avatar"
+					className="w-full h-auto object-contain"
+					style={{
+						filter: "drop-shadow(0 20px 15px rgba(0, 0, 0, 0.3))",
+					}}
 				/>
+			</div>
 
-				<Environment preset="city" />
-			</Canvas>
+			{/* --- COMIC FLOOR SHADOW --- */}
+			<div className="absolute bottom-6 w-72 h-8 bg-black/20 rounded-[100%] blur-xl" />
 		</div>
 	);
 }
