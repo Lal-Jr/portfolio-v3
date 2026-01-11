@@ -15,7 +15,6 @@ export default function ZoomPanel({
 			layoutId={`panel-${id}`}
 			whileHover={{
 				scale: 1.02,
-				rotate: -0.5,
 				zIndex: 20,
 				boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)",
 			}}
@@ -33,7 +32,7 @@ export default function ZoomPanel({
 			<div className="absolute inset-0 comic-halftone pointer-events-none" />
 
 			{/* Text Content */}
-			<div className={`flex flex-col z-10 ${!isTall ? "md:flex-1" : ""}`}>
+			{/* <div className={`flex flex-col z-10 ${!isTall ? "md:flex-1" : ""}`}>
 				<h3 className="font-black text-xl md:text-3xl uppercase italic leading-none mb-2">
 					{title}
 				</h3>
@@ -42,14 +41,10 @@ export default function ZoomPanel({
 				>
 					{description}
 				</p>
-			</div>
+			</div> */}
 
 			{/* Avatar Container */}
-			<div
-				className={`flex-shrink-0 z-10 flex ${
-					isTall ? "mt-auto self-end" : "justify-center"
-				}`}
-			>
+			<div className={"flex-shrink-0 z-10 flex mt-auto self-end"}>
 				<motion.div
 					className={`relative ${
 						isTall

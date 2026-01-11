@@ -1,17 +1,23 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+import type { Config } from "tailwindcss";
+
+const config: Config = {
 	theme: {
 		extend: {
-			boxShadow: {
-				// The thick, offset black shadow common in comics
-				comic: "8px 8px 0px 0px rgba(0,0,0,1)",
-				"comic-hover": "12px 12px 0px 0px rgba(0,0,0,1)",
+			keyframes: {
+				"pacman-top": {
+					"0%, 100%": { transform: "rotate(-45deg)" },
+					"50%": { transform: "rotate(0deg)" },
+				},
+				"pacman-bottom": {
+					"0%, 100%": { transform: "rotate(45deg)" },
+					"50%": { transform: "rotate(0deg)" },
+				},
 			},
-			borderWidth: {
-				"3": "3px",
+			animation: {
+				"pacman-top": "pacman-top 0.25s ease-in-out infinite",
+				"pacman-bottom": "pacman-bottom 0.25s ease-in-out infinite",
 			},
 		},
 	},
-	plugins: [],
 };
+export default config;
