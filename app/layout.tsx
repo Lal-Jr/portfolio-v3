@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Press_Start_2P, Inter } from "next/font/google";
 import "./globals.css";
+import LoadingProvider from "@/components/LoadingProvider";
 
 const pressStart = Press_Start_2P({
 	weight: "400",
@@ -24,20 +25,18 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className="h-full">
 			<body
-				className={`${pressStart.variable} ${inter.variable} bg-rpg-background bg-opacity-20 font-sans antialiased text-rpg-black`}
+				className={`${pressStart.variable} ${inter.variable} 
+                bg-rpg-background bg-opacity-20 font-sans antialiased text-rpg-black
+                min-h-screen max-w-[100vw] overflow-x-hidden`}
 			>
-				{/* Background Texture Overlay */}
-				<div
-					className="fixed inset-0 opacity-5 pointer-events-none z-[-1]"
-					style={{
-						backgroundImage:
-							"radial-gradient(#2D2D2D 1px, transparent 1px)",
-						backgroundSize: "20px 20px",
-					}}
-				/>
-				<main className="max-w-7xl mx-auto space-y-12">{children}</main>
+				{/* All client-side loading logic lives inside this provider */}
+				<LoadingProvider>
+					<main className="relative min-h-screen w-full max-w-full flex flex-col">
+						{children}
+					</main>
+				</LoadingProvider>
 			</body>
 		</html>
 	);
