@@ -165,8 +165,6 @@ export default function ContentGrid({
 
 	return (
 		<div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 bg-[#050505] font-['Press_Start_2P'] overflow-hidden">
-			{/* 2. GRID BACKGROUND */}
-
 			<div
 				className="absolute inset-0 opacity-10 pointer-events-none"
 				style={{
