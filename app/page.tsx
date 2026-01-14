@@ -5,7 +5,6 @@ import { useScroll } from "framer-motion";
 import WrapperOverlay from "@/components/WrapperOverlay";
 import ContentGrid from "@/components/ContentGrid";
 import BlackOverlay from "@/components/BlackOverlay";
-import ScrollableStory from "@/components/ScrollableStory";
 import PacmanLoader from "@/components/Loader";
 
 export default function Home() {
@@ -22,7 +21,6 @@ export default function Home() {
 			<WrapperOverlay scrollYProgress={scrollYProgress} />
 			<ContentGrid scrollYProgress={scrollYProgress} />
 			{/* <BlackOverlay scrollYProgress={scrollYProgress} /> */}
-			{/* <ScrollableStory scrollYProgress={scrollYProgress} /> */}
 		</div>
 	);
 }
