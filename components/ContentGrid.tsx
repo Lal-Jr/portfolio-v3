@@ -20,16 +20,23 @@ import { CSS } from "@dnd-kit/utilities";
 import { AVATARS } from "@/constants";
 import ZoomPanel from "./ZoomPanel";
 import { motion, MotionValue, useTransform } from "framer-motion";
+import AboutMeSelection from "./AboutMeSelection";
 
 // --- SORTABLE ITEM COMPONENT ---
 function SortablePanel({
 	id,
 	item,
 	index,
+	isFirst,
+	zoomProps,
+	fadeProps,
 }: {
 	id: string;
 	item: any;
 	index: number;
+	isFirst: boolean;
+	zoomProps?: { scale: MotionValue<number>; x: MotionValue<string>; y: MotionValue<string>; contentOpacity?: MotionValue<number> };
+	fadeProps?: { opacity: MotionValue<number> };
 }) {
 	const {
 		attributes,
@@ -51,43 +58,58 @@ function SortablePanel({
 
 	const config = slotConfigs[index] || slotConfigs[5];
 
-	const style = {
+	// dnd-kit transform for the container
+	const dndStyle = {
 		transform: CSS.Transform.toString(transform),
 		transition,
-		zIndex: isDragging ? 50 : 1,
+		zIndex: isDragging ? 50 : isFirst ? 30 : 1, // Higher z-index for zooming panel
 	};
 
 	return (
 		<div
 			ref={setNodeRef}
-			style={style}
-			className={`${config.grid} ${
-				isDragging ? "opacity-50" : "opacity-100"
-			} group relative border-2 border-zinc-800 bg-black overflow-hidden transition-colors hover:border-white/40`}
+			style={dndStyle}
+			className={`${config.grid} relative`}
 			{...attributes}
 			{...listeners}
 		>
-			{/* --- NEW TITLE & LABEL OVERLAY --- */}
-			<div className="absolute top-0 left-0 z-20 p-3 flex flex-col gap-1 pointer-events-none">
+			<motion.div
+				style={
+					isFirst && zoomProps
+						? { scale: zoomProps.scale, x: zoomProps.x, y: zoomProps.y }
+						: fadeProps
+						? { opacity: fadeProps.opacity }
+						: {}
+				}
+				className={`
+					w-full h-full
+					${isDragging ? "opacity-50" : "opacity-100"}
+					group relative border-2 border-zinc-800 bg-black overflow-hidden hover:border-white/40
+				`}
+			>
+			{/* --- TITLE & LABEL OVERLAY --- */}
+			<motion.div style={{ opacity: zoomProps?.contentOpacity || 1 }} className="absolute top-0 left-0 z-20 p-3 flex flex-col gap-1 pointer-events-none">
 				<span className="text-[10px] md:text-[12px] text-white bg-black/60 px-2 py-1 backdrop-blur-sm border-l-2 border-white/30">
 					{item.title}
 				</span>
 				<span className="text-[8px] md:text-[10px] text-zinc-400 bg-black/60 px-2 py-0.5 backdrop-blur-sm">
 					{item.desc}
 				</span>
-			</div>
+			</motion.div>
 
 			<ZoomPanel
 				{...item}
 				avatarSrc={item.avatar}
 				description={item.desc}
 				isTall={config.isTall}
+				contentOpacity={zoomProps?.contentOpacity}
 			/>
 
-			{/* Visual drag handle hint */}
-			<div className="absolute top-2 right-2 text-[10px] text-zinc-600 group-hover:text-white opacity-0 group-hover:opacity-100 transition-opacity z-20">
-				⁝⁝
-			</div>
+				{/* Visual drag handle hint */}
+				<div className="absolute top-2 right-2 text-[10px] text-zinc-600 group-hover:text-white opacity-0 group-hover:opacity-100 transition-opacity z-20">
+					⁝⁝
+				</div>
+			</motion.div>
 		</div>
 	);
 }
@@ -150,7 +172,31 @@ export default function ContentGrid({
 		})
 	);
 
+	// Grid appearance
 	const gridOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1]);
+
+	// Zoom interaction for the first panel (index 0)
+	// Triggers after the grid has fully appeared (0.25)
+	const zoomStart = 0.35;
+	const zoomEnd = 0.55;
+
+	// Drastically increased scale to ensure it covers the viewport
+	const firstPanelScale = useTransform(scrollYProgress, [zoomStart, zoomEnd], [1, 25]);
+	
+	// Center the panel
+	const firstPanelX = useTransform(scrollYProgress, [zoomStart, zoomEnd], ["0%", "50%"]);
+	const firstPanelY = useTransform(scrollYProgress, [zoomStart, zoomEnd], ["0%", "15%"]);
+
+	// Fade out other panels
+	const otherPanelsOpacity = useTransform(scrollYProgress, [zoomStart, 0.45], [1, 0]);
+
+	// AboutMe Selection Transition
+	// Starts showing up as the zoom completes
+	const aboutMeOpacity = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
+	const aboutMePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.6 ? "auto" : "none"));
+	
+	// Fade out ZoomPanel content as the AboutMe section appears
+	const contentOpacity = useTransform(scrollYProgress, [0.55, 0.65], [1, 0]);
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
@@ -174,9 +220,10 @@ export default function ContentGrid({
 					backgroundSize: "60px 60px",
 				}}
 			/>
+			
 			<motion.div
 				style={{ opacity: gridOpacity }}
-				className="w-full max-w-7xl"
+				className="w-full max-w-7xl relative"
 			>
 				<DndContext
 					sensors={sensors}
@@ -194,11 +241,34 @@ export default function ContentGrid({
 									id={item.id}
 									item={item}
 									index={index}
+									isFirst={index === 0}
+									zoomProps={
+										index === 0
+											? { scale: firstPanelScale, x: firstPanelX, y: firstPanelY, contentOpacity }
+											: undefined
+									}
+									fadeProps={index !== 0 ? { opacity: otherPanelsOpacity } : undefined}
 								/>
 							))}
 						</div>
 					</SortableContext>
 				</DndContext>
+			</motion.div>
+
+			{/* About Me Selection Overlay */}
+			<motion.div 
+				style={{ opacity: aboutMeOpacity, pointerEvents: aboutMePointerEvents as any }}
+				className="absolute inset-0 z-50 flex items-center justify-center"
+			>
+				{/* Import dynamically or use standard import if available at top */}
+				{/* Since I cannot see the top, I will assume I need to add the import at the top in a separate step if it's missing, 
+                   but I will try to use the component directly assuming I add the import.
+                   Wait, I am in replace_file_content for the bottom half. I need to make sure I add the import. 
+                   I will use the full file content replacement in a subsequent step or try to add import now?
+                   Actually I can adding the Import in a separate MultiReplace or just assume I'll do it next.
+                   I will add the component usage here.
+                */}
+				<AboutMeSelection />
 			</motion.div>
 		</div>
 	);

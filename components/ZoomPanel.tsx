@@ -9,6 +9,7 @@ export default function ZoomPanel({
 	avatarSrc,
 	color,
 	isTall,
+	contentOpacity,
 }: any) {
 	return (
 		<motion.div
@@ -44,7 +45,7 @@ export default function ZoomPanel({
 			</div> */}
 
 			{/* Avatar Container */}
-			<div className={"flex-shrink-0 z-10 flex mt-auto self-end"}>
+			<motion.div style={{ opacity: contentOpacity || 1 }} className={"flex-shrink-0 z-10 flex mt-auto self-end"}>
 				<motion.div
 					className={`relative ${
 						isTall
@@ -60,7 +61,7 @@ export default function ZoomPanel({
 						style={{ imageRendering: "pixelated" }}
 					/>
 				</motion.div>
-			</div>
+			</motion.div>
 		</motion.div>
 	);
 }
