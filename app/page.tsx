@@ -17,10 +17,10 @@ export default function Home() {
 
 	return (
 		<div ref={containerRef} className="relative h-[1200vh] w-full">
-			<PacmanLoader />
+			<PacmanLoader onComplete={} />
 			<WrapperOverlay scrollYProgress={scrollYProgress} />
 			<ContentGrid scrollYProgress={scrollYProgress} />
-			{/* <BlackOverlay scrollYProgress={scrollYProgress} /> */}
+			<BlackOverlay scrollYProgress={scrollYProgress} /> */}
 		</div>
 	);
 }
