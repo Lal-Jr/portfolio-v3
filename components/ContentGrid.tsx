@@ -30,6 +30,7 @@ function SortablePanel({
 	isFirst,
 	zoomProps,
 	fadeProps,
+	scale,
 }: {
 	id: string;
 	item: any;
@@ -37,6 +38,7 @@ function SortablePanel({
 	isFirst: boolean;
 	zoomProps?: { scale: MotionValue<number>; x: MotionValue<string>; y: MotionValue<string>; contentOpacity?: MotionValue<number> };
 	fadeProps?: { opacity: MotionValue<number> };
+	scale?: MotionValue<number>;
 }) {
 	const {
 		attributes,
@@ -103,6 +105,7 @@ function SortablePanel({
 				description={item.desc}
 				isTall={config.isTall}
 				contentOpacity={zoomProps?.contentOpacity}
+				scale={scale}
 			/>
 
 				{/* Visual drag handle hint */}
@@ -248,6 +251,7 @@ export default function ContentGrid({
 											: undefined
 									}
 									fadeProps={index !== 0 ? { opacity: otherPanelsOpacity } : undefined}
+									scale={index === 0 ? firstPanelScale : undefined}
 								/>
 							))}
 						</div>

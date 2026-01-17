@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, MotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function ZoomPanel({
@@ -10,7 +10,16 @@ export default function ZoomPanel({
 	color,
 	isTall,
 	contentOpacity,
+	scale, // Receive the scale generic motion value
 }: any) {
+	// Inverse scale to keep the avatar size roughly constant visually if the parent scales
+	// We default to 1 if scale is not provided
+	const avatarScale = useTransform(scale || new MotionValue(), (v: any) => (v ? 1 / v : 1));
+	
+	// Only apply the layoutId to the specific "peace" panel (or whichever is the hero)
+	// We'll stick to a static ID 'hero-avatar' for the first panel to match AboutMeSelection
+	const isHero = id === "peace";
+
 	return (
 		<motion.div
 			layoutId={`panel-${id}`}
@@ -47,6 +56,8 @@ export default function ZoomPanel({
 			{/* Avatar Container */}
 			<motion.div style={{ opacity: contentOpacity || 1 }} className={"flex-shrink-0 z-10 flex mt-auto self-end"}>
 				<motion.div
+					layoutId={isHero ? "hero-avatar" : undefined}
+					style={isHero && scale ? { scale: avatarScale, originX: 0.5, originY: 1 } : undefined}
 					className={`relative ${
 						isTall
 							? "w-48 h-48 md:w-56 md:h-56"
