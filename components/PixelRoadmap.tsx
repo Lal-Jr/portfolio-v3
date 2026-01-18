@@ -48,21 +48,21 @@ export default function WorkRoadmap() {
 	return (
 		<div
 			ref={containerRef}
-			className="w-full bg-[#0a0a0a] py-32 px-4 font-['Press_Start_2P'] text-white"
+			className="w-full h-full flex items-center justify-center font-['Press_Start_2P'] text-white px-8"
 		>
-			<div className="max-w-4xl mx-auto relative">
+			<div className="max-w-5xl w-full relative">
 				{/* SECTION HEADER */}
-				<div className="text-center mb-32">
-					<h2 className="text-2xl md:text-4xl mb-4 text-yellow-400 drop-shadow-[4px_4px_0px_#7a5c00]">
+				<div className="text-center mb-12">
+					<h2 className="text-xl md:text-3xl mb-3 text-yellow-400 drop-shadow-[4px_4px_0px_#7a5c00]">
 						EXPERIENCE_LOG
 					</h2>
-					<p className="text-[10px] text-zinc-500 animate-pulse uppercase tracking-[0.2em]">
+					<p className="text-[8px] text-zinc-500 animate-pulse uppercase tracking-[0.2em]">
 						-- Scrolling to synchronize timeline --
 					</p>
 				</div>
 
 				{/* THE PROGRESS LINE */}
-				<div className="absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-2 bg-zinc-800 border-x border-zinc-700">
+				<div className="absolute left-1/2 -translate-x-1/2 top-8 bottom-8 w-2 bg-zinc-800 border-x border-zinc-700">
 					<motion.div
 						style={{ scaleY, originY: 0 }}
 						className="w-full h-full bg-yellow-400 shadow-[0_0_15px_#facc15]"
@@ -74,7 +74,7 @@ export default function WorkRoadmap() {
 					return (
 						<div
 							key={index}
-							className={`relative flex items-center mb-32 w-full ${
+							className={`relative flex items-center mb-16 w-full ${
 								isEven ? "flex-row" : "flex-row-reverse"
 							}`}
 						>
@@ -87,17 +87,17 @@ export default function WorkRoadmap() {
 									isEven ? "text-right" : "text-left"
 								}`}
 							>
-								<div className="relative p-6 bg-zinc-900 border-4 border-zinc-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:border-yellow-400 transition-colors group">
+								<div className="relative p-4 bg-zinc-900 border-4 border-zinc-700 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:border-yellow-400 transition-colors group">
 									<span className="text-[10px] text-yellow-500 mb-2 block tracking-tighter">
 										{job.period}
 									</span>
-									<h3 className="text-[14px] mb-2 leading-tight uppercase group-hover:text-yellow-400">
+									<h3 className="text-[12px] mb-2 leading-tight uppercase group-hover:text-yellow-400">
 										{job.company}
 									</h3>
-									<p className="text-[11px] text-zinc-400 mb-4 leading-relaxed font-sans font-bold">
+									<p className="text-[10px] text-zinc-400 mb-3 leading-relaxed font-sans font-bold">
 										{job.role}
 									</p>
-									<p className="text-[9px] leading-relaxed text-zinc-500 mb-4 lowercase italic">
+									<p className="text-[8px] leading-relaxed text-zinc-500 mb-3 lowercase italic">
 										{job.desc}
 									</p>
 
@@ -139,7 +139,7 @@ export default function WorkRoadmap() {
 										rotate: [0, 90, 0],
 									}}
 									viewport={{ once: true }}
-									className={`${job.color} w-14 h-14 flex items-center justify-center border-4 border-black text-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative`}
+									className={`${job.color} w-12 h-12 flex items-center justify-center border-4 border-black text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative`}
 								>
 									{job.icon}
 									{/* Achievement Glow */}
@@ -154,7 +154,7 @@ export default function WorkRoadmap() {
 				})}
 
 				{/* FINAL GOAL NODE */}
-				<div className="relative flex justify-center mt-20">
+				<div className="relative flex justify-center mt-12">
 					<motion.div
 						initial={{ y: 0 }}
 						animate={{ y: [0, -10, 0] }}

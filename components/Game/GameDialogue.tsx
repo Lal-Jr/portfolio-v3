@@ -11,15 +11,16 @@ export default function GameDialogue({ scrollYProgress }: GameDialogueProps) {
   const [currentText, setCurrentText] = useState("");
   const [displayedText, setDisplayedText] = useState("");
 
-  // Section dialogues
+  // Section dialogues - equal 15% spacing
   const dialogues = [
-    { range: [0, 0.15], text: "WELCOME, TRAVELER... YOUR JOURNEY BEGINS..." },
-    { range: [0.15, 0.30], text: "CHAPTER 1: BIO - DISCOVERING THE ORIGINS..." },
-    { range: [0.30, 0.45], text: "CHAPTER 2: LOGS - TRACKING THE MILESTONES..." },
-    { range: [0.45, 0.60], text: "CHAPTER 3: TECH - ENTERING THE DEV_VERSE..." },
-    { range: [0.60, 0.75], text: "CHAPTER 4: FOCUS - FINDING STABILITY..." },
-    { range: [0.75, 0.90], text: "CHAPTER 5: SKILLS - LEVELING UP..." },
-    { range: [0.90, 1.0], text: "CHAPTER 6: COMM - SEIZING OPPORTUNITY..." },
+    { range: [0, 0.10], text: "WELCOME, TRAVELER... INITIALIZING..." },
+    { range: [0.10, 0.20], text: "EXPLORE THE GRID... CHOOSE YOUR PATH..." },
+    { range: [0.20, 0.25], text: "LOADING CHAPTER..." },
+    { range: [0.25, 0.40], text: "CHAPTER 1: ABOUT - MEET THE HERO..." },
+    { range: [0.40, 0.55], text: "CHAPTER 2: EXPERIENCE - THE JOURNEY SO FAR..." },
+    { range: [0.55, 0.70], text: "CHAPTER 3: ARSENAL - TOOLS OF THE TRADE..." },
+    { range: [0.70, 0.85], text: "CHAPTER 4: PROJECTS - BATTLE ACHIEVEMENTS..." },
+    { range: [0.85, 1.0], text: "CHAPTER 5: ASPIRATIONS - FUTURE QUESTS..." },
   ];
 
   // Determine current dialogue based on scroll
@@ -47,8 +48,8 @@ export default function GameDialogue({ scrollYProgress }: GameDialogueProps) {
     }
   }, [currentText, displayedText]);
 
-  // Show/hide based on scroll
-  const opacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
+  // Show/hide based on scroll - keep visible until end
+  const opacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
   const barHeight = useTransform(scrollYProgress, [0, 0.05], ["0vh", "12vh"]);
 
   return (

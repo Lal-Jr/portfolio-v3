@@ -21,6 +21,11 @@ import { AVATARS } from "@/constants";
 import ZoomPanel from "./ZoomPanel";
 import { motion, MotionValue, useTransform } from "framer-motion";
 import AboutMeSelection from "./AboutMeSelection";
+import GameCTA from "./Game/GameCTA";
+import PixelRoadmap from "./PixelRoadmap";
+import ComicAresenal from "./ComicAresenal";
+import PixelShelf from "./PixelShelf";
+import AspirationWall from "./AspirationWall";
 
 // --- SORTABLE ITEM COMPONENT ---
 function SortablePanel({
@@ -175,13 +180,12 @@ export default function ContentGrid({
 		})
 	);
 
-	// Grid appearance
-	const gridOpacity = useTransform(scrollYProgress, [0.2, 0.25], [0, 1]);
+	// Grid appearance - 10-20%
+	const gridOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.18, 0.22], [0, 1, 1, 0]);
 
-	// Zoom interaction for the first panel (index 0)
-	// Triggers after the grid has fully appeared (0.25)
-	const zoomStart = 0.35;
-	const zoomEnd = 0.55;
+	// Zoom interaction for the first panel - 20-25%
+	const zoomStart = 0.20;
+	const zoomEnd = 0.25;
 
 	// Drastically increased scale to ensure it covers the viewport
 	const firstPanelScale = useTransform(scrollYProgress, [zoomStart, zoomEnd], [1, 25]);
@@ -193,10 +197,9 @@ export default function ContentGrid({
 	// Fade out other panels
 	const otherPanelsOpacity = useTransform(scrollYProgress, [zoomStart, 0.45], [1, 0]);
 
-	// AboutMe Selection Transition
-	// Starts showing up as the zoom completes
-	const aboutMeOpacity = useTransform(scrollYProgress, [0.55, 0.65], [0, 1]);
-	const aboutMePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.6 ? "auto" : "none"));
+	// AboutMe Selection - 25-40% (15% space)
+	const aboutMeOpacity = useTransform(scrollYProgress, [0.23, 0.27, 0.38, 0.42], [0, 1, 1, 0]);
+	const aboutMePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.25 && v < 0.40 ? "auto" : "none"));
 	
 	// Fade out ZoomPanel content as the AboutMe section appears
 	const contentOpacity = useTransform(scrollYProgress, [0.55, 0.65], [1, 0]);
@@ -273,6 +276,61 @@ export default function ContentGrid({
                    I will add the component usage here.
                 */}
 				<AboutMeSelection />
+			</motion.div>
+
+			{/* Roadmap Overlay - 40-55% (15% space) */}
+			<motion.div 
+				style={{ 
+					opacity: useTransform(scrollYProgress, [0.38, 0.42, 0.53, 0.57], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.40 && v < 0.55 ? "auto" : "none")) as any
+				}}
+				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
+			>
+				<PixelRoadmap />
+			</motion.div>
+
+			{/* Arsenal Overlay - 55-70% (15% space) */}
+			<motion.div 
+				style={{ 
+					opacity: useTransform(scrollYProgress, [0.53, 0.57, 0.68, 0.72], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.55 && v < 0.70 ? "auto" : "none")) as any
+				}}
+				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
+			>
+				<ComicAresenal />
+			</motion.div>
+
+			{/* Shelf Overlay - 70-85% (15% space) */}
+			<motion.div 
+				style={{ 
+					opacity: useTransform(scrollYProgress, [0.68, 0.72, 0.83, 0.87], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.70 && v < 0.85 ? "auto" : "none")) as any
+				}}
+				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
+			>
+				<PixelShelf />
+			</motion.div>
+
+			{/* Aspiration Wall Overlay - 85-100% (15% space) */}
+			<motion.div 
+				style={{ 
+					opacity: useTransform(scrollYProgress, [0.83, 0.87, 0.98, 1.0], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.85 && v < 1.0 ? "auto" : "none")) as any
+				}}
+				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
+			>
+				<AspirationWall />
+			</motion.div>
+
+			{/* CTA Selection Overlay - Always visible at 100% */}
+			<motion.div 
+				style={{ 
+					opacity: useTransform(scrollYProgress, [0.98, 1.0], [0, 1]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v >= 0.99 ? "auto" : "none")) as any
+				}}
+				className="absolute inset-0 z-50 flex items-center justify-center"
+			>
+				<GameCTA />
 			</motion.div>
 		</div>
 	);

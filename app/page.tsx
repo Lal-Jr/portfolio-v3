@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { useScroll } from "framer-motion";
+import { useScroll, motion, useTransform } from "framer-motion";
 
 import WrapperOverlay from "@/components/WrapperOverlay";
 import ContentGrid from "@/components/ContentGrid";
