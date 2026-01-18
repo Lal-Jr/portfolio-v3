@@ -1,14 +1,16 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useScroll } from "framer-motion";
 
 import WrapperOverlay from "@/components/WrapperOverlay";
 import ContentGrid from "@/components/ContentGrid";
-import BlackOverlay from "@/components/BlackOverlay";
 import PacmanLoader from "@/components/Loader";
+import GameScene from "@/components/Game/GameScene";
+import GameDialogue from "@/components/Game/GameDialogue";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
 	const { scrollYProgress } = useScroll({
 		target: containerRef,
@@ -16,11 +18,20 @@ export default function Home() {
 	});
 
 	return (
-		<div ref={containerRef} className="relative h-[1200vh] w-full">
-			<PacmanLoader />
+		<div ref={containerRef} className="relative h-[800vh] w-full" style={{ scrollBehavior: 'smooth' }}>
+			<PacmanLoader onComplete={() => setIsLoaded(true)} />
+            
+            {/* Game background layer */}
+            <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+                <GameScene scrollYProgress={scrollYProgress} />
+            </div>
+            
+            {/* Content layers */}
 			<WrapperOverlay scrollYProgress={scrollYProgress} />
 			<ContentGrid scrollYProgress={scrollYProgress} />
-			<BlackOverlay scrollYProgress={scrollYProgress} />
+            
+            {/* Dialogue overlay on top */}
+            <GameDialogue scrollYProgress={scrollYProgress} />
 		</div>
 	);
 }
