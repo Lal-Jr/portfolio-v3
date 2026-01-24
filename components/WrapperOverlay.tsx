@@ -11,17 +11,17 @@ export default function WrapperOverlay({
 	// 1. Cinematic "Curtain" Lift - Softer and more theatrical than heavy doors
 	const topY = useTransform(
 		scrollYProgress,
-		[0, 0.15, 0.3],
-		["0%", "0%", "-100%"]
+		[0.05, 0.2],
+		["0%", "-100%"]
 	);
 	const bottomY = useTransform(
 		scrollYProgress,
-		[0, 0.15, 0.3],
-		["0%", "0%", "100%"]
+		[0.05, 0.2],
+		["0%", "100%"]
 	);
 
 	// Smoothly fade out the text elements before the panels finish moving
-	const contentOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+	const contentOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
 	return (
 		<div className="fixed inset-0 z-[300] pointer-events-none overflow-hidden font-['Press_Start_2P']">

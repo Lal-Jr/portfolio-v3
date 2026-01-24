@@ -9,20 +9,20 @@ export default function BlackOverlay({ scrollYProgress }: BlackOverlayProps) {
 	// 1. UI Transition Logic
 	const barHeight = useTransform(
 		scrollYProgress,
-		[0.28, 0.32, 0.45, 0.52],
+		[0.30, 0.34, 0.45, 0.52],
 		["0vh", "12vh", "12vh", "0vh"]
 	);
 
 	const contentOpacity = useTransform(
 		scrollYProgress,
-		[0.32, 0.35, 0.45, 0.5],
+		[0.34, 0.37, 0.45, 0.5],
 		[0, 1, 1, 0]
 	);
 
 	// Narrative Text for Bottom Bar
 	const storyText = useTransform(
 		scrollYProgress,
-		[0.32, 0.38, 0.44],
+		[0.34, 0.40, 0.44],
 		[
 			"THE SURFACE ONLY REVEALS SO MUCH...",
 			"TO UNDERSTAND THE ARCHITECT...",
@@ -57,7 +57,7 @@ export default function BlackOverlay({ scrollYProgress }: BlackOverlayProps) {
 						style={{
 							width: useTransform(
 								scrollYProgress,
-								[0.3, 0.48],
+								[0.30, 0.48],
 								["0%", "100%"]
 							),
 						}}

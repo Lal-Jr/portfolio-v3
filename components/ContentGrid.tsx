@@ -85,8 +85,8 @@ function SortablePanel({
 					isFirst && zoomProps
 						? { scale: zoomProps.scale, x: zoomProps.x, y: zoomProps.y }
 						: fadeProps
-						? { opacity: fadeProps.opacity }
-						: {}
+							? { opacity: fadeProps.opacity }
+							: {}
 				}
 				className={`
 					w-full h-full
@@ -94,24 +94,24 @@ function SortablePanel({
 					group relative border-2 border-zinc-800 bg-black overflow-hidden hover:border-white/40
 				`}
 			>
-			{/* --- TITLE & LABEL OVERLAY --- */}
-			<motion.div style={{ opacity: zoomProps?.contentOpacity || 1 }} className="absolute top-0 left-0 z-20 p-3 flex flex-col gap-1 pointer-events-none">
-				<span className="text-[10px] md:text-[12px] text-white bg-black/60 px-2 py-1 backdrop-blur-sm border-l-2 border-white/30">
-					{item.title}
-				</span>
-				<span className="text-[8px] md:text-[10px] text-zinc-400 bg-black/60 px-2 py-0.5 backdrop-blur-sm">
-					{item.desc}
-				</span>
-			</motion.div>
+				{/* --- TITLE & LABEL OVERLAY --- */}
+				<motion.div style={{ opacity: zoomProps?.contentOpacity || 1 }} className="absolute top-0 left-0 z-20 p-3 flex flex-col gap-1 pointer-events-none">
+					<span className="text-[10px] md:text-[12px] text-white bg-black/60 px-2 py-1 backdrop-blur-sm border-l-2 border-white/30">
+						{item.title}
+					</span>
+					<span className="text-[8px] md:text-[10px] text-zinc-400 bg-black/60 px-2 py-0.5 backdrop-blur-sm">
+						{item.desc}
+					</span>
+				</motion.div>
 
-			<ZoomPanel
-				{...item}
-				avatarSrc={item.avatar}
-				description={item.desc}
-				isTall={config.isTall}
-				contentOpacity={zoomProps?.contentOpacity}
-				scale={scale}
-			/>
+				<ZoomPanel
+					{...item}
+					avatarSrc={item.avatar}
+					description={item.desc}
+					isTall={config.isTall}
+					contentOpacity={zoomProps?.contentOpacity}
+					scale={scale}
+				/>
 
 				{/* Visual drag handle hint */}
 				<div className="absolute top-2 right-2 text-[10px] text-zinc-600 group-hover:text-white opacity-0 group-hover:opacity-100 transition-opacity z-20">
@@ -181,26 +181,26 @@ export default function ContentGrid({
 	);
 
 	// Grid appearance - 10-20%
-	const gridOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.18, 0.22], [0, 1, 1, 0]);
+	const gridOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.28, 0.32], [0, 1, 1, 0]);
 
-	// Zoom interaction for the first panel - 20-25%
-	const zoomStart = 0.20;
-	const zoomEnd = 0.25;
+	// Zoom interaction for the first panel - STARTS LATER NOW (0.30)
+	const zoomStart = 0.30;
+	const zoomEnd = 0.38;
 
 	// Drastically increased scale to ensure it covers the viewport
 	const firstPanelScale = useTransform(scrollYProgress, [zoomStart, zoomEnd], [1, 25]);
-	
+
 	// Center the panel
 	const firstPanelX = useTransform(scrollYProgress, [zoomStart, zoomEnd], ["0%", "50%"]);
 	const firstPanelY = useTransform(scrollYProgress, [zoomStart, zoomEnd], ["0%", "15%"]);
 
 	// Fade out other panels
-	const otherPanelsOpacity = useTransform(scrollYProgress, [zoomStart, 0.45], [1, 0]);
+	const otherPanelsOpacity = useTransform(scrollYProgress, [zoomStart, 0.55], [1, 0]);
 
-	// AboutMe Selection - 25-40% (15% space)
-	const aboutMeOpacity = useTransform(scrollYProgress, [0.23, 0.27, 0.38, 0.42], [0, 1, 1, 0]);
-	const aboutMePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.25 && v < 0.40 ? "auto" : "none"));
-	
+	// AboutMe Selection - 38-52% (14% space)
+	const aboutMeOpacity = useTransform(scrollYProgress, [0.38, 0.42, 0.48, 0.52], [0, 1, 1, 0]);
+	const aboutMePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.40 && v < 0.50 ? "auto" : "none"));
+
 	// Fade out ZoomPanel content as the AboutMe section appears
 	const contentOpacity = useTransform(scrollYProgress, [0.55, 0.65], [1, 0]);
 
@@ -226,7 +226,7 @@ export default function ContentGrid({
 					backgroundSize: "60px 60px",
 				}}
 			/>
-			
+
 			<motion.div
 				style={{ opacity: gridOpacity }}
 				className="w-full max-w-7xl relative"
@@ -263,7 +263,7 @@ export default function ContentGrid({
 			</motion.div>
 
 			{/* About Me Selection Overlay */}
-			<motion.div 
+			<motion.div
 				style={{ opacity: aboutMeOpacity, pointerEvents: aboutMePointerEvents as any }}
 				className="absolute inset-0 z-50 flex items-center justify-center"
 			>
@@ -278,44 +278,44 @@ export default function ContentGrid({
 				<AboutMeSelection />
 			</motion.div>
 
-			{/* Roadmap Overlay - 40-55% (15% space) */}
-			<motion.div 
-				style={{ 
-					opacity: useTransform(scrollYProgress, [0.38, 0.42, 0.53, 0.57], [0, 1, 1, 0]),
-					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.40 && v < 0.55 ? "auto" : "none")) as any
+			{/* Roadmap Overlay - 52-64% (12% space) */}
+			<motion.div
+				style={{
+					opacity: useTransform(scrollYProgress, [0.52, 0.56, 0.60, 0.64], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.54 && v < 0.62 ? "auto" : "none")) as any
 				}}
 				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
 			>
 				<PixelRoadmap />
 			</motion.div>
 
-			{/* Arsenal Overlay - 55-70% (15% space) */}
-			<motion.div 
-				style={{ 
-					opacity: useTransform(scrollYProgress, [0.53, 0.57, 0.68, 0.72], [0, 1, 1, 0]),
-					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.55 && v < 0.70 ? "auto" : "none")) as any
+			{/* Arsenal Overlay - 64-76% (12% space) */}
+			<motion.div
+				style={{
+					opacity: useTransform(scrollYProgress, [0.64, 0.68, 0.72, 0.76], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.66 && v < 0.74 ? "auto" : "none")) as any
 				}}
 				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
 			>
 				<ComicAresenal />
 			</motion.div>
 
-			{/* Shelf Overlay - 70-85% (15% space) */}
-			<motion.div 
-				style={{ 
-					opacity: useTransform(scrollYProgress, [0.68, 0.72, 0.83, 0.87], [0, 1, 1, 0]),
-					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.70 && v < 0.85 ? "auto" : "none")) as any
+			{/* Shelf Overlay - 76-88% (12% space) */}
+			<motion.div
+				style={{
+					opacity: useTransform(scrollYProgress, [0.76, 0.80, 0.84, 0.88], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.78 && v < 0.86 ? "auto" : "none")) as any
 				}}
 				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
 			>
 				<PixelShelf />
 			</motion.div>
 
-			{/* Aspiration Wall Overlay - 85-100% (15% space) */}
-			<motion.div 
-				style={{ 
-					opacity: useTransform(scrollYProgress, [0.83, 0.87, 0.98, 1.0], [0, 1, 1, 0]),
-					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.85 && v < 1.0 ? "auto" : "none")) as any
+			{/* Aspiration Wall Overlay - 88-100% (12% space) */}
+			<motion.div
+				style={{
+					opacity: useTransform(scrollYProgress, [0.88, 0.92, 0.96, 1.0], [0, 1, 1, 0]),
+					pointerEvents: useTransform(scrollYProgress, (v) => (v > 0.90 && v < 1.0 ? "auto" : "none")) as any
 				}}
 				className="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto"
 			>
@@ -323,8 +323,8 @@ export default function ContentGrid({
 			</motion.div>
 
 			{/* CTA Selection Overlay - Always visible at 100% */}
-			<motion.div 
-				style={{ 
+			<motion.div
+				style={{
 					opacity: useTransform(scrollYProgress, [0.98, 1.0], [0, 1]),
 					pointerEvents: useTransform(scrollYProgress, (v) => (v >= 0.99 ? "auto" : "none")) as any
 				}}
