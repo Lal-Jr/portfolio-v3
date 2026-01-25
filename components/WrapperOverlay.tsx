@@ -12,16 +12,30 @@ export default function WrapperOverlay({
 	const topY = useTransform(
 		scrollYProgress,
 		[0.05, 0.2],
-		["0%", "-100%"]
+		["0%", "-85%"]
 	);
 	const bottomY = useTransform(
 		scrollYProgress,
 		[0.05, 0.2],
-		["0%", "100%"]
+		["0%", "85%"]
 	);
 
 	// Smoothly fade out the text elements before the panels finish moving
 	const contentOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+
+	// NEW: Bottom Bar Content Opacity (Stars appearing at 0.30)
+	const bottomBarContentOpacity = useTransform(scrollYProgress, [0.30, 0.35, 0.45, 0.5], [0, 1, 1, 0]);
+
+	// Narrative Text for Bottom Bar
+	const storyText = useTransform(
+		scrollYProgress,
+		[0.34, 0.40, 0.44],
+		[
+			"THE SURFACE ONLY REVEALS SO MUCH...",
+			"TO UNDERSTAND THE ARCHITECT...",
+			"WE MUST GO DEEPER.",
+		]
+	);
 
 	return (
 		<div className="fixed inset-0 z-[300] pointer-events-none overflow-hidden font-['Press_Start_2P']">
@@ -60,6 +74,31 @@ export default function WrapperOverlay({
 						The Hero's Journey
 					</h2>
 					<div className="mt-4 w-24 h-[1px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mx-auto" />
+				</motion.div>
+
+				{/* NEW: Story Content that appears later */}
+				<motion.div
+					style={{ opacity: bottomBarContentOpacity }}
+					className="absolute top-10 w-full flex flex-col items-center justify-center px-10"
+				>
+					{/* Story Text */}
+					<motion.p className="text-white text-[10px] md:text-xs text-center max-w-2xl leading-loose uppercase tracking-wide">
+						{storyText}
+					</motion.p>
+
+					{/* RPG Progress Bar (The Sync) */}
+					<div className="mt-4 w-48 h-1 bg-zinc-800 relative">
+						<motion.div
+							style={{
+								width: useTransform(
+									scrollYProgress,
+									[0.30, 0.48],
+									["0%", "100%"]
+								),
+							}}
+							className="h-full bg-red-600"
+						/>
+					</div>
 				</motion.div>
 
 				{/* Subtle Corner Accents */}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, Inter } from "next/font/google";
+import { Press_Start_2P, Inter, Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 import LoadingProvider from "@/components/LoadingProvider";
 
@@ -12,6 +12,16 @@ const pressStart = Press_Start_2P({
 const inter = Inter({
 	subsets: ["latin"],
 	variable: "--font-inter",
+});
+
+const outfit = Outfit({
+	subsets: ["latin"],
+	variable: "--font-outfit",
+});
+
+const caveat = Caveat({
+	subsets: ["latin"],
+	variable: "--font-caveat",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +37,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className="h-full">
 			<body
-				className={`${pressStart.variable} ${inter.variable} 
+				className={`${pressStart.variable} ${inter.variable} ${outfit.variable} ${caveat.variable} 
                 bg-rpg-background bg-opacity-20 font-sans antialiased text-rpg-black
                 min-h-screen max-w-[100vw] overflow-x-hidden`}
 			>

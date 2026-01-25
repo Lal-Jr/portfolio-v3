@@ -3,6 +3,11 @@ import type { Config } from "tailwindcss";
 const config: Config = {
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ["var(--font-outfit)", "var(--font-inter)", "sans-serif"],
+				handwriting: ["var(--font-caveat)", "cursive"],
+				pixel: ["var(--font-press-start)", "monospace"],
+			},
 			keyframes: {
 				"pacman-top": {
 					"0%, 100%": { transform: "rotate(-45deg)" },
