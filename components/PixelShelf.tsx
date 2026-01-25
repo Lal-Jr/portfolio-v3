@@ -1,168 +1,290 @@
-"use client";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { useRef, useState } from "react";
+
+// --- DECORATIVE STARBURST ---
+const Starburst = ({ className = "", color = "#DD5E25" }: { className?: string; color?: string }) => (
+	<motion.div
+		initial={{ scale: 0, rotate: -45 }}
+		animate={{ scale: 1, rotate: 0 }}
+		exit={{ scale: 0, rotate: 45 }}
+		className={`absolute pointer-events-none ${className}`}
+	>
+		<svg viewBox="0 0 100 100" className="w-16 h-16 md:w-24 md:h-24">
+			<motion.path
+				d="M50 0 L60 35 L95 25 L75 55 L100 80 L65 75 L50 100 L35 75 L0 80 L25 55 L5 25 L40 35 Z"
+				fill={color}
+				stroke="white"
+				strokeWidth="2"
+				strokeLinejoin="round"
+				animate={{ scale: [1, 1.1, 1] }}
+				transition={{ duration: 2, repeat: Infinity }}
+			/>
+			<text x="50" y="55" fontSize="12" fontWeight="bold" fill="white" textAnchor="middle" className="font-['Press_Start_2P'] uppercase">POP!</text>
+		</svg>
+	</motion.div>
+);
+
+// --- PIXEL GAME LABEL ---
+const PixelLabel = ({ text, className = "" }: { text: string; className?: string }) => (
+	<motion.div
+		initial={{ y: 20, opacity: 0 }}
+		animate={{ y: 0, opacity: 1 }}
+		exit={{ y: -20, opacity: 0 }}
+		className={`bg-white text-black px-2 py-1 font-['Press_Start_2P'] text-[8px] border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${className}`}
+	>
+		{text}
+	</motion.div>
+);
 
 const projects = [
 	{
 		id: 1,
-		title: "Neural-Link",
+		title: "THE INTERFACE THAT SEES BEYOND THE VOID",
 		year: "2024",
+		category: "AI & Data Science",
 		tech: ["Next.js", "PyTorch"],
-		color: "bg-red-600",
-		icon: "🧠",
-		desc: "A DEEP-LEARNING INTERFACE FOR REAL-TIME DATA VISUALIZATION.",
+		color: "#DD5E25",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "10m read",
+		liveUrl: "#",
+		githubUrl: "#",
 	},
 	{
 		id: 2,
-		title: "Pixel-Shop",
+		title: "A GATEWAY TO DIMENSIONAL ARTIFACTS",
 		year: "2023",
+		category: "E-Commerce & 3D",
 		tech: ["React", "Three.js"],
-		color: "bg-emerald-500",
-		icon: "🛒",
-		desc: "IMMERSIVE 3D E-COMMERCE EXPERIENCE FOR DIGITAL ASSETS.",
+		color: "#10b981",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "5m read",
+		liveUrl: "#",
+		githubUrl: "#",
 	},
 	{
 		id: 3,
-		title: "Grid-OS",
+		title: "HARNESSING THE PULSE OF THE MACHINE",
 		year: "2024",
+		category: "Systems & Monitoring",
 		tech: ["Rust", "Wasm"],
-		color: "bg-orange-500",
-		icon: "📟",
-		desc: "LOW-LEVEL SYSTEM MONITORING DASHBOARD BUILT FOR WEB.",
+		color: "#3b82f6",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "8m read",
+		liveUrl: "#",
+		githubUrl: "#",
 	},
 	{
 		id: 4,
-		title: "Echo-Base",
+		title: "WHERE FRAGMENTS OF THOUGHT ALIGN",
 		year: "2022",
+		category: "Collaboration Tool",
 		tech: ["Node", "Redis"],
-		color: "bg-blue-500",
-		icon: "📡",
-		desc: "REAL-TIME COLLABORATIVE WORKSPACE FOR TEAMS.",
+		color: "#a855f7",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "6m read",
+		liveUrl: "#",
+		githubUrl: "#",
 	},
 ];
 
 export default function PixelProjectShelf() {
-	const [selectedProject, setSelectedProject] = useState(null);
+	return (
+		<div className="w-full bg-transparent py-14 px-6 overflow-visible">
+			<div className="max-w-4xl mx-auto space-y-20">
+				{projects.map((proj, index) => (
+					<ProjectItem key={proj.id} proj={proj} index={index} />
+				))}
+			</div>
+
+			{/* MORE IN THE WORKS SECTION */}
+			<div className="mt-24 flex flex-col items-center justify-center font-['var(--font-caveat)'] text-white">
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true }}
+					className="relative flex flex-col items-center group"
+				>
+					{/* Hand-drawn Pencil Icon */}
+					<div className="relative mb-4">
+						<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
+							<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+							<path d="M15 5l4 4" />
+						</svg>
+						{/* Wavy line underneath based on reference */}
+						<motion.svg
+							width="80" height="20" viewBox="0 0 80 20"
+							className="absolute -bottom-2 -left-8 text-white/20"
+						>
+							<motion.path
+								d="M0 10 Q 20 0, 40 10 T 80 10"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								initial={{ pathLength: 0 }}
+								whileInView={{ pathLength: 1 }}
+								transition={{ duration: 1, delay: 0.5 }}
+							/>
+						</motion.svg>
+					</div>
+
+					<h4 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
+						with more in the works
+					</h4>
+
+					{/* Action Lines (Speed lines from ref) */}
+					<div className="absolute -left-16 top-1/2 -translate-y-1/2 flex flex-col gap-3 opacity-10">
+						<div className="w-10 h-0.5 bg-white transform -rotate-12" />
+						<div className="w-12 h-0.5 bg-white transform rotate-6" />
+						<div className="w-8 h-0.5 bg-white transform -rotate-3" />
+					</div>
+
+					<a
+						href="https://github.com/Lal-Jr"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="group/link relative px-8 py-3 rounded-full border-2 border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all flex items-center gap-3 text-2xl font-bold overflow-hidden"
+					>
+						<span className="relative z-10 text-white/60 group-hover/link:text-white transition-colors">
+							see all projects on github
+						</span>
+						<motion.div
+							className="absolute inset-0 bg-emerald-500/20 translate-y-full group-hover/link:translate-y-0 transition-transform duration-300"
+						/>
+					</a>
+				</motion.div>
+			</div>
+		</div>
+	);
+}
+
+function ProjectItem({ proj, index }: { proj: typeof projects[0]; index: number }) {
+	const [isHovered, setIsHovered] = useState(false);
+	const [isRead, setIsRead] = useState(false);
+	const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+	const containerRef = useRef<HTMLDivElement>(null);
+	const { scrollYProgress } = useScroll({
+		target: containerRef,
+		offset: ["start end", "end start"],
+	});
+
+	const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+	const rotate = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? -2 : 2, index % 2 === 0 ? 2 : -2]);
+
+	const handleMouseMove = (e: React.MouseEvent) => {
+		setMousePos({ x: e.clientX, y: e.clientY });
+	};
 
 	return (
-		<div className="w-full min-h-screen bg-[#0a0a0a] py-20 px-4 font-['Press_Start_2P'] text-white">
-			<div className="max-w-6xl mx-auto">
-				{/* --- HEADER (Matches Roadmap Style) --- */}
-				<div className="text-center mb-20">
-					<h2 className="text-2xl md:text-4xl mb-4 text-emerald-400 drop-shadow-[4px_4px_0px_#065f46]">
-						PROJECT_ARCHIVE
-					</h2>
-					<p className="text-[10px] text-zinc-500 tracking-[0.2em] uppercase">
-						-- Select a quest to view details --
-					</p>
+		<motion.div
+			ref={containerRef}
+			initial={{ opacity: 0 }}
+			whileInView={{ opacity: 1 }}
+			viewport={{ once: true, margin: "-100px" }}
+			transition={{ duration: 0.8 }}
+			onClick={() => setIsRead(true)}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+			onMouseMove={handleMouseMove}
+			className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+				} items-center gap-16 md:gap-24 relative group cursor-pointer py-10`}
+		>
+			{/* CURSOR FOLLOWING LABEL */}
+			<AnimatePresence>
+				{isHovered && !isRead && (
+					<motion.div
+						initial={{ opacity: 0, scale: 0.5 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.5 }}
+						className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
+						style={{
+							x: mousePos.x + 20,
+							y: mousePos.y + 20
+						}}
+					>
+						<PixelLabel text={proj.time} className="bg-yellow-400 text-black border-black whitespace-nowrap" />
+					</motion.div>
+				)}
+			</AnimatePresence>
+
+			{/* PROJECT CONTENT SECTION */}
+			<div className="w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300">
+				<div className="space-y-3">
+					<h3 className={`text-xl md:text-2xl lg:text-3xl font-['Press_Start_2P'] leading-tight uppercase transition-colors duration-300 ${isRead ? 'text-zinc-700' : 'text-white'}`}>
+						{proj.title}
+					</h3>
+					<div className="flex items-center gap-3 text-emerald-500/60 font-['Press_Start_2P'] text-[10px] md:text-[12px]">
+						<span>{proj.year}</span>
+						<span className="w-1.5 h-1.5 bg-emerald-500/40 rounded-none transform rotate-45" />
+						<span>{proj.category}</span>
+					</div>
 				</div>
 
-				{/* --- THE SHELF (Gamified Grid) --- */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-					{projects.map((proj) => (
-						<motion.div
-							key={proj.id}
-							whileHover={{ y: -10 }}
-							onClick={() => setSelectedProject(proj)}
-							className="group cursor-pointer"
-						>
-							{/* PROJECT CARD */}
-							<div className="relative p-4 bg-zinc-900 border-4 border-zinc-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group-hover:border-emerald-400 transition-colors">
-								{/* ICON BOX */}
-								<div
-									className={`${proj.color} w-full h-32 flex items-center justify-center border-4 border-black text-5xl mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}
-								>
-									{proj.icon}
-								</div>
-
-								<div className="text-[12px] text-emerald-400 mb-2 uppercase">
-									{proj.title}
-								</div>
-
-								<div className="flex justify-between items-center text-[8px] text-zinc-500 border-t border-zinc-800 pt-3">
-									<span>{proj.year}</span>
-									<span>LVL {proj.id}</span>
-								</div>
-							</div>
-						</motion.div>
-					))}
-				</div>
-
-				{/* --- MODAL (Retro Dialogue Box Style) --- */}
 				<AnimatePresence>
-					{selectedProject && (
-						<div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+					{isRead && (
+						<motion.div
+							initial={{ opacity: 0, x: -10 }}
+							animate={{ opacity: 1, x: 0 }}
+							className="text-emerald-500 font-['Press_Start_2P'] text-[10px] flex items-center gap-2"
+						>
+							<span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+							MEMORY_STOCKED
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</div>
+
+			{/* PROJECT IMAGE SECTION */}
+			<div className="w-full md:w-1/2 relative">
+				{/* Decorative Elements on Hover */}
+				<AnimatePresence>
+					{isHovered && !isRead && (
+						<>
+							<Starburst className={`-top-12 ${index % 2 === 0 ? "-right-12" : "-left-12"} z-50`} color={proj.color} />
+
+							<motion.div
+								initial={{ opacity: 0, scale: 0 }}
+								animate={{ opacity: 1, scale: 1 }}
+								exit={{ opacity: 0, scale: 0 }}
+								className={`absolute ${index % 2 === 0 ? "-top-12 -left-8" : "-top-12 -right-8"} z-50`}
+							>
+								<PixelLabel text={`LEVEL ${proj.id}`} className="bg-emerald-500 text-white" />
+							</motion.div>
+						</>
+					)}
+				</AnimatePresence>
+
+				<motion.div
+					style={{ y, rotate }}
+					className={`relative aspect-[4/3] w-full bg-zinc-900 border-[12px] ${isHovered && !isRead ? 'border-emerald-500 shadow-[0_0_50px_rgba(16,185,129,0.2)]' : 'border-zinc-800'} rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-500 ${isRead ? 'opacity-20 grayscale scale-95' : ''}`}
+				>
+					{/* Static Image / GIF Switch */}
+					<Image
+						src={isHovered && !isRead ? proj.gif : proj.image}
+						alt={proj.title}
+						fill
+						className={`object-cover transition-all duration-700 ${isHovered && !isRead ? 'scale-100' : 'scale-110'}`}
+					/>
+
+					{/* Hover Overlay */}
+					<AnimatePresence>
+						{isHovered && !isRead && (
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								onClick={() => setSelectedProject(null)}
-								className="absolute inset-0 bg-black/90 backdrop-blur-sm"
-							/>
-
-							<motion.div
-								initial={{ scale: 0.8, opacity: 0 }}
-								animate={{ scale: 1, opacity: 1 }}
-								exit={{ scale: 0.8, opacity: 0 }}
-								className="relative w-full max-w-2xl bg-slate-900 border-4 border-white p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] z-10"
+								className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 via-transparent to-transparent flex flex-col justify-end p-8"
 							>
-								{/* CLOSE BUTTON */}
-								<button
-									onClick={() => setSelectedProject(null)}
-									className="absolute -top-4 -right-4 bg-red-600 border-4 border-black px-2 py-1 text-[10px]"
-								>
-									X
-								</button>
-
-								<div className="flex flex-col md:flex-row gap-8">
-									{/* MODAL LEFT: ICON */}
-									<div
-										className={`${selectedProject.color} w-32 h-32 shrink-0 flex items-center justify-center border-4 border-black text-6xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}
-									>
-										{selectedProject.icon}
-									</div>
-
-									{/* MODAL RIGHT: INFO */}
-									<div className="flex-1">
-										<h3 className="text-xl text-yellow-400 mb-4 uppercase italic">
-											{selectedProject.title}
-										</h3>
-										<p className="text-[10px] leading-loose text-zinc-300 mb-6">
-											{selectedProject.desc}
-										</p>
-
-										<div className="flex flex-wrap gap-3 mb-8">
-											{selectedProject.tech.map((t) => (
-												<span
-													key={t}
-													className="text-[8px] bg-black border border-zinc-600 px-2 py-1 text-emerald-400"
-												>
-													{t}
-												</span>
-											))}
-										</div>
-
-										<div className="flex gap-4">
-											<button className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-black border-4 border-black px-4 py-3 text-[10px] transition-colors">
-												START_MISSION
-											</button>
-											<button className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white border-4 border-black px-4 py-3 text-[10px] transition-colors">
-												VIEW_CODE
-											</button>
-										</div>
-									</div>
-								</div>
-
-								{/* FOOTER DECORATION */}
-								<div className="mt-8 pt-4 border-t-2 border-dashed border-zinc-700 flex justify-between text-[8px] text-zinc-500">
-									<span>ID: 00{selectedProject.id}</span>
-									<span>STATUS: COMPLETED</span>
-								</div>
+								<span className="font-['Press_Start_2P'] text-[10px] text-white opacity-80 animate-pulse">EXTRACTING_DATA...</span>
 							</motion.div>
-						</div>
-					)}
-				</AnimatePresence>
+						)}
+					</AnimatePresence>
+				</motion.div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }

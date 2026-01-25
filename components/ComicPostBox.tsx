@@ -1,205 +1,155 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Instagram, Linkedin, Download, Mail } from "lucide-react";
+import { FileText, Copy, Check } from "lucide-react";
+import Image from "next/image";
 
-const socials = [
-	{
-		icon: <Github size={20} />,
-		label: "GITHUB",
-		color: "bg-zinc-800",
-		url: "https://github.com",
-	},
-	{
-		icon: <Instagram size={20} />,
-		label: "INSTA",
-		color: "bg-rose-500",
-		url: "https://instagram.com",
-	},
-	{
-		icon: <Linkedin size={20} />,
-		label: "LINKED",
-		color: "bg-blue-600",
-		url: "https://linkedin.com",
-	},
-];
+const ComicPostBox = () => {
+	const [copied, setCopied] = useState(false);
+	const email = "arjragh@iu.edu";
 
-const PixelCTA = () => {
-	const [isActive, setIsActive] = useState(false);
+	const copyToClipboard = async () => {
+		try {
+			await navigator.clipboard.writeText(email);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		} catch (err) {
+			console.error("Failed to copy!", err);
+		}
+	};
 
 	return (
-		<div className="relative min-h-screen w-full bg-[#0a0a0a] overflow-hidden flex flex-col items-center justify-center p-8 border-t-8 border-white font-['Press_Start_2P'] text-white">
-			{/* 1. CRT SCANLINES (Must have pointer-events-none) */}
-			<div className="absolute inset-0 pointer-events-none z-[60] opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,118,0.06))] bg-[length:100%_2px,3px_100%]" />
+		<div className="relative min-h-[60vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10 font-['var(--font-caveat)'] text-white border-t-4 border-white/5">
+			<div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-			<div className="z-10 text-center mb-16 max-w-2xl">
-				<h2 className="text-2xl md:text-4xl uppercase leading-tight mb-4 drop-shadow-[4px_4px_0px_#dc2626]">
-					CONNECT_TO <br />
-					<span className="text-red-600">STATION_01</span>
-				</h2>
-			</div>
-
-			<div className="relative flex flex-col items-center">
-				{/* 2. FIXED SOCIAL DROPS (Adjusted position and z-index) */}
-				<div className="absolute -top-48 left-1/2 -translate-x-1/2 flex gap-4 z-20 w-max pointer-events-none">
-					<AnimatePresence>
-						{isActive &&
-							socials.map((social, i) => (
-								<motion.a
-									key={i}
-									href={social.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									initial={{ y: -50, opacity: 0, scale: 0 }}
-									animate={{ y: 0, opacity: 1, scale: 1 }}
-									exit={{ y: -20, opacity: 0, scale: 0 }}
-									transition={{
-										type: "spring",
-										stiffness: 260,
-										damping: 20,
-										delay: i * 0.1,
-									}}
-									className={`pointer-events-auto w-24 h-24 md:w-32 md:h-20 ${social.color} border-4 border-black p-2 flex flex-col items-center justify-center shadow-[6px_6px_0px_0px_white] hover:translate-y-[-5px] active:shadow-none active:translate-y-0 transition-all`}
-								>
-									{social.icon}
-									<span className="text-[8px] mt-3">
-										{social.label}
-									</span>
-								</motion.a>
-							))}
-					</AnimatePresence>
-				</div>
-
-				{/* 3. CLICKABLE TERMINAL BODY */}
-				<div
-					onClick={() => setIsActive(!isActive)}
-					className="relative w-64 h-80 z-10 cursor-pointer group"
-				>
-					{/* TERMINAL SCREEN */}
-					<div
-						className={`absolute top-0 left-0 w-full h-full border-8 bg-zinc-900 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center p-6 overflow-hidden transition-all duration-500 ${
-							isActive
-								? "border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]"
-								: "border-white hover:border-red-500"
-						}`}
-					>
-						<div
-							className={`w-full h-32 border-4 transition-colors duration-500 ${
-								isActive
-									? "border-emerald-500 bg-emerald-500/10"
-									: "border-zinc-800 bg-black"
-							} flex flex-col items-center justify-center mb-6 overflow-hidden relative`}
-						>
-							{isActive ? (
-								<motion.div
-									animate={{ opacity: [0.4, 1, 0.4] }}
-									transition={{
-										repeat: Infinity,
-										duration: 0.15,
-									}}
-									className="text-emerald-500 text-[10px] text-center px-2"
-								>
-									UPLINK_ON
-									<div className="text-[7px] mt-2 text-emerald-300/50">
-										RECIEVING_DATA...
-									</div>
-								</motion.div>
-							) : (
-								<Mail
-									className="text-zinc-800 group-hover:text-red-500 transition-colors"
-									size={48}
+				{/* LEFT COLUMN: PHILOSOPHY */}
+				<div className="flex flex-col space-y-8">
+					<div className="space-y-2">
+						<h3 className="text-2xl text-zinc-500 italic font-medium">My Philosophy</h3>
+						<div className="text-3xl md:text-4xl leading-relaxed font-bold tracking-tight">
+							In short, I'm someone who <br />
+							<span className="relative inline-block px-1">
+								<span className="relative z-10">enjoys working in messy,</span>
+								<motion.span
+									initial={{ scaleX: 0 }}
+									whileInView={{ scaleX: 1 }}
+									className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
+									transition={{ duration: 0.8, delay: 0.2 }}
 								/>
-							)}
-
-							{isActive && (
-								<div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(16,185,129,0.05)_2px,rgba(16,185,129,0.05)_4px)]" />
-							)}
-						</div>
-
-						{/* KEYPAD DETAIL */}
-						<div className="grid grid-cols-3 gap-2 w-full">
-							{[...Array(6)].map((_, i) => (
-								<div
-									key={i}
-									className={`h-4 border-2 transition-colors ${
-										isActive
-											? "bg-emerald-900 border-emerald-500"
-											: "bg-zinc-800 border-zinc-700"
-									}`}
+							</span>{" "}
+							<br />
+							<span className="relative inline-block px-1">
+								<span className="relative z-10">complex spaces</span>
+								<motion.span
+									initial={{ scaleX: 0 }}
+									whileInView={{ scaleX: 1 }}
+									className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 rotate-1 origin-left -z-0"
+									transition={{ duration: 0.8, delay: 0.4 }}
 								/>
-							))}
+							</span>{" "}
+							and making <br />
+							them clearer and more human.
 						</div>
-
-						{/* BOOT TEXT HINT */}
-						{!isActive && (
-							<motion.div
-								animate={{ opacity: [0, 1, 0] }}
-								transition={{ repeat: Infinity, duration: 2 }}
-								className="mt-4 text-[7px] text-zinc-500"
-							>
-								[ CLICK_TO_INIT ]
-							</motion.div>
-						)}
 					</div>
 
-					{/* OVERRIDE LEVER (THE FLAG) */}
-					<div className="absolute -right-16 top-1/2 -translate-y-1/2">
-						<div className="relative">
-							<div
-								className={`w-10 h-10 bg-zinc-800 border-4 flex items-center justify-center transition-colors ${
-									isActive
-										? "border-emerald-500"
-										: "border-white"
-								}`}
-							>
-								<motion.div
-									animate={{ rotate: isActive ? 180 : 0 }}
-									className={`w-1 h-10 border-2 border-black origin-center ${
-										isActive
-											? "bg-emerald-500"
-											: "bg-red-600"
-									}`}
-								/>
-							</div>
-						</div>
+					<div className="text-3xl md:text-3xl leading-relaxed font-bold tracking-tight opacity-90">
+						I do that by{" "}
+						<span className="relative inline-block px-1">
+							<span className="relative z-10">experimenting to</span>
+							<motion.span
+								initial={{ scaleX: 0 }}
+								whileInView={{ scaleX: 1 }}
+								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
+								transition={{ duration: 0.8, delay: 0.6 }}
+							/>
+						</span>{" "}
+						<br />
+						learn,{" "}
+						<span className="relative inline-block px-1">
+							<span className="relative z-10">shaping clear stories</span>
+							<motion.span
+								initial={{ scaleX: 0 }}
+								whileInView={{ scaleX: 1 }}
+								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 rotate-1 origin-left -z-0"
+								transition={{ duration: 0.8, delay: 0.8 }}
+							/>
+						</span>{" "}
+						<br />
+						that help people align, and <br />
+						<span className="relative inline-block px-1">
+							<span className="relative z-10">designing systems with care</span>
+							<motion.span
+								initial={{ scaleX: 0 }}
+								whileInView={{ scaleX: 1 }}
+								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
+								transition={{ duration: 0.8, delay: 1.0 }}
+							/>
+						</span>{" "}
+						<br />
+						for the small details that quietly <br />
+						shape how something feels.
 					</div>
 				</div>
 
-				{/* THE BASE */}
-				<div
-					className={`w-48 h-12 bg-zinc-900 border-x-8 border-b-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-colors duration-500 ${
-						isActive ? "border-emerald-500" : "border-white"
-					}`}
-				/>
-			</div>
+				{/* RIGHT COLUMN: AVATAR & ACTIONS */}
+				<div className="flex flex-col items-center relative gap-8">
+					{/* Speech Bubble */}
+					<div className="relative self-end mr-4 md:mr-12 mb-4">
+						<div className="absolute -top-6 left-4 text-zinc-500 text-xl font-medium">Arjun</div>
+						<div className="bg-blue-600 text-white rounded-[40px] px-8 py-4 text-2xl font-bold shadow-lg relative min-w-[280px] text-center">
+							If this made sense, let's chat!
+							{/* Bubble point */}
+							<div className="absolute -bottom-2 left-8 w-6 h-6 bg-blue-600 rotate-45 rounded-sm" />
+						</div>
+					</div>
 
-			{/* RESUME LOOT DROP */}
-			<div className="mt-20 h-24">
-				<AnimatePresence>
-					{isActive && (
-						<motion.a
+					{/* Avatar */}
+					<div className="relative w-full aspect-[4/5] max-w-[400px]">
+						<Image
+							src="/avatars/IMG_7730.PNG"
+							alt="Arjun Avatar"
+							fill
+							className="object-contain"
+							priority
+						/>
+					</div>
+
+					{/* Buttons Section */}
+					<div className="flex flex-col items-center gap-6 mt-4">
+						{/* Arrows decoration */}
+						<div className="flex gap-4 opacity-30">
+							<span className="text-2xl transform rotate-180">↑</span>
+							<span className="text-2xl transform rotate-180">↑</span>
+							<span className="text-2xl transform rotate-180">↑</span>
+						</div>
+
+						{/* Email Button */}
+						<div className="flex flex-col items-center gap-2">
+							<button
+								onClick={copyToClipboard}
+								className="group relative px-8 py-3 rounded-full border-2 border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all flex items-center gap-3 text-2xl font-bold"
+							>
+								{email}
+								{copied ? <Check className="text-green-500" size={24} /> : <Copy className="text-white/40 group-hover:text-white" size={24} />}
+							</button>
+							<span className="text-lg text-zinc-500 italic">tap to copy</span>
+						</div>
+
+						{/* Resume Button */}
+						<a
 							href="/resume.pdf"
 							download
-							initial={{ y: 20, opacity: 0 }}
-							animate={{ y: 0, opacity: 1 }}
-							exit={{ y: 20, opacity: 0 }}
-							className="flex items-center gap-4 px-8 py-5 bg-emerald-500 border-4 border-black text-black text-xs md:text-sm shadow-[8px_8px_0px_0px_white] hover:bg-emerald-400 hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all active:scale-95"
+							className="group px-10 py-4 rounded-full border-2 border-white bg-white text-black hover:bg-zinc-200 transition-all flex items-center gap-4 text-2xl font-bold shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-none hover:translate-x-1 hover:translate-y-1"
 						>
-							<Download size={20} />
-							GET_RESUME.EXE
-						</motion.a>
-					)}
-				</AnimatePresence>
-			</div>
-
-			{/* FOOTER SYMBOLS */}
-			<div className="absolute bottom-10 flex gap-10 opacity-20">
-				<span className="text-[10px]">VER: 2.0.26</span>
-				<span className="text-[10px]">© PLAYER_ONE</span>
-				<span className="text-[10px]">STATION: 7739</span>
+							<FileText size={28} />
+							My Resume
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
+
 	);
 };
 
-export default PixelCTA;
+export default ComicPostBox;

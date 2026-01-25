@@ -43,24 +43,7 @@ const ASPIRATIONS = [
 
 export default function PixelAspirationWall() {
 	return (
-		<section className="relative w-full bg-[#0a0a0a] flex flex-col items-center py-24 px-10 overflow-hidden border-t-8 border-white font-['Press_Start_2P']">
-			{/* CRT SCANLINES OVERLAY */}
-			<div className="absolute inset-0 pointer-events-none z-50 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,118,0.06))] bg-[length:100%_2px,3px_100%]" />
-
-			{/* HEADER AREA */}
-			<div className="relative mb-24 text-center">
-				<motion.div
-					animate={{ scale: [1, 1.05, 1] }}
-					transition={{ duration: 2, repeat: Infinity }}
-					className="absolute -inset-4 bg-red-600 border-4 border-black -rotate-2 -z-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-				/>
-				<h2 className="text-xl md:text-3xl uppercase px-8 py-4 bg-white text-black border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rotate-1">
-					SIDE_<span className="text-red-600">QUESTS</span>
-				</h2>
-				<p className="mt-8 text-[10px] text-zinc-500 tracking-widest">
-					-- ACTIVE OBJECTIVES --
-				</p>
-			</div>
+		<section className="relative w-full flex flex-col items-center py-12 px-10 overflow-hidden font-['Press_Start_2P']">
 
 			<div className="max-w-6xl w-full relative">
 				{/* Notes Grid */}
@@ -119,20 +102,6 @@ export default function PixelAspirationWall() {
 							</div>
 						</motion.div>
 					))}
-				</div>
-			</div>
-
-			{/* DECORATIVE TERMINAL ACCENT */}
-			<div className="mt-24 w-full max-w-4xl border-t-4 border-dashed border-zinc-800 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-				<div className="flex gap-4">
-					<div className="w-3 h-3 bg-red-600 animate-ping" />
-					<span className="text-[10px] text-zinc-500 uppercase tracking-tighter">
-						System.Sync: Active
-					</span>
-				</div>
-				<div className="text-[8px] text-zinc-700 max-w-xs text-center md:text-right">
-					ALL OBJECTIVES ARE SUBJECT TO PERSISTENT ITERATION AND
-					RESOURCE ALLOCATION.
 				</div>
 			</div>
 		</section>

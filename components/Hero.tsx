@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useState, useCallback } from "react";
 
 // Helper component for handwriting effect
 const HandwrittenText = ({ text, className = "" }: { text: string; className?: string }) => {
@@ -48,51 +49,123 @@ const HandwrittenText = ({ text, className = "" }: { text: string; className?: s
 const COMIC_PANELS = [
     {
         src: "/avatars/IMG_7735.PNG",
-        alt: "Coding",
+        alt: "Travel",
         color: "#FFD700", // Gold
-        story: "Engineering the future, one bug at a time.",
+        story: "Living life one SRK pose at a time.",
         rotate: -3,
     },
     {
         src: "/avatars/IMG_7733.PNG",
-        alt: "Creative",
+        alt: "Fun",
         color: "#FF69B4", // Hot Pink
-        story: "Dreaming up designs that actually work.",
+        story: "Attempting adulthood. Accidentally chose chaos.",
         rotate: 2,
     },
     {
         src: "/avatars/IMG_7734.PNG",
-        alt: "Chill",
+        alt: "Growth",
         color: "#8842ebff", // Violet
-        story: "Staying chill while the servers visualizing.",
+        story: "Excited for what’s next, learning as I go.",
         rotate: -2,
     },
     {
         src: "/avatars/IMG_7737.PNG",
-        alt: "Adventure",
+        alt: "Biking",
         color: "#4ade80", // Light Green
-        story: "Exploring new tech frontiers daily.",
+        story: "Two wheels, my kind of therapy.",
         rotate: 3,
     },
 ];
 
+// Custom SVG Comic Bubble Component
+const ComicBubble = ({ text, className = "" }: { text: string; className?: string }) => {
+    return (
+        <div className={`absolute -top-36 left-1/2 -translate-x-1/2 w-64 pointer-events-none z-50 transform scale-75 group-hover:scale-100 origin-bottom transition-all duration-500 opacity-0 group-hover:opacity-100 ${className}`}>
+            <div className="relative min-h-[140px] flex items-center justify-center p-6 px-10 pb-10">
+                {/* Shadow path (offset) */}
+                <svg
+                    viewBox="0 0 200 140"
+                    className="absolute inset-0 w-full h-full translate-x-1.5 translate-y-1.5"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="M15,25 C15,15 25,10 55,10 L145,10 C175,10 185,15 185,35 L190,85 C190,105 175,115 145,115 L115,115 L100,135 L85,115 L45,115 C15,115 10,105 10,75 Z"
+                        fill="black"
+                    />
+                </svg>
+
+                {/* Main bubble path */}
+                <svg
+                    viewBox="0 0 200 140"
+                    className="absolute inset-0 w-full h-full"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="M15,25 C15,15 25,10 55,10 L145,10 C175,10 185,15 185,35 L190,85 C190,105 175,115 145,115 L115,115 L100,135 L85,115 L45,115 C15,115 10,105 10,75 Z"
+                        fill="white"
+                        stroke="black"
+                        strokeWidth="4"
+                        strokeLinejoin="round"
+                    />
+                </svg>
+
+                {/* Text Content */}
+                <p className="relative z-10 font-handwriting font-bold text-lg md:text-xl leading-tight text-black text-center">
+                    {text}
+                </p>
+            </div>
+        </div>
+    );
+};
+
+
+
+// Comic Action Lines Component
+const ComicActionLines = () => {
+    const lines = Array.from({ length: 10 }).map((_, i) => ({
+        id: i,
+        angle: (i / 10) * 360 + (Math.random() - 0.5) * 30,
+        length: 80 + Math.random() * 40,
+        delay: Math.random() * 5,
+    }));
+
+    return (
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-visible flex items-center justify-center">
+            <svg className="w-[500px] h-[500px] absolute opacity-30" viewBox="0 0 100 100">
+                {lines.map((line) => (
+                    <motion.line
+                        key={line.id}
+                        x1="50"
+                        y1="50"
+                        x2={50 + Math.cos((line.angle * Math.PI) / 180) * line.length}
+                        y2={50 + Math.sin((line.angle * Math.PI) / 180) * line.length}
+                        stroke="#666666"
+                        strokeWidth="1"
+                        strokeDasharray="1 3"
+                        strokeLinecap="square"
+                        initial={{ pathLength: 1, opacity: 0 }}
+                        animate={{
+                            opacity: [0.1, 0.4, 0.1]
+                        }}
+                        transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            delay: line.delay,
+                            ease: "easeInOut",
+                        }}
+                    />
+                ))}
+            </svg>
+        </div>
+    );
+};
+
 export default function Hero() {
+
     return (
         <section
-            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#050505] text-white overflow-hidden px-4 py-20"
-            style={{
-                cursor: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w7.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z'></path><path d='m15 5 4 4'></path></svg>") 0 22, auto`
-            }}
+            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 py-20 select-none touch-none"
         >
-            {/* Grid Background */}
-            <div
-                className="absolute inset-0 opacity-20 pointer-events-none"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
-            />
 
             {/* Main Content */}
             <div className="z-20 w-full max-w-7xl flex flex-col items-center text-center space-y-8">
@@ -252,15 +325,7 @@ export default function Hero() {
                                 dragElastic={0.2}
                             >
                                 {/* Dialogue Bubble (Reveals on Hover) */}
-                                <div
-                                    className={`absolute -top-24 left-1/2 -translate-x-1/2 w-48 bg-white text-black p-3 rounded-2xl shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50 transform scale-75 group-hover:scale-100 origin-bottom`}
-                                >
-                                    <p className="font-handwriting font-bold text-lg leading-tight">
-                                        {panel.story}
-                                    </p>
-                                    {/* Tail */}
-                                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45" />
-                                </div>
+                                <ComicBubble text={panel.story} />
 
                                 {/* Comic Panel Frame */}
                                 <div
@@ -319,7 +384,7 @@ export default function Hero() {
                         initial="initial"
                         whileInView="animate"
                         style={{ x: "-50%", rotate: -6 }}
-                        className="absolute -top-16 left-1/2 z-20 flex flex-col items-center"
+                        className="absolute -top-12 left-1/2 z-20 flex flex-col items-center"
                     >
                         <HandwrittenText
                             text="Okay so... how do i do that?"
@@ -349,21 +414,25 @@ export default function Hero() {
                         </svg>
                     </motion.div>
 
-                    {/* Avatar Head */}
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 2, type: "spring" }}
-                        className="relative w-32 h-32 rounded-full border-4 border-white bg-zinc-800 overflow-hidden z-10 shadow-2xl"
-                    >
-                        {/* Using the "Chill" avatar which looks like a face/headshot */}
-                        <Image
-                            src="/avatars/IMG_7729.PNG"
-                            alt="Me"
-                            fill
-                            className="object-cover"
-                        />
-                    </motion.div>
+                    <div className="relative -mt-16">
+                        <ComicActionLines />
+                        {/* Avatar Head */}
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            whileInView={{ scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5, type: "spring" }}
+                            className="relative w-76 h-76 overflow-hidden z-10 shadow-2xl"
+                        >
+                            {/* Using the "Chill" avatar which looks like a face/headshot */}
+                            <Image
+                                src="/Headshot.PNG"
+                                alt="Me"
+                                fill
+                                className="object-cover"
+                            />
+                        </motion.div>
+                    </div>
 
                     {/* "Here's How" Text */}
                     <motion.h3
@@ -375,22 +444,44 @@ export default function Hero() {
                         Here&apos;s <span className="relative inline-block text-white">
                             how
                             {/* Thick Orange Underline */}
-                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#DD5E25]" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                <path d="M0 5 Q 50 12 100 5" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+                            <svg className="absolute w-full h-3 -bottom-1 left-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                {/* Outer Glow */}
+                                <motion.path
+                                    d="M0 5 Q 50 12 100 5"
+                                    stroke="#DD5E25"
+                                    strokeWidth="8"
+                                    strokeLinecap="round"
+                                    initial={{ pathLength: 0, opacity: 0 }}
+                                    animate={{
+                                        pathLength: 1,
+                                        opacity: [0.6, 1, 0.6],
+                                    }}
+                                    transition={{
+                                        duration: 1.2,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                    }}
+                                    style={{ filter: "blur(2px)" }}
+                                />
+                                {/* Inner Core */}
+                                <motion.path
+                                    d="M0 5 Q 50 12 100 5"
+                                    stroke="#DD5E25"
+                                    strokeWidth="3"
+                                    strokeLinecap="round"
+                                    initial={{ pathLength: 0 }}
+                                    animate={{ pathLength: 1 }}
+                                    transition={{
+                                        duration: 1.2,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                    }}
+                                />
                             </svg>
                         </span>
                     </motion.h3>
-
-                    {/* Down Arrow Indicator */}
-                    <motion.div
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ repeat: Infinity, duration: 2, delay: 3 }}
-                        className="mt-8 text-gray-500"
-                    >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
-                        </svg>
-                    </motion.div>
                 </motion.div>
             </div>
         </section>

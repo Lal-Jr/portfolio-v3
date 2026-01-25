@@ -1,7 +1,30 @@
 @import "tailwindcss";
 
 /* globals.css */
-/* @import url("https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap"); */
+
+* {
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-drag: none;
+	-webkit-user-drag: none;
+}
+
+*::selection {
+	background: transparent;
+	color: inherit;
+}
+
+*::-moz-selection {
+	background: transparent;
+	color: inherit;
+}
+
+img {
+	pointer-events: none;
+}
+
 
 .pixel-border {
 	border-style: solid;
