@@ -1,164 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useCallback } from "react";
-
-// Helper component for handwriting effect
-const HandwrittenText = ({ text, className = "" }: { text: string; className?: string }) => {
-    const characters = Array.from(text);
-
-    const containerVariants = {
-        initial: {},
-        animate: {
-            transition: {
-                staggerChildren: 0.05,
-            },
-        },
-    };
-
-    const characterVariants = {
-        initial: { opacity: 0, display: "none" },
-        animate: {
-            opacity: 1,
-            display: "inline",
-            transition: {
-                duration: 0.01,
-            },
-        },
-    };
-
-    return (
-        <motion.span
-            variants={containerVariants}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className={className}
-        >
-            {characters.map((char, index) => (
-                <motion.span key={index} variants={characterVariants}>
-                    {char}
-                </motion.span>
-            ))}
-        </motion.span>
-    );
-};
-
-// Comic Panel Data
-const COMIC_PANELS = [
-    {
-        src: "/avatars/IMG_7735.PNG",
-        alt: "Travel",
-        color: "#FFD700", // Gold
-        story: "Living life one SRK pose at a time.",
-        rotate: -3,
-    },
-    {
-        src: "/avatars/IMG_7733.PNG",
-        alt: "Fun",
-        color: "#FF69B4", // Hot Pink
-        story: "Attempting adulthood. Accidentally chose chaos.",
-        rotate: 2,
-    },
-    {
-        src: "/avatars/IMG_7734.PNG",
-        alt: "Growth",
-        color: "#8842ebff", // Violet
-        story: "Excited for what’s next, learning as I go.",
-        rotate: -2,
-    },
-    {
-        src: "/avatars/IMG_7737.PNG",
-        alt: "Biking",
-        color: "#4ade80", // Light Green
-        story: "Two wheels, my kind of therapy.",
-        rotate: 3,
-    },
-];
-
-// Custom SVG Comic Bubble Component
-const ComicBubble = ({ text, className = "" }: { text: string; className?: string }) => {
-    return (
-        <div className={`absolute -top-36 left-1/2 -translate-x-1/2 w-64 pointer-events-none z-50 transform scale-75 group-hover:scale-100 origin-bottom transition-all duration-500 opacity-0 group-hover:opacity-100 ${className}`}>
-            <div className="relative min-h-[140px] flex items-center justify-center p-6 px-10 pb-10">
-                {/* Shadow path (offset) */}
-                <svg
-                    viewBox="0 0 200 140"
-                    className="absolute inset-0 w-full h-full translate-x-1.5 translate-y-1.5"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        d="M15,25 C15,15 25,10 55,10 L145,10 C175,10 185,15 185,35 L190,85 C190,105 175,115 145,115 L115,115 L100,135 L85,115 L45,115 C15,115 10,105 10,75 Z"
-                        fill="black"
-                    />
-                </svg>
-
-                {/* Main bubble path */}
-                <svg
-                    viewBox="0 0 200 140"
-                    className="absolute inset-0 w-full h-full"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        d="M15,25 C15,15 25,10 55,10 L145,10 C175,10 185,15 185,35 L190,85 C190,105 175,115 145,115 L115,115 L100,135 L85,115 L45,115 C15,115 10,105 10,75 Z"
-                        fill="white"
-                        stroke="black"
-                        strokeWidth="4"
-                        strokeLinejoin="round"
-                    />
-                </svg>
-
-                {/* Text Content */}
-                <p className="relative z-10 font-handwriting font-bold text-lg md:text-xl leading-tight text-black text-center">
-                    {text}
-                </p>
-            </div>
-        </div>
-    );
-};
-
-
-
-// Comic Action Lines Component
-const ComicActionLines = () => {
-    const lines = Array.from({ length: 10 }).map((_, i) => ({
-        id: i,
-        angle: (i / 10) * 360 + (Math.random() - 0.5) * 30,
-        length: 80 + Math.random() * 40,
-        delay: Math.random() * 5,
-    }));
-
-    return (
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-visible flex items-center justify-center">
-            <svg className="w-[500px] h-[500px] absolute opacity-30" viewBox="0 0 100 100">
-                {lines.map((line) => (
-                    <motion.line
-                        key={line.id}
-                        x1="50"
-                        y1="50"
-                        x2={50 + Math.cos((line.angle * Math.PI) / 180) * line.length}
-                        y2={50 + Math.sin((line.angle * Math.PI) / 180) * line.length}
-                        stroke="#666666"
-                        strokeWidth="1"
-                        strokeDasharray="1 3"
-                        strokeLinecap="square"
-                        initial={{ pathLength: 1, opacity: 0 }}
-                        animate={{
-                            opacity: [0.1, 0.4, 0.1]
-                        }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            delay: line.delay,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
-            </svg>
-        </div>
-    );
-};
+import { HERO_COMIC_PANELS } from "@/constants";
+import HandwrittenText from "@/components/ui/HandwrittenText";
+import ComicBubble from "@/components/ui/ComicBubble";
+import ComicActionLines from "@/components/ui/ComicActionLines";
 
 export default function Hero() {
 
@@ -177,9 +24,6 @@ export default function Hero() {
                     transition={{ duration: 0.8 }}
                     className="space-y-6 relative"
                 >
-
-
-
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-bold leading-tight tracking-tighter max-w-6xl mx-auto mt-8">
                         {/* "I" with Left Annotation */}
@@ -307,7 +151,7 @@ export default function Hero() {
                 {/* COMIC STRIP SECTION */}
                 <div className="relative w-full overflow-visible pb-16">
                     <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 px-4">
-                        {COMIC_PANELS.map((panel, index) => (
+                        {HERO_COMIC_PANELS.map((panel, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, scale: 0, rotate: panel.rotate }}
@@ -353,8 +197,6 @@ export default function Hero() {
                         ))}
                     </div>
                 </div>
-
-
 
                 {/* "Here's How" Section matching reference */}
                 <motion.div

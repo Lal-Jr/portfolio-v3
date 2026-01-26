@@ -1,4 +1,4 @@
-// src/constants.ts
+
 export const AVATARS = {
 	ME: "/avatars/IMG_7729.png",
 	FOOTBALL: "/avatars/IMG_7730.png",
@@ -71,5 +71,234 @@ export const PANELS = [
 		avatar: AVATARS.ME,
 		grid: "md:col-span-1 md:row-span-1",
 		colorCode: "#ad46ff",
+	},
+] as const;
+
+export const ASPIRATION_QUESTS = [
+	{
+		id: "Q-01",
+		title: "ENTER THE 3D REALM",
+		desc: "Unlocking WebGL secrets.",
+		status: "IN_PROGRESS",
+		borderColor: "border-sky-500",
+		bg: "bg-sky-500/10",
+		rotate: -1
+	},
+	{
+		id: "Q-02",
+		title: "FORGE THE GUILD",
+		desc: "Assembling elite creatives.",
+		status: "LOCKED",
+		borderColor: "border-purple-500",
+		bg: "bg-purple-500/10",
+		rotate: 2
+	},
+	{
+		id: "Q-03",
+		title: "NEURAL LINKAGE",
+		desc: "Integrating AI agents.",
+		status: "OPEN",
+		borderColor: "border-emerald-500",
+		bg: "bg-emerald-500/10",
+		rotate: -2
+	},
+	{
+		id: "Q-04",
+		title: "ARCHITECT'S BLUEPRINT",
+		desc: "Drafting scalable SaaS.",
+		status: "LOCKED",
+		borderColor: "border-orange-500",
+		bg: "bg-orange-500/10",
+		rotate: 1
+	},
+	{
+		id: "Q-05",
+		title: "MASTER OF VOID",
+		desc: "Studying low-level systems.",
+		status: "LOCKED",
+		borderColor: "border-rose-500",
+		bg: "bg-rose-500/10",
+		rotate: -1
+	},
+	// Duplicates for length
+	{
+		id: "Q-06",
+		title: "QUANTUM LEAP",
+		desc: "Exploring quantum computing.",
+		status: "LOCKED",
+		borderColor: "border-yellow-500",
+		bg: "bg-yellow-500/10",
+		rotate: 2
+	},
+	{
+		id: "Q-07",
+		title: "SYNTHETIC MINDS",
+		desc: "Building AGI prototypes.",
+		status: "LOCKED",
+		borderColor: "border-pink-500",
+		bg: "bg-pink-500/10",
+		rotate: -2
+	}
+] as const;
+
+export const HERO_COMIC_PANELS = [
+	{
+		src: "/avatars/IMG_7735.PNG",
+		alt: "Travel",
+		color: "#FFD700", // Gold
+		story: "Living life one SRK pose at a time.",
+		rotate: -3,
+	},
+	{
+		src: "/avatars/IMG_7733.PNG",
+		alt: "Fun",
+		color: "#FF69B4", // Hot Pink
+		story: "Attempting adulthood. Accidentally chose chaos.",
+		rotate: 2,
+	},
+	{
+		src: "/avatars/IMG_7734.PNG",
+		alt: "Growth",
+		color: "#8842ebff", // Violet
+		story: "Excited for what’s next, learning as I go.",
+		rotate: -2,
+	},
+	{
+		src: "/avatars/IMG_7737.PNG",
+		alt: "Biking",
+		color: "#4ade80", // Light Green
+		story: "Two wheels, my kind of therapy.",
+		rotate: 3,
+	},
+] as const;
+
+export const SHELF_PROJECTS = [
+	{
+		id: 1,
+		title: "THE INTERFACE THAT SEES BEYOND THE VOID",
+		year: "2024",
+		category: "AI & Data Science",
+		tech: ["Next.js", "PyTorch"],
+		color: "#DD5E25",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "10m read",
+		liveUrl: "#",
+		githubUrl: "#",
+		problem: "Current AI interfaces often fail to provide visceral feedback, creating a disconnect between abstract data and user perception.",
+		thought: "I wanted to create a bridge using high-performance computation that translates latent space into visual artifacts.",
+		solving: "Integrated real-time sharders with PyTorch backends, optimizing for low-latency visual updates.",
+		result: "Increased user engagement by 45% and reduced cognitive load during data analysis.",
+	},
+	{
+		id: 2,
+		title: "A GATEWAY TO DIMENSIONAL ARTIFACTS",
+		year: "2023",
+		category: "E-Commerce & 3D",
+		tech: ["React", "Three.js"],
+		color: "#10b981",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "5m read",
+		liveUrl: "#",
+		githubUrl: "#",
+		problem: "Static 2D stores lack the depth and interactivity required for luxury digital collectibles.",
+		thought: "The goal was to build an immersive 3D environment where products feel like physical objects.",
+		solving: "Leveraged Three.js for GLTF rendering and custom physics for 'object weight' simulation.",
+		result: "Conversion rates up by 22% with average session duration increasing by 3 minutes.",
+	},
+	{
+		id: 3,
+		title: "HARNESSING THE PULSE OF THE MACHINE",
+		year: "2024",
+		category: "Systems & Monitoring",
+		tech: ["Rust", "Wasm"],
+		color: "#3b82f6",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "8m read",
+		liveUrl: "#",
+		githubUrl: "#",
+		problem: "Legacy monitoring tools are heavy and slow, often causing the very performance dips they are meant to track.",
+		thought: "I envisioned a lightweight, memory-safe collector that runs near native speed in the browser.",
+		solving: "Used Rust's zero-cost abstractions and compiled to Wasm for peak performance.",
+		result: "90% reduction in monitoring overhead compared to JS-based alternatives.",
+	},
+	{
+		id: 4,
+		title: "WHERE FRAGMENTS OF THOUGHT ALIGN",
+		year: "2022",
+		category: "Collaboration Tool",
+		tech: ["Node", "Redis"],
+		color: "#a855f7",
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "6m read",
+		liveUrl: "#",
+		githubUrl: "#",
+		problem: "Collaborative tools often suffer from sync conflicts and high latency in distributed teams.",
+		thought: "A state-first architecture was needed to ensure eventual consistency across all nodes.",
+		solving: "Implemented OT (Operational Transformation) with a Redis pub/sub backbone.",
+		result: "Zero data loss over 100k+ concurrent sync events with <50ms latency.",
+	},
+] as const;
+
+export const EXPERIENCE_DATA = [
+	{
+		id: "daily-planet",
+		company: "Daily Planet",
+		role: "Junior Developer",
+		period: "2019 - 2021",
+		desc: "Modernized legacy CMS systems. Automated global news reporting pipelines.",
+		icon: "🗞️",
+		color: "text-sky-400",
+		nodeColor: "#38bdf8",
+		x: "15%",
+		y: "65%",
+		arrowRotation: -15,
+		label: "Start",
+	},
+	{
+		id: "wayne",
+		company: "Wayne Enterprises",
+		role: "UI/UX Developer",
+		period: "2021 - 2023",
+		desc: "Developed dark-mode specialized dashboards. Implemented stealth-first accessibility features.",
+		icon: "🦇",
+		color: "text-slate-400",
+		nodeColor: "#94a3b8",
+		x: "40%",
+		y: "75%",
+		arrowRotation: 10,
+		label: "Growth",
+	},
+	{
+		id: "stark",
+		company: "Stark Industries",
+		role: "Lead Frontend Engineer",
+		period: "2023 - PRESENT",
+		desc: "Architected reactive HUD interfaces using Next.js. Optimized performance for low-latency combat data streams.",
+		icon: "🛡️",
+		color: "text-rose-400",
+		nodeColor: "#fb7185",
+		x: "65%",
+		y: "45%",
+		arrowRotation: -20,
+		label: "Lead",
+	},
+	{
+		id: "ai",
+		company: "Future Path",
+		role: "AI Integration Specialty",
+		period: "ONGOING",
+		desc: "Leveraging machine learning to solve complex architectural problems and crafting intelligent interfaces.",
+		icon: "🤖",
+		color: "text-green-400",
+		nodeColor: "#4ade80",
+		x: "90%",
+		y: "55%",
+		arrowRotation: -10,
+		label: "Focus: AI",
+		isSpecial: true,
 	},
 ] as const;

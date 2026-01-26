@@ -1,119 +1,15 @@
 "use client";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-
-const experience = [
-	{
-		id: "daily-planet",
-		company: "Daily Planet",
-		role: "Junior Developer",
-		period: "2019 - 2021",
-		desc: "Modernized legacy CMS systems. Automated global news reporting pipelines.",
-		icon: "🗞️",
-		color: "text-sky-400",
-		nodeColor: "#38bdf8",
-		x: "15%",
-		y: "65%",
-		arrowRotation: -15,
-		label: "Start",
-	},
-	{
-		id: "wayne",
-		company: "Wayne Enterprises",
-		role: "UI/UX Developer",
-		period: "2021 - 2023",
-		desc: "Developed dark-mode specialized dashboards. Implemented stealth-first accessibility features.",
-		icon: "🦇",
-		color: "text-slate-400",
-		nodeColor: "#94a3b8",
-		x: "40%",
-		y: "75%",
-		arrowRotation: 10,
-		label: "Growth",
-	},
-	{
-		id: "stark",
-		company: "Stark Industries",
-		role: "Lead Frontend Engineer",
-		period: "2023 - PRESENT",
-		desc: "Architected reactive HUD interfaces using Next.js. Optimized performance for low-latency combat data streams.",
-		icon: "🛡️",
-		color: "text-rose-400",
-		nodeColor: "#fb7185",
-		x: "65%",
-		y: "45%",
-		arrowRotation: -20,
-		label: "Lead",
-	},
-	{
-		id: "ai",
-		company: "Future Path",
-		role: "AI Integration Specialty",
-		period: "ONGOING",
-		desc: "Leveraging machine learning to solve complex architectural problems and crafting intelligent interfaces.",
-		icon: "🤖",
-		color: "text-green-400",
-		nodeColor: "#4ade80",
-		x: "90%",
-		y: "55%",
-		arrowRotation: -10,
-		label: "Focus: AI",
-		isSpecial: true,
-	},
-];
-
-const ScribbleNode = ({ icon, color = "white", isActive = false, isSpecial = false }: { icon: string, color?: string, isActive?: boolean, isSpecial?: boolean }) => (
-	<div className="relative w-16 h-16 flex items-center justify-center">
-		<svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
-			<motion.path
-				d="M30,50 C30,30 70,30 70,50 C70,70 30,70 30,50 M35,45 C35,25 75,25 75,45 C75,65 35,65 35,45 M25,55 C25,35 65,35 65,55 C65,75 25,75 25,55"
-				fill="none"
-				stroke={color}
-				strokeWidth="2"
-				strokeLinecap="round"
-				initial={{ pathLength: 0 }}
-				whileInView={{ pathLength: 1 }}
-				transition={{ duration: 1.5, ease: "easeInOut" }}
-			/>
-		</svg>
-		<div className={`relative z-10 text-2xl transition-transform duration-300 ${isActive ? 'scale-125' : 'scale-100'}`}>
-			{icon}
-		</div>
-		{isSpecial && (
-			<motion.div
-				className="absolute inset-0 rounded-full bg-green-500/10 blur-xl"
-				animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.4, 0.2] }}
-				transition={{ repeat: Infinity, duration: 2 }}
-			/>
-		)}
-	</div>
-);
-
-const HandDrawnArrow = ({ rotation = 0, color = "white" }: { rotation?: number, color?: string }) => (
-	<motion.svg
-		width="30" height="30" viewBox="0 0 40 40"
-		style={{ rotate: rotation }}
-		className="pointer-events-none"
-	>
-		<motion.path
-			d="M20,5 Q25,20 20,35 M12,28 L20,35 L28,28"
-			fill="none"
-			stroke={color}
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			initial={{ pathLength: 0 }}
-			whileInView={{ pathLength: 1 }}
-			transition={{ duration: 0.8, delay: 0.5 }}
-		/>
-	</motion.svg>
-);
+import { EXPERIENCE_DATA } from "@/constants";
+import ScribbleNode from "@/components/ui/ScribbleNode";
+import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 
 export default function WorkRoadmap() {
 	const [activeNode, setActiveNode] = useState<string | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const activeJob = experience.find(n => n.id === activeNode);
+	const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
 	return (
 		<div
@@ -143,7 +39,7 @@ export default function WorkRoadmap() {
 					</svg>
 
 					{/* Nodes and Labels */}
-					{experience.map((node) => (
+					{EXPERIENCE_DATA.map((node) => (
 						<div
 							key={node.id}
 							className="absolute transform -translate-x-1/2 -translate-y-1/2"
@@ -168,11 +64,11 @@ export default function WorkRoadmap() {
 									icon={node.icon}
 									color={node.nodeColor}
 									isActive={activeNode === node.id}
-									isSpecial={node.isSpecial}
+									isSpecial={(node as any).isSpecial}
 								/>
 
 								{/* Hint for mobile or just flavor */}
-								{node.isSpecial && (
+								{(node as any).isSpecial && (
 									<motion.span
 										className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm text-zinc-500 whitespace-nowrap font-['var(--font-caveat)']"
 										animate={{ opacity: [0.4, 1, 0.4] }}

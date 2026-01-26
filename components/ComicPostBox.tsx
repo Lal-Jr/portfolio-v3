@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FileText, Copy, Check } from "lucide-react";
+import { Copy, Check, FileText } from "lucide-react";
 import Image from "next/image";
+import { AVATARS } from "@/constants";
+import HighlighterSpan from "@/components/ui/HighlighterSpan";
 
 const ComicPostBox = () => {
 	const [copied, setCopied] = useState(false);
@@ -28,25 +29,13 @@ const ComicPostBox = () => {
 						<h3 className="text-2xl text-zinc-500 italic font-medium">My Philosophy</h3>
 						<div className="text-3xl md:text-4xl leading-relaxed font-bold tracking-tight">
 							In short, I'm someone who <br />
-							<span className="relative inline-block px-1">
-								<span className="relative z-10">enjoys working in messy,</span>
-								<motion.span
-									initial={{ scaleX: 0 }}
-									whileInView={{ scaleX: 1 }}
-									className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
-									transition={{ duration: 0.8, delay: 0.2 }}
-								/>
-							</span>{" "}
+							<HighlighterSpan delay={0.2} rotation={-1}>
+								enjoys working in messy,
+							</HighlighterSpan>{" "}
 							<br />
-							<span className="relative inline-block px-1">
-								<span className="relative z-10">complex spaces</span>
-								<motion.span
-									initial={{ scaleX: 0 }}
-									whileInView={{ scaleX: 1 }}
-									className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 rotate-1 origin-left -z-0"
-									transition={{ duration: 0.8, delay: 0.4 }}
-								/>
-							</span>{" "}
+							<HighlighterSpan delay={0.4} rotation={1}>
+								complex spaces
+							</HighlighterSpan>{" "}
 							and making <br />
 							them clearer and more human.
 						</div>
@@ -54,37 +43,19 @@ const ComicPostBox = () => {
 
 					<div className="text-3xl md:text-3xl leading-relaxed font-bold tracking-tight opacity-90">
 						I do that by{" "}
-						<span className="relative inline-block px-1">
-							<span className="relative z-10">experimenting to</span>
-							<motion.span
-								initial={{ scaleX: 0 }}
-								whileInView={{ scaleX: 1 }}
-								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
-								transition={{ duration: 0.8, delay: 0.6 }}
-							/>
-						</span>{" "}
+						<HighlighterSpan delay={0.6} rotation={-1}>
+							experimenting to
+						</HighlighterSpan>{" "}
 						<br />
 						learn,{" "}
-						<span className="relative inline-block px-1">
-							<span className="relative z-10">shaping clear stories</span>
-							<motion.span
-								initial={{ scaleX: 0 }}
-								whileInView={{ scaleX: 1 }}
-								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 rotate-1 origin-left -z-0"
-								transition={{ duration: 0.8, delay: 0.8 }}
-							/>
-						</span>{" "}
+						<HighlighterSpan delay={0.8} rotation={1}>
+							shaping clear stories
+						</HighlighterSpan>{" "}
 						<br />
 						that help people align, and <br />
-						<span className="relative inline-block px-1">
-							<span className="relative z-10">designing systems with care</span>
-							<motion.span
-								initial={{ scaleX: 0 }}
-								whileInView={{ scaleX: 1 }}
-								className="absolute inset-y-1 left-0 right-0 bg-green-500 opacity-60 -rotate-1 origin-left -z-0"
-								transition={{ duration: 0.8, delay: 1.0 }}
-							/>
-						</span>{" "}
+						<HighlighterSpan delay={1.0} rotation={-1}>
+							designing systems with care
+						</HighlighterSpan>{" "}
 						<br />
 						for the small details that quietly <br />
 						shape how something feels.
@@ -106,7 +77,7 @@ const ComicPostBox = () => {
 					{/* Avatar */}
 					<div className="relative w-full aspect-[4/5] max-w-[400px]">
 						<Image
-							src="/avatars/IMG_7730.PNG"
+							src={AVATARS.FOOTBALL}
 							alt="Arjun Avatar"
 							fill
 							className="object-contain"
@@ -148,7 +119,6 @@ const ComicPostBox = () => {
 				</div>
 			</div>
 		</div>
-
 	);
 };
 
