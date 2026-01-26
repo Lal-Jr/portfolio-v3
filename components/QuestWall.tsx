@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ASPIRATION_QUESTS } from "@/constants";
 import QuestCard from "./QuestCard";
 
-export default function PixelAspirationWall() {
+export default function QuestWall() {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { scrollYProgress } = useScroll({
 		target: containerRef,

@@ -5,7 +5,7 @@ import { EXPERIENCE_DATA } from "@/constants";
 import ScribbleNode from "@/components/ui/ScribbleNode";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 
-export default function WorkRoadmap() {
+export default function WorkExperience() {
 	const [activeNode, setActiveNode] = useState<string | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 

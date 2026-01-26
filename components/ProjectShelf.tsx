@@ -5,7 +5,7 @@ import { SHELF_PROJECTS } from "@/constants";
 import ProjectItem from "@/components/shelf/ProjectItem";
 import ProjectDetailView from "@/components/shelf/ProjectDetailView";
 
-export default function PixelProjectShelf() {
+export default function ProjectShelf() {
 	const [selectedProject, setSelectedProject] = useState<typeof SHELF_PROJECTS[number] | null>(null);
 
 	return (

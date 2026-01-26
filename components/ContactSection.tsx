@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AVATARS } from "@/constants";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 
-const ComicPostBox = () => {
+const ContactSection = () => {
 	const [copied, setCopied] = useState(false);
 	const email = "arjragh@iu.edu";
 
@@ -122,4 +122,4 @@ const ComicPostBox = () => {
 	);
 };
 
-export default ComicPostBox;
+export default ContactSection;
