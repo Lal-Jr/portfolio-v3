@@ -164,7 +164,7 @@ export default function Hero() {
 
     return (
         <section
-            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 py-20 select-none touch-none"
+            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 pt-20 pb-0 select-none touch-none"
         >
 
             {/* Main Content */}
@@ -361,7 +361,7 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5, duration: 1 }}
-                    className="pt-32 pb-10 flex flex-col items-center relative"
+                    className="pt-32 pb-0 flex flex-col items-center relative"
                 >
                     {/* Sunburst Lines */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] h-[400px] pointer-events-none">

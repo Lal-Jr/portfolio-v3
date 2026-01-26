@@ -26,8 +26,8 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-	title: "Chapter 1 : The Hero’s Journey",
-	description: "The Hero's Journey till now.",
+	title: "The Hero’s Journey",
+	description: "Chapter 1 : How he became who he is.",
 };
 
 export default function RootLayout({

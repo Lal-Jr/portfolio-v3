@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
 	onComplete: () => void;
@@ -19,13 +20,11 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 					return 100;
 				}
 
-				const nextValue = prev + (fastForward ? 4 : 0.4);
+				const nextValue = prev + (fastForward ? 5 : 0.5);
 
-				// Logical "Trigger Point" inside the setter
-				// This avoids the cascading render error
+				// Trigger cherry eaten slightly before reaching the very end for better visual sync
 				if (nextValue >= 98 && !cherryEaten) {
 					setCherryEaten(true);
-					// Call the completion callback after a small delay
 					setTimeout(() => {
 						if (typeof onComplete === "function") onComplete();
 					}, 500);
@@ -50,92 +49,100 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 		}
 
 		return () => clearInterval(interval);
-	}, [onComplete, cherryEaten]); // cherryEaten dependency ensures we don't trigger the timeout twice
+	}, [onComplete, cherryEaten]);
 
 	return (
-		<div className="flex flex-col items-center justify-center w-full max-w-2xl p-12 bg-black rounded-3xl">
-			<style>
-				{`
-          @keyframes chomp-top {
-            0%, 100% { transform: rotate(-45deg); }
-            50% { transform: rotate(0deg); }
-          }
-          @keyframes chomp-bottom {
-            0%, 100% { transform: rotate(45deg); }
-            50% { transform: rotate(0deg); }
-          }
-        `}
-			</style>
-
-			{/* The Track */}
-			<div className="relative w-full h-24 mb-6 flex items-center bg-gray-900/40 rounded-full px-4 border border-blue-900/50 overflow-hidden">
-				{/* Pellets - disappearing based on progress */}
-				<div className="absolute inset-0 flex items-center justify-around px-12">
+		<div className="flex flex-col items-center justify-center w-full max-w-2xl px-8">
+			{/* THE TRACK */}
+			<div className="relative w-full h-32 mb-8 flex items-center">
+				{/* Pellets - Classic Small Dots */}
+				<div className="absolute inset-0 flex items-center justify-between px-8">
 					{[...Array(12)].map((_, i) => (
-						<div
+						<motion.div
 							key={i}
-							className="w-2 h-2 bg-pink-100 rounded-full transition-opacity duration-75"
-							style={{ opacity: progress > (i + 1) * 8 ? 0 : 1 }}
+							className="w-2 h-2 rounded-full bg-[#ffb8ff] opacity-80"
+							initial={{ opacity: 0.8 }}
+							animate={{
+								opacity: progress > (i + 1) * (100 / 13) ? 0 : 0.8,
+								scale: progress > (i + 1) * (100 / 13) ? 0 : 1
+							}}
 						/>
 					))}
 				</div>
 
-				{/* The Cherry 🍒 */}
-				<div
-					className={`absolute right-6 text-3xl transition-all duration-150 ${
-						cherryEaten
-							? "scale-0 opacity-0 translate-x-4"
-							: "scale-110 opacity-100"
-					}`}
-				>
-					🍒
-				</div>
-
-				{/* Pac-Man Body */}
-				<div
-					className="absolute transition-all duration-150 ease-out"
-					style={{ left: `${progress * 0.85}%` }}
+				{/* Classic Pac-Man */}
+				<motion.div
+					className="absolute z-10"
+					style={{
+						left: `${progress}%`,
+						x: "-50%"
+					}}
 				>
 					<div className="relative w-16 h-16">
-						<div
-							className="absolute top-0 left-0 w-16 h-8 bg-yellow-400 rounded-t-full origin-bottom"
-							style={{
-								animation: "chomp-top 0.2s infinite linear",
-							}}
-						/>
-						<div
-							className="absolute bottom-0 left-0 w-16 h-8 bg-yellow-400 rounded-b-full origin-top"
-							style={{
-								animation: "chomp-bottom 0.2s infinite linear",
-							}}
-						/>
-						<div className="absolute top-3 left-9 w-2 h-2 bg-black rounded-full z-10" />
+						<svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(255,255,0,0.3)]">
+							{/* Top Jaw */}
+							<motion.path
+								d="M50,50 L95,20 A45,45 0 1,0 5,50 L50,50"
+								fill="#FFFF00"
+								animate={{
+									d: [
+										"M50,50 L95,15 A45,45 0 1,0 5,50 L50,50",
+										"M50,50 L95,50 A45,45 1 1,0 5,50 L50,50",
+										"M50,50 L95,15 A45,45 0 1,0 5,50 L50,50"
+									]
+								}}
+								transition={{ duration: 0.25, repeat: Infinity, ease: "easeInOut" }}
+							/>
+							{/* Bottom Jaw */}
+							<motion.path
+								d="M50,50 L95,80 A45,45 0 0,1 5,50 L50,50"
+								fill="#FFFF00"
+								animate={{
+									d: [
+										"M50,50 L95,85 A45,45 0 0,1 5,50 L50,50",
+										"M50,50 L95,50 A45,45 1 0,1 5,50 L50,50",
+										"M50,50 L95,85 A45,45 0 0,1 5,50 L50,50"
+									]
+								}}
+								transition={{ duration: 0.25, repeat: Infinity, ease: "easeInOut" }}
+							/>
+						</svg>
 					</div>
+				</motion.div>
+
+				{/* The Goal / Cherry */}
+				<div
+					className={`absolute right-0 transition-all duration-200 ${cherryEaten ? "scale-0 opacity-0" : "scale-110 opacity-100"
+						}`}
+				>
+					<span className="text-4xl filter drop-shadow-[0_0_15px_rgba(255,0,0,0.3)]">🍒</span>
 				</div>
 			</div>
 
-			{/* Percentage Display with Yellow Glow */}
-			<div className="mt-6 text-center">
-				<div
-					className="text-6xl font-mono font-black text-yellow-400 italic tracking-tighter"
-					style={{
-						textShadow:
-							"0 0 10px rgba(250, 204, 21, 0.8), 0 0 20px rgba(250, 204, 21, 0.4)",
-					}}
-				>
-					{Math.floor(progress)}
-					<span className="text-2xl not-italic ml-1">%</span>
+			{/* Progress Text */}
+			<div className="text-center space-y-4">
+				<div className="flex items-baseline justify-center gap-2">
+					<span className="text-6xl md:text-8xl font-['Press_Start_2P'] text-white tracking-tighter">
+						{Math.floor(progress)}
+					</span>
+					<span className="text-2xl font-['Press_Start_2P'] text-yellow-400">%</span>
 				</div>
 
-				{/* Status Text with Blue Glow */}
-				<div
-					className="mt-3 text-blue-500 font-mono text-[10px] uppercase tracking-[0.5em] animate-pulse"
-					style={{
-						textShadow: "0 0 8px rgba(59, 130, 246, 0.6)",
-					}}
-				>
-					{progress === 100 ? "Ready to Play!" : "Loading Level 1..."}
-				</div>
+				<AnimatePresence mode="wait">
+					<motion.div
+						key={progress === 100 ? "ready" : "loading"}
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						className="text-3xl md:text-4xl font-['var(--font-caveat)'] text-zinc-400"
+					>
+						{progress === 100 ? (
+							<span className="text-green-400">ready to play!</span>
+						) : (
+							<span>preparing level one...</span>
+						)}
+					</motion.div>
+				</AnimatePresence>
 			</div>
 		</div>
 	);
