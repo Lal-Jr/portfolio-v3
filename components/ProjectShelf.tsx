@@ -9,7 +9,7 @@ export default function ProjectShelf() {
 	const [selectedProject, setSelectedProject] = useState<typeof SHELF_PROJECTS[number] | null>(null);
 
 	return (
-		<div className="w-full bg-transparent pb-14 px-6 overflow-visible">
+		<div className="w-full bg-transparent pb-12 pt-12 overflow-visible">
 			<div className="max-w-5xl mx-auto">
 				{SHELF_PROJECTS.map((proj, index) => (
 					<ProjectItem
@@ -62,7 +62,7 @@ export default function ProjectShelf() {
 					{/* Header: Handwritten Font + Comic Pop Lines Only */}
 					<div className="relative">
 						<motion.h4
-							className="text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2"
+							className="text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2 leading-relaxed"
 							animate={{
 								opacity: [0.8, 1, 0.8],
 								y: [0, -4, 0],
@@ -75,7 +75,23 @@ export default function ProjectShelf() {
 							}}
 							whileHover={{ scale: 1.05, opacity: 1, rotate: 0 }}
 						>
-							But every build has a backstory...
+							Every project tells a story,<br />
+							but the{" "}
+							<span className="relative inline-block">
+								<span className="relative z-10 font-black italic">real story</span>
+								<svg className="absolute -bottom-1 left-0 w-full h-3 z-0" viewBox="0 0 200 10" preserveAspectRatio="none">
+									<path d="M0,7 Q10,3 20,7 T40,7 T60,7 T80,7 T100,7 T120,7 T140,7 T160,7 T180,7 T200,7"
+										stroke="#2f24fbff" strokeWidth="3" fill="none" strokeLinecap="round" />
+								</svg>
+							</span>{" "}
+							is in how I{" "}
+							<span className="relative inline-block">
+								<span className="relative z-10 font-black italic">think</span>
+								<svg className="absolute -bottom-1 left-0 w-full h-3 z-0" viewBox="0 0 200 10" preserveAspectRatio="none">
+									<path d="M0,7 Q10,3 20,7 T40,7 T60,7 T80,7 T100,7 T120,7 T140,7 T160,7 T180,7 T200,7"
+										stroke="#ec4899" strokeWidth="3" fill="none" strokeLinecap="round" />
+								</svg>
+							</span>
 						</motion.h4>
 
 						{/* Comic 'Stress' Marks - Top Right */}

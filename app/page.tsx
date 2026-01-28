@@ -14,8 +14,8 @@ export default function Home() {
 		<div ref={containerRef} className="relative w-full" style={{ scrollBehavior: 'smooth' }}>
 			<Hero />
 			<ProjectShelf />
-			<StorySection />
 			<SystemsSection />
+			<StorySection />
 			<ContactSection />
 		</div>
 	);

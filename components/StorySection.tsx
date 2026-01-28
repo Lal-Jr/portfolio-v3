@@ -45,10 +45,14 @@ const StorySection = () => {
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16 relative"
+                    className="text-center mb-32 relative"
                 >
                     <h2 className="text-3xl md:text-5xl font-['var(--font-caveat)'] text-zinc-300 font-bold transform -rotate-1">
-                        ...and this is how my story unwinds
+                        But all this comes from the <br className="hidden md:block" />
+                        <span className="relative inline-block px-3 py-1">
+                            <span className="absolute inset-0 bg-blue-500 rounded-full transform -rotate-1 opacity-90"></span>
+                            <span className="relative text-white">journey</span>
+                        </span> that shaped how I think...
                     </h2>
                     <div className="absolute -right-8 -bottom-4 hidden md:block opacity-60">
                         <HandDrawnArrow type="curved-down" width={40} height={40} color="#a1a1aa" rotation={-10} />

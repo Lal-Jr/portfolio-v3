@@ -182,7 +182,7 @@ const ColorPaletteWidget = () => {
 
 const PhilosophySection = () => {
     return (
-        <section className="relative w-full flex flex-col items-center justify-center pt-8 pb-16 overflow-visible z-20">
+        <section className="relative w-full flex flex-col items-center justify-center pt-32 pb-32 overflow-visible z-20">
 
             {/* ================= SYSTEMS (DIAMOND LAYOUT) ================= */}
             <div className="relative w-full max-w-6xl min-h-[800px] flex items-center justify-center mb-0">
