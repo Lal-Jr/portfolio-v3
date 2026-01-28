@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { Copy, Plus, Minus, MoveHorizontal, Type, MousePointer2 } from "lucide-react";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import ComicScribble from "@/components/ui/ComicScribble";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ASPIRATION_QUESTS } from "@/constants";
+import QuestCard from "./QuestCard";
 
-// --- WIDGETS ---
+// --- WIDGETS (From PhilosophySection) ---
 
 const ChatBubbleWidget = () => {
     const [variant, setVariant] = useState<"Left" | "Right">("Left");
@@ -141,27 +144,37 @@ const TypographyWidget = () => {
     );
 }
 
-// --- MAIN SECTION ---
+// --- MAIN COMBINED COMPONENT ---
 
-const PhilosophySection = () => {
+const PhilosophyAndQuests = () => {
+    // --- Quest Wall Logic ---
+    const questRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: questRef,
+        offset: ["start end", "end start"]
+    });
+
+    // Map vertical scroll to horizontal movement for the Quest section
+    // Using a simpler transform for the combined section context
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+
     return (
-        <section className="relative w-full min-h-[80vh] flex flex-col md:flex-row items-center justify-center p-6 md:p-20 overflow-visible z-10 mb-20">
+        <section className="relative w-full flex flex-col items-center justify-center pt-20 pb-0 overflow-hidden z-20">
 
-            {/* Background elements (subtle grid or noise could go here) */}
-
-            <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center relative">
+            {/* ================= PART 1: PHILOSOPHY ================= */}
+            <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center relative px-6 md:px-20 mb-32">
 
                 {/* LEFT: The Text */}
                 <div className="relative z-20 order-2 lg:order-1">
                     <div className="relative">
                         <h3 className="text-2xl text-zinc-400 italic font-medium mb-6 font-['var(--font-caveat)']">My Philosophy</h3>
 
-                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-900 leading-[1.1]">
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]">
                             I think in systems, <br />
                             not just one off screens
                         </h2>
 
-                        <div className="mt-8 text-xl md:text-2xl leading-relaxed text-zinc-600 max-w-xl">
+                        <div className="mt-8 text-xl md:text-2xl leading-relaxed text-zinc-400 max-w-xl">
                             My eng background makes me see{" "}
                             <HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300/80">
                                 patterns, edge cases, and
@@ -219,10 +232,42 @@ const PhilosophySection = () => {
                     </div>
 
                 </div>
-
             </div>
+
+            {/* ================= PART 2: QUEST WALL ================= */}
+            <div ref={questRef} className="relative w-full py-10 bg-transparent">
+                {/* Optional Header for the Quests Section to tie it to Philosophy */}
+                <div className="w-full text-center mb-10 px-6">
+                    <p className="font-['var(--font-caveat)'] text-2xl text-zinc-500 rotate-1">
+                        ...and these systems power my future quests:
+                    </p>
+                </div>
+
+                {/* MASK GRADIENTS FOR FADE EFFECT */}
+                <div className="absolute top-0 left-0 h-full w-12 md:w-32 bg-gradient-to-r from-[#050505] to-transparent z-20 pointer-events-none" />
+                <div className="absolute top-0 right-0 h-full w-12 md:w-32 bg-gradient-to-l from-[#050505] to-transparent z-20 pointer-events-none" />
+
+                {/* SCROLL-DRIVEN STRIP WITH MANUAL DRAG */}
+                <div className="flex w-full overflow-visible cursor-grab active:cursor-grabbing">
+                    <motion.div
+                        className="w-full"
+                        style={{ x }}
+                    >
+                        <motion.div
+                            drag="x"
+                            dragConstraints={{ left: -1000, right: 200 }}
+                            className="flex gap-10 pl-8 md:pl-32 py-16 w-max"
+                        >
+                            {ASPIRATION_QUESTS.map((quest, i) => (
+                                <QuestCard key={`${quest.id}-${i}`} quest={quest} index={i} />
+                            ))}
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </div>
+
         </section>
     );
 };
 
-export default PhilosophySection;
+export default PhilosophyAndQuests;

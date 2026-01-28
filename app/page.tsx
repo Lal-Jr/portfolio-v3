@@ -1,13 +1,11 @@
 "use client";
-import { useRef, useState } from "react";
-import { useScroll, motion, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 import Hero from "@/components/Hero";
 import ProjectShelf from "@/components/ProjectShelf";
-import WorkExperience from "@/components/WorkExperience";
-import QuestWall from "@/components/QuestWall";
+import StorySection from "@/components/StorySection";
+import PhilosophyAndQuests from "@/components/PhilosophyAndQuests";
 import ContactSection from "@/components/ContactSection";
-import PhilosophySection from "@/components/PhilosophySection";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -16,9 +14,8 @@ export default function Home() {
 		<div ref={containerRef} className="relative w-full" style={{ scrollBehavior: 'smooth' }}>
 			<Hero />
 			<ProjectShelf />
-			<WorkExperience />
-			<QuestWall />
-			<PhilosophySection />
+			<StorySection />
+			<PhilosophyAndQuests />
 			<ContactSection />
 		</div>
 	);

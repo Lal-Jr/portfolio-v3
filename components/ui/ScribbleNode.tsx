@@ -2,13 +2,12 @@
 import { motion } from "framer-motion";
 
 interface ScribbleNodeProps {
-    icon: string;
     color?: string;
     isActive?: boolean;
     isSpecial?: boolean;
 }
 
-const ScribbleNode = ({ icon, color = "white", isActive = false, isSpecial = false }: ScribbleNodeProps) => (
+const ScribbleNode = ({ color = "white", isActive = false, isSpecial = false }: ScribbleNodeProps) => (
     <div className="relative w-16 h-16 flex items-center justify-center">
         <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
             <motion.path
@@ -22,9 +21,6 @@ const ScribbleNode = ({ icon, color = "white", isActive = false, isSpecial = fal
                 transition={{ duration: 1.5, ease: "easeInOut" }}
             />
         </svg>
-        <div className={`relative z-10 text-2xl transition-transform duration-300 ${isActive ? 'scale-125' : 'scale-100'}`}>
-            {icon}
-        </div>
         {isSpecial && (
             <motion.div
                 className="absolute inset-0 rounded-full bg-green-500/10 blur-xl"
