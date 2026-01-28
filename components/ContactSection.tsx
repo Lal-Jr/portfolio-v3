@@ -21,18 +21,15 @@ const ContactSection = () => {
 	};
 
 	return (
-		<div className="relative min-h-[80vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10 font-['var(--font-caveat)'] text-zinc-800 mb-20">
+		<div className="relative min-h-[80vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10">
 
 			<div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center">
 
 				{/* LEFT COLUMN: PHILOSOPHY TEXT */}
 				<div className="flex flex-col space-y-8 order-2 md:order-1 relative z-10">
 					<div className="space-y-4">
-						<h3 className="text-2xl text-zinc-400 italic font-medium transform -rotate-2">
-							The Bottom Line
-						</h3>
 
-						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-zinc-900">
+						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-white font-['var(--font-caveat)']">
 							In short, I'm someone who <br />
 							<HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300">
 								enjoys working in messy,
@@ -46,7 +43,7 @@ const ContactSection = () => {
 						</div>
 					</div>
 
-					<div className="text-2xl md:text-4xl leading-tight font-bold text-zinc-700/90">
+					<div className="text-2xl md:text-4xl leading-tight font-bold text-zinc-300 font-['var(--font-caveat)']">
 						I do that by{" "}
 						<HighlighterSpan delay={0.6} rotation={-2} color="bg-green-300">
 							experimenting to
@@ -70,13 +67,12 @@ const ContactSection = () => {
 				{/* RIGHT COLUMN: AVATAR & ACTIONS */}
 				<div className="flex flex-col items-center relative gap-4 order-1 md:order-2">
 
-					{/* Speech Bubble */}
+					{/* Speech Bubble - Pixel Style */}
 					<div className="relative z-20 translate-y-4 translate-x-12 md:translate-x-20">
-						<div className="bg-blue-500 text-white rounded-[2rem] px-6 py-4 text-xl md:text-2xl font-bold shadow-xl relative transform rotate-3 animate-float-slow max-w-[280px] text-center">
-							<span className="absolute -top-6 left-0 text-zinc-400 text-lg font-['var(--font-caveat)'] transform -rotate-3">Harish</span>
-							If this made sense, let's chat!
+						<div className="bg-blue-500 border-4 border-black text-white px-6 py-4 text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 max-w-[280px] text-center font-['Press_Start_2P'] leading-relaxed">
+							<span className="text-sm">If this made sense, let's chat!</span>
 							{/* Pointy bit */}
-							<div className="absolute -bottom-2 left-6 w-6 h-6 bg-blue-500 transform rotate-45" />
+							<div className="absolute -bottom-2 left-6 w-6 h-6 bg-blue-500 border-l-4 border-b-4 border-black transform rotate-45" />
 						</div>
 					</div>
 
@@ -91,42 +87,45 @@ const ContactSection = () => {
 						/>
 					</div>
 
-					{/* Actions Container */}
+					{/* Actions Container - Pixel Retro Style */}
 					<div className="flex flex-col items-center gap-6 mt-[-20px] relative z-20 w-full pl-8 md:pl-0">
 
-						{/* Connecting Arrows */}
-						<div className="flex gap-8 opacity-40 text-zinc-400 mb-2">
-							<HandDrawnArrow type="default" width={30} height={40} rotation={170} />
-							<HandDrawnArrow type="default" width={30} height={40} rotation={190} />
-							<HandDrawnArrow type="default" width={30} height={40} rotation={180} />
-						</div>
-
 						<div className="flex flex-col md:flex-row items-center gap-6">
-							{/* Email Button - Sketchy Oval */}
-							<div className="flex flex-col items-center gap-2">
+							{/* Email Button - Arcade Style */}
+							<div className="flex flex-col items-center gap-2 relative">
+								{/* Arrows pointing at email button */}
+								<div className="flex gap-4 mb-2 opacity-60">
+									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
+									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
+									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
+								</div>
 								<button
 									onClick={copyToClipboard}
-									className="group relative px-8 py-4 bg-[#1a1a1a] text-white transition-transform hover:scale-105 active:scale-95 flex items-center gap-3 text-2xl font-bold shadow-lg"
-									style={{
-										borderRadius: "255px 15px 225px 15px / 15px 225px 15px 255px",
-										border: "3px solid #1a1a1a"
-									}}
+									className="group relative px-6 py-4 bg-yellow-400 border-4 border-black text-black transition-all hover:bg-yellow-300 active:translate-x-1 active:translate-y-1 active:shadow-none flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
 								>
-									<span className="tracking-wide font-['Press_Start_2P'] text-sm md:text-base mr-2" style={{ fontFamily: 'sans-serif' }}>{email}</span>
-									{copied ? <Check size={24} className="text-green-400" /> : <Copy size={24} className="text-zinc-400 group-hover:text-white" />}
+									<span className="text-xs md:text-sm leading-relaxed">{email}</span>
+									{copied ? <Check size={20} className="text-green-600" /> : <Copy size={20} className="text-zinc-800 group-hover:text-black" />}
 								</button>
-								<span className="text-sm text-zinc-400 italic font-['var(--font-caveat)']">tap to copy</span>
+								<span className="text-sm text-zinc-400 italic font-['var(--font-caveat)'] animate-pulse">← tap to copy</span>
 							</div>
 
-							{/* Resume Button - Boxy Sketch */}
+							{/* Resume Button - Pixel Style */}
 							<a
 								href="/resume.pdf"
 								download
-								className="group relative px-8 py-3 bg-white text-zinc-900 border-[3px] border-zinc-900 hover:bg-zinc-50 transition-all hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3 text-2xl font-bold rounded-lg transform -rotate-2"
+								className="group relative px-6 py-4 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
 							>
-								<FileText size={24} />
-								My Resume
+								<FileText size={20} />
+								<span className="text-xs md:text-sm leading-relaxed">Resume</span>
 							</a>
+						</div>
+
+						{/* Pixel Decoration */}
+						<div className="flex gap-2 mt-4">
+							<div className="w-4 h-4 bg-red-500 border-2 border-black animate-pulse" />
+							<div className="w-4 h-4 bg-yellow-500 border-2 border-black animate-pulse" style={{ animationDelay: '200ms' }} />
+							<div className="w-4 h-4 bg-green-500 border-2 border-black animate-pulse" style={{ animationDelay: '400ms' }} />
+							<div className="w-4 h-4 bg-blue-500 border-2 border-black animate-pulse" style={{ animationDelay: '600ms' }} />
 						</div>
 					</div>
 				</div>
