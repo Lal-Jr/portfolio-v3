@@ -7,6 +7,7 @@ import ProjectShelf from "@/components/ProjectShelf";
 import WorkExperience from "@/components/WorkExperience";
 import QuestWall from "@/components/QuestWall";
 import ContactSection from "@/components/ContactSection";
+import PhilosophySection from "@/components/PhilosophySection";
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ export default function Home() {
 			<ProjectShelf />
 			<WorkExperience />
 			<QuestWall />
+			<PhilosophySection />
 			<ContactSection />
 		</div>
 	);
