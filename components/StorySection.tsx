@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { HERO_COMIC_PANELS, EXPERIENCE_DATA } from "@/constants";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import ComicScribble from "@/components/ui/ComicScribble";
-import ScribbleNode from "@/components/ui/ScribbleNode";
 import PixelLabel from "@/components/ui/PixelLabel";
 import Paperclip from "@/components/ui/Paperclip";
 import { Globe, Shield, Zap, Bot } from "lucide-react";
@@ -29,7 +28,7 @@ const StorySection = () => {
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
-        <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-16">
+        <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-48">
 
             {/* Background Scribbles (Global Decor) */}
             <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none">
@@ -56,18 +55,18 @@ const StorySection = () => {
                     </div>
                 </motion.div>
 
-                {/* 2. THE CURVE OF LIFE (Timeline container) */}
-                <div ref={containerRef} className="relative w-full h-[1600px] mt-0">
+                {/* 2. THE CURVE OF LIFE (Timeline container) - Compacted Height: 1400px (was 1600px) */}
+                <div ref={containerRef} className="relative w-full h-[1400px] mt-0">
 
-                    {/* SVG PATH */}
+                    {/* SVG PATH - Recalculated for 1400px height */}
                     <svg
-                        viewBox="0 0 1000 1600"
+                        viewBox="0 0 1000 1400"
                         className="absolute inset-0 w-full h-full pointer-events-none"
                         preserveAspectRatio="none"
                     >
                         {/* Dashed guide line */}
                         <motion.path
-                            d="M50,100 C200,100 800,300 900,500 C1000,700 800,900 200,1100 C-100,1300 200,1500 900,1500"
+                            d="M50,50 C150,50 800,250 900,420 C1000,600 800,800 200,950 C-50,1100 200,1250 900,1350"
                             fill="none"
                             stroke="#333"
                             strokeWidth="8"
@@ -76,7 +75,7 @@ const StorySection = () => {
                         />
                         {/* Actual Path */}
                         <motion.path
-                            d="M50,100 C200,100 800,300 900,500 C1000,700 800,900 200,1100 C-100,1300 200,1500 900,1500"
+                            d="M50,50 C150,50 800,250 900,420 C1000,600 800,800 200,950 C-50,1100 200,1250 900,1350"
                             fill="none"
                             stroke="white"
                             strokeWidth="6"
@@ -87,156 +86,128 @@ const StorySection = () => {
                         />
                     </svg>
 
-                    {/* INTERLEAVED CONTENT (Nodes + Text + Photos) - CLUSTERED LAYOUT */}
+                    {/* INTERLEAVED CONTENT (Nodes + Text + Photos) - COMPACT CLUSTERS */}
 
                     {/* --- CLUSTER 1: START (Left - Vertical: Photo Top, Text Bottom) --- 
-                        Photo at top-[2%].
+                        Photo at top-[1%].
                     */}
 
-                    {/* Photo 1: Fun/Chaos - Left side */}
+                    {/* Photo 1: Fun/Chaos - Left side - w-64 */}
                     <motion.div
-                        className="absolute top-[2%] left-[5%] md:left-[5%] w-40 rotate-[6deg] z-10 origin-top"
-                        whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
+                        className="absolute top-[1%] left-[5%] md:left-[5%] w-64 rotate-[6deg] z-10 origin-top"
+                        whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                            <Paperclip width={40} height={40} color="#38bdf8" className="rotate-[15deg] drop-shadow-md" />
+                            <Paperclip width={50} height={50} color="#38bdf8" className="rotate-[15deg] drop-shadow-md" />
                         </div>
-                        <div className="bg-white p-2 pb-6 shadow-xl transform transition-transform">
+                        <div className="bg-white p-3 pb-8 shadow-xl transform transition-transform">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7740.PNG" alt="Fun" fill className="object-cover" />
                             </div>
-                            <p className="font-['var(--font-caveat)'] text-zinc-800 text-center text-sm font-bold pt-2 leading-none">Originals</p>
                         </div>
                     </motion.div>
 
-                    {/* Text 1: Positioned BELOW the photo */}
-                    <div className="absolute top-[16%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left">
+                    {/* Text 1: Positioned BELOW the photo - Pushed down to top-[25%] to fix overlap */}
+                    <div className="absolute top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left">
                         <div className="mb-4">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: START</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
                                 This is how everything started... late night coding sessions in college dorms, finding joy in fixing that one broken div.
                             </p>
                         </div>
-                        {/* Button near text */}
-                        <button
-                            className="absolute -right-4 top-0 translate-x-1/2 scale-100 hover:scale-125 transition-transform"
-                            onClick={() => setActiveNode(activeNode === 'daily-planet' ? null : 'daily-planet')}
-                        >
-                            <ScribbleNode color="#38bdf8" isActive={activeNode === 'daily-planet'} />
-                        </button>
                     </div>
 
 
                     {/* --- CLUSTER 2: PLACEMENT (Right - Horizontal: Text Left, Photo Right) --- 
-                        Peak: 900, 500
+                        Peak: 900, 420 (approx top-[30%])
                     */}
 
                     {/* Text 2 */}
-                    <div className="absolute top-[30%] right-[25%] md:right-[22%] w-full max-w-[250px] z-20 text-right">
+                    <div className="absolute top-[32%] right-[32%] md:right-[28%] w-full max-w-[250px] z-20 text-right">
                         <div className="mt-4 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: BREAKTHROUGH</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
                                 The placement journey. Landing my first role at Wayne Enterprises wasn't luck—it was grinding data structures until they made sense.
                             </p>
                         </div>
-                        <button
-                            className="absolute -right-10 top-2 translate-x-1/2 scale-100 hover:scale-125 transition-transform"
-                            onClick={() => setActiveNode(activeNode === 'wayne' ? null : 'wayne')}
-                        >
-                            <ScribbleNode color="#fbbf24" isActive={activeNode === 'wayne'} />
-                        </button>
                     </div>
 
-                    {/* Photo 2 */}
+                    {/* Photo 2 - w-64 */}
                     <motion.div
-                        className="absolute top-[28%] right-[5%] md:right-[5%] w-44 rotate-[-4deg] z-30 origin-top"
-                        whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
+                        className="absolute top-[30%] right-[5%] md:right-[5%] w-64 rotate-[-4deg] z-30 origin-top"
+                        whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 right-10 z-20">
-                            <Paperclip width={40} height={40} color="#facc15" className="-rotate-12 drop-shadow-md" />
+                            <Paperclip width={50} height={50} color="#facc15" className="-rotate-12 drop-shadow-md" />
                         </div>
-                        <div className="bg-white p-2 pb-6 shadow-xl">
+                        <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
-                                <Image src="/avatars/IMG_7741.PNG" alt="Travel" fill className="object-cover" />
+                                <Image src="/avatars/IMG_7743.PNG" alt="Travel" fill className="object-cover" />
                             </div>
                         </div>
                     </motion.div>
 
 
                     {/* --- CLUSTER 3: CORPORATE EVOLUTION (Left - Horizontal: Photo Left, Text Right) --- 
-                        Loop: 200, 1100
+                        Loop: 200, 950 (approx top-[60-65%])
                     */}
 
-                    {/* Photo 3 */}
+                    {/* Photo 3 - w-64 */}
                     <motion.div
-                        className="absolute top-[65%] left-[8%] md:left-[15%] w-36 rotate-[3deg] z-10 origin-top"
-                        whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
+                        className="absolute top-[62%] left-[5%] md:left-[10%] w-64 rotate-[3deg] z-10 origin-top"
+                        whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                     >
                         {/* Paperclip */}
-                        <div className="absolute -top-3 left-6 z-20">
-                            <Paperclip width={36} height={36} color="#f472b6" className="rotate-[45deg] drop-shadow-md" />
+                        <div className="absolute -top-3 left-10 z-20">
+                            <Paperclip width={50} height={50} color="#f472b6" className="rotate-[45deg] drop-shadow-md" />
                         </div>
-                        <div className="bg-white p-2 pb-5 shadow-xl">
+                        <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
-                                <Image src="/avatars/IMG_7743.PNG" alt="Bike" fill className="object-cover" />
+                                <Image src="/avatars/IMG_7741.PNG" alt="Bike" fill className="object-cover" />
                             </div>
                         </div>
                     </motion.div>
 
                     {/* Text 3 */}
-                    <div className="absolute top-[67%] left-[28%] md:left-[35%] w-full max-w-[250px] z-20 text-left">
+                    <div className="absolute top-[67%] left-[32%] md:left-[35%] w-full max-w-[250px] z-20 text-left">
                         <div className="mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: EVOLUTION</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
                                 2.5 years in the corporate trenches. Evolving from "make it work" to "make it scalable". Designing systems that survive the test of time.
                             </p>
                         </div>
-                        <button
-                            className="absolute -left-12 top-2 translate-x-1/2 scale-100 hover:scale-125 transition-transform"
-                            onClick={() => setActiveNode(activeNode === 'stark' ? null : 'stark')}
-                        >
-                            <ScribbleNode color="#f472b6" isActive={activeNode === 'stark'} />
-                        </button>
                     </div>
 
 
                     {/* --- CLUSTER 4: FUTURE (Right - Vertical: Text Top, Photo Bottom) --- 
-                        End: 900, 1500
+                        End: 900, 1350
                     */}
 
-                    {/* Text 4: Positioned ABOVE the Photo */}
-                    <div className="absolute top-[75%] right-[5%] md:right-[5%] w-full max-w-[250px] z-20 text-center md:text-right">
+                    {/* Text 4: Positioned ABOVE the Photo - Compacted position top-[80%] */}
+                    <div className="absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
                         <div className="mb-4">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">CHAPTER 4: HORIZON</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                And now? Building for the future. AI, Agents, and whatever comes next. The story is just getting started. 🚀
+                                And now? Building for the future. AI, Agents, and whatever comes next. The story is just getting started.
                             </p>
                         </div>
-                        {/* Button near text */}
-                        <button
-                            className="absolute -left-10 md:left-auto md:-right-4 top-2 translate-x-1/2 scale-100 hover:scale-125 transition-transform"
-                            onClick={() => setActiveNode(activeNode === 'ai' ? null : 'ai')}
-                        >
-                            <ScribbleNode color="#4ade80" isSpecial={true} isActive={activeNode === 'ai'} />
-                        </button>
                     </div>
 
-                    {/* Photo 4: Growth - Right side */}
+                    {/* Photo 4: Growth - Right side - w-64 - Compacted position top-[90%] (almost at end) */}
                     <motion.div
-                        className="absolute top-[88%] right-[5%] md:right-[5%] w-48 rotate-[-5deg] z-10 origin-top"
-                        whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
+                        className="absolute top-[89%] right-[5%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
+                        whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 right-1/2 translate-x-1/2 z-20">
-                            <Paperclip width={40} height={40} color="#4ade80" className="-rotate-6 drop-shadow-md" />
+                            <Paperclip width={50} height={50} color="#4ade80" className="-rotate-6 drop-shadow-md" />
                         </div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7742.PNG" alt="Growth" fill className="object-cover" />
                             </div>
-                            <p className="font-['var(--font-caveat)'] text-zinc-800 text-center text-lg font-bold pt-2 rotate-1">LFG!</p>
                         </div>
                     </motion.div>
 
