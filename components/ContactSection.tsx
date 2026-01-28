@@ -29,7 +29,7 @@ const ContactSection = () => {
 				<div className="flex flex-col space-y-8 order-2 md:order-1 relative z-10">
 					<div className="space-y-4">
 						<h3 className="text-2xl text-zinc-400 italic font-medium transform -rotate-2">
-							That's how I think
+							The Bottom Line
 						</h3>
 
 						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-zinc-900">

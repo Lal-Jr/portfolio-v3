@@ -207,14 +207,64 @@ const PhilosophySection = () => {
 
                     {/* Connector Lines (SVG) from Center to Widgets */}
                     <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20" viewBox="0 0 800 800">
-                        {/* Lines radiating out */}
-                        <motion.path d="M400,400 L400,100" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1 }} />
-                        <motion.path d="M400,400 L700,400" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.2 }} />
-                        <motion.path d="M400,400 L400,700" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.4 }} />
-                        <motion.path d="M400,400 L100,400" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.6 }} />
+                        {/* Lines radiating out with flowing animation */}
+                        <motion.path
+                            d="M400,400 L400,100"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeDasharray="10,5"
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1 }}
+                            animate={{ strokeDashoffset: [0, -15] }}
+                            style={{ strokeDashoffset: 0 }}
+                        />
+                        <motion.path
+                            d="M400,400 L700,400"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeDasharray="10,5"
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                            animate={{ strokeDashoffset: [0, -15] }}
+                            style={{ strokeDashoffset: 0 }}
+                        />
+                        <motion.path
+                            d="M400,400 L400,700"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeDasharray="10,5"
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            animate={{ strokeDashoffset: [0, -15] }}
+                            style={{ strokeDashoffset: 0 }}
+                        />
+                        <motion.path
+                            d="M400,400 L100,400"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeDasharray="10,5"
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            animate={{ strokeDashoffset: [0, -15] }}
+                            style={{ strokeDashoffset: 0 }}
+                        />
 
-                        {/* Diamond Outline */}
-                        <motion.path d="M400,100 L700,400 L400,700 L100,400 Z" stroke="white" strokeWidth="1" strokeOpacity="0.5" fill="none" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 2 }} />
+                        {/* Diamond Outline with subtle pulse */}
+                        <motion.path
+                            d="M400,100 L700,400 L400,700 L100,400 Z"
+                            stroke="white"
+                            strokeWidth="1"
+                            strokeOpacity="0.5"
+                            fill="none"
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 2 }}
+                            animate={{ strokeOpacity: [0.3, 0.6, 0.3] }}
+                        />
                     </svg>
                 </div>
 
