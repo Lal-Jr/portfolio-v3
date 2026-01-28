@@ -8,7 +8,7 @@ import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 
 const ContactSection = () => {
 	const [copied, setCopied] = useState(false);
-	const email = "arjragh@iu.edu";
+	const email = "harishlal80@gmail.com";
 
 	const copyToClipboard = async () => {
 		try {
@@ -72,8 +72,8 @@ const ContactSection = () => {
 
 					{/* Speech Bubble */}
 					<div className="relative z-20 translate-y-4 translate-x-12 md:translate-x-20">
-						<div className="bg-blue-500 text-white rounded-[2rem] rounded-bl-sm px-6 py-4 text-xl md:text-2xl font-bold shadow-xl relative transform rotate-3 animate-float-slow max-w-[280px] text-center">
-							<span className="absolute -top-6 left-0 text-zinc-400 text-lg font-['var(--font-caveat)'] transform -rotate-3">Arjun</span>
+						<div className="bg-blue-500 text-white rounded-[2rem] px-6 py-4 text-xl md:text-2xl font-bold shadow-xl relative transform rotate-3 animate-float-slow max-w-[280px] text-center">
+							<span className="absolute -top-6 left-0 text-zinc-400 text-lg font-['var(--font-caveat)'] transform -rotate-3">Harish</span>
 							If this made sense, let's chat!
 							{/* Pointy bit */}
 							<div className="absolute -bottom-2 left-6 w-6 h-6 bg-blue-500 transform rotate-45" />
@@ -84,7 +84,7 @@ const ContactSection = () => {
 					<div className="relative w-[300px] h-[380px] md:w-[380px] md:h-[450px] z-10">
 						<Image
 							src={AVATARS.WAVE}
-							alt="Arjun Waving"
+							alt="Harish Waving"
 							fill
 							className="object-contain"
 							priority

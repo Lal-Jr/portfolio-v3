@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Hero from "@/components/Hero";
 import ProjectShelf from "@/components/ProjectShelf";
 import StorySection from "@/components/StorySection";
-import PhilosophyAndQuests from "@/components/PhilosophyAndQuests";
+import SystemsSection from "@/components/SystemsSection";
 import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
 			<Hero />
 			<ProjectShelf />
 			<StorySection />
-			<PhilosophyAndQuests />
+			<SystemsSection />
 			<ContactSection />
 		</div>
 	);

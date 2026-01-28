@@ -1,21 +1,16 @@
 "use client";
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import { Copy, Plus, Minus, MoveHorizontal, Type, MousePointer2 } from "lucide-react";
+import React, { useState } from "react";
+import { Type } from "lucide-react";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
-import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
-import ComicScribble from "@/components/ui/ComicScribble";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ASPIRATION_QUESTS } from "@/constants";
-import QuestCard from "./QuestCard";
+import { motion } from "framer-motion";
 
-// --- WIDGETS (From PhilosophySection) ---
+// --- WIDGETS ---
 
 const ChatBubbleWidget = () => {
     const [variant, setVariant] = useState<"Left" | "Right">("Left");
 
     return (
-        <div className="relative bg-white rounded-xl shadow-lg border border-zinc-200 p-4 w-[280px] select-none transform transition-transform hover:scale-105 duration-300">
+        <div className="relative bg-white rounded-xl shadow-lg border border-zinc-200 w-[280px] select-none transform transition-transform hover:scale-105 duration-300">
             {/* Header / Controls */}
             <div className="flex justify-between items-center border-b border-zinc-100 pb-2 mb-3">
                 <span className="text-xs font-semibold text-zinc-500">Chat bubble</span>
@@ -144,130 +139,111 @@ const TypographyWidget = () => {
     );
 }
 
-// --- MAIN COMBINED COMPONENT ---
-
-const PhilosophyAndQuests = () => {
-    // --- Quest Wall Logic ---
-    const questRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: questRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Map vertical scroll to horizontal movement for the Quest section
-    // Using a simpler transform for the combined section context
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-
+const ColorPaletteWidget = () => {
     return (
-        <section className="relative w-full flex flex-col items-center justify-center pt-20 pb-0 overflow-hidden z-20">
+        <div className="relative bg-white rounded-lg shadow-sm border border-indigo-200 p-3 w-[180px] h-[180px] rotate-6 hover:rotate-0 transition-transform duration-300 flex flex-col gap-2">
 
-            {/* ================= PART 1: PHILOSOPHY ================= */}
-            <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center relative px-6 md:px-20 mb-32">
-
-                {/* LEFT: The Text */}
-                <div className="relative z-20 order-2 lg:order-1">
-                    <div className="relative">
-                        <h3 className="text-2xl text-zinc-400 italic font-medium mb-6 font-['var(--font-caveat)']">My Philosophy</h3>
-
-                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]">
-                            I think in systems, <br />
-                            not just one off screens
-                        </h2>
-
-                        <div className="mt-8 text-xl md:text-2xl leading-relaxed text-zinc-400 max-w-xl">
-                            My eng background makes me see{" "}
-                            <HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300/80">
-                                patterns, edge cases, and
-                            </HighlighterSpan>{" "}
-                            <br className="hidden md:block" />
-                            <HighlighterSpan delay={0.4} rotation={1} color="bg-green-300/80">
-                                long-term maintenance
-                            </HighlighterSpan>{" "}
-                            ... plus, it makes things consistent
-                        </div>
-                    </div>
-
-                    {/* Decorative Arrow connecting text to widgets */}
-                    <div className="absolute -bottom-12 right-0 hidden md:block opacity-60">
-                        <HandDrawnArrow
-                            type="curved-down"
-                            width={100}
-                            height={80}
-                            color="#52525b"
-                            className="transform rotate-12"
-                        />
-                    </div>
-                </div>
-
-                {/* RIGHT: The Visuals (Floating Widgets) */}
-                <div className="relative h-[400px] md:h-[500px] w-full flex items-center justify-center order-1 lg:order-2 perspective-1000">
-
-                    {/* Widget 1: Chat Bubble (Left, floating) */}
-                    <div className="absolute top-10 left-0 md:-left-8 z-20 animate-float-slow">
-                        <ChatBubbleWidget />
-                        {/* Connecting line/arrow hint */}
-                        <div className="absolute -left-12 top-12 opacity-40 hidden md:block">
-                            <span className="font-['var(--font-caveat)'] text-2xl text-zinc-400 -rotate-12 block">Components</span>
-                        </div>
-                    </div>
-
-                    {/* Widget 2: Typography (Right, floating) */}
-                    <div className="absolute bottom-20 right-0 md:-right-4 z-30 animate-float-medium">
-                        <TypographyWidget />
-                    </div>
-
-                    {/* Widget 3: Spacing (Center/Bottom, layered) */}
-                    <div className="absolute bottom-40 left-1/2 -translate-x-1/2 md:translate-x-12 z-10 scale-90 opacity-80 blur-[0.5px] hover:blur-0 transition-all duration-300">
-                        <SpacingWidget />
-                    </div>
-
-                    {/* Background doodles/decoration */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
-                        <div className="absolute top-0 right-20 opacity-20 rotate-45">
-                            <ComicScribble type="zigzag" width={100} color="#a1a1aa" />
-                        </div>
-                        <div className="absolute bottom-10 left-10 opacity-20 -rotate-12">
-                            <ComicScribble type="loop" width={80} color="#a1a1aa" />
-                        </div>
-                    </div>
-
+            {/* Header */}
+            <div className="flex justify-between items-center border-b border-indigo-100 pb-2">
+                <span className="text-xs font-bold text-zinc-600">Palette.json</span>
+                <div className="flex gap-1">
+                    <div className="w-2 h-2 rounded-full bg-red-400" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-400" />
                 </div>
             </div>
 
-            {/* ================= PART 2: QUEST WALL ================= */}
-            <div ref={questRef} className="relative w-full py-10 bg-transparent">
-                {/* Optional Header for the Quests Section to tie it to Philosophy */}
-                <div className="w-full text-center mb-10 px-6">
-                    <p className="font-['var(--font-caveat)'] text-2xl text-zinc-500 rotate-1">
-                        ...and these systems power my future quests:
-                    </p>
+            {/* Colors Grid */}
+            <div className="grid grid-cols-2 gap-2 flex-1">
+                <div className="bg-indigo-500 rounded-md relative group overflow-hidden">
+                    <span className="absolute bottom-1 left-1 text-[8px] text-white/80 font-mono opacity-0 group-hover:opacity-100">#6366f1</span>
+                </div>
+                <div className="bg-rose-400 rounded-md relative group overflow-hidden">
+                    <span className="absolute bottom-1 left-1 text-[8px] text-white/80 font-mono opacity-0 group-hover:opacity-100">#fb7185</span>
+                </div>
+                <div className="bg-emerald-400 rounded-md relative group overflow-hidden">
+                    <span className="absolute bottom-1 left-1 text-[8px] text-white/80 font-mono opacity-0 group-hover:opacity-100">#34d399</span>
+                </div>
+                <div className="bg-amber-400 rounded-md relative group overflow-hidden">
+                    <span className="absolute bottom-1 left-1 text-[8px] text-white/80 font-mono opacity-0 group-hover:opacity-100">#fbbf24</span>
+                </div>
+            </div>
+
+            {/* Floating Label */}
+            <div className="absolute -top-2 -left-4 z-10">
+                <div className="bg-indigo-500 text-white text-[10px] px-2 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                    Colors
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- MAIN COMPONENT ---
+
+const PhilosophySection = () => {
+    return (
+        <section className="relative w-full flex flex-col items-center justify-center pt-32 pb-48 overflow-visible z-20">
+
+            {/* ================= SYSTEMS (DIAMOND LAYOUT) ================= */}
+            <div className="relative w-full max-w-6xl min-h-[800px] flex items-center justify-center mb-0">
+
+                {/* CENTER: The Philosophy Text (The Core) */}
+                <div className="absolute z-30 text-center max-w-xl px-4 pointer-events-none">
+                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
+                        I THINK IN <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500">SYSTEMS.</span>
+                    </h2>
+                    <div className="text-lg md:text-xl text-zinc-400 font-medium leading-relaxed max-w-sm mx-auto">
+                        Not just screens. <br />
+                        <HighlighterSpan delay={0.2} rotation={-1} color="bg-indigo-500/30">
+                            Scalable patterns.
+                        </HighlighterSpan>{" "}
+                        <HighlighterSpan delay={0.4} rotation={1} color="bg-rose-500/30">
+                            Edge cases.
+                        </HighlighterSpan>{" "}
+                        <br />
+                        Built for the long haul.
+                    </div>
+
+                    {/* Connector Lines (SVG) from Center to Widgets */}
+                    <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20" viewBox="0 0 800 800">
+                        {/* Lines radiating out */}
+                        <motion.path d="M400,400 L400,100" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1 }} />
+                        <motion.path d="M400,400 L700,400" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.2 }} />
+                        <motion.path d="M400,400 L400,700" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.4 }} />
+                        <motion.path d="M400,400 L100,400" stroke="white" strokeWidth="2" strokeDasharray="5,5" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.6 }} />
+
+                        {/* Diamond Outline */}
+                        <motion.path d="M400,100 L700,400 L400,700 L100,400 Z" stroke="white" strokeWidth="1" strokeOpacity="0.5" fill="none" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 2 }} />
+                    </svg>
                 </div>
 
-                {/* MASK GRADIENTS FOR FADE EFFECT */}
-                <div className="absolute top-0 left-0 h-full w-12 md:w-32 bg-gradient-to-r from-[#050505] to-transparent z-20 pointer-events-none" />
-                <div className="absolute top-0 right-0 h-full w-12 md:w-32 bg-gradient-to-l from-[#050505] to-transparent z-20 pointer-events-none" />
+                {/* ORBITING WIDGETS (Diamond Points) */}
 
-                {/* SCROLL-DRIVEN STRIP WITH MANUAL DRAG */}
-                <div className="flex w-full overflow-visible cursor-grab active:cursor-grabbing">
-                    <motion.div
-                        className="w-full"
-                        style={{ x }}
-                    >
-                        <motion.div
-                            drag="x"
-                            dragConstraints={{ left: -1000, right: 200 }}
-                            className="flex gap-10 pl-8 md:pl-32 py-16 w-max"
-                        >
-                            {ASPIRATION_QUESTS.map((quest, i) => (
-                                <QuestCard key={`${quest.id}-${i}`} quest={quest} index={i} />
-                            ))}
-                        </motion.div>
-                    </motion.div>
+                {/* TOP: Spacing (Structure) */}
+                <div className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                    <SpacingWidget />
                 </div>
+
+                {/* RIGHT: Typography (Style) */}
+                <div className="absolute top-1/2 right-4 md:right-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                    <TypographyWidget />
+                </div>
+
+                {/* BOTTOM: Chat Bubble (Component/Func) */}
+                <div className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                    <ChatBubbleWidget />
+                </div>
+
+                {/* LEFT: Color Palette (Theme) */}
+                <div className="absolute top-1/2 left-4 md:left-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                    <ColorPaletteWidget />
+                </div>
+
             </div>
 
         </section>
     );
 };
 
-export default PhilosophyAndQuests;
+export default PhilosophySection;

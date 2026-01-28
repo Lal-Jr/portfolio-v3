@@ -6,7 +6,7 @@ export const AVATARS = {
 	JUMP: "/avatars/IMG_7734.png",
 	CELEBRATE: "/avatars/IMG_7735.png",
 	BIKE: "/avatars/IMG_7737.png",
-	WAVE: "/avatars/IMG_7739.png",
+	WAVE: "/avatars/IMG_7732.PNG",
 } as const;
 
 export const PANELS = [
