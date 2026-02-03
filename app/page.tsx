@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Hero from "@/components/Hero";
 import ProjectShelf from "@/components/ProjectShelf";
 import StorySection from "@/components/StorySection";
-import SystemsSection from "@/components/SystemsSection";
+import ThoughtProcessSection from "@/components/ThoughtProcessSection";
 import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
 		<div ref={containerRef} className="relative w-full" style={{ scrollBehavior: 'smooth' }}>
 			<Hero />
 			<ProjectShelf />
-			<SystemsSection />
+			<ThoughtProcessSection />
 			<StorySection />
 			<ContactSection />
 		</div>

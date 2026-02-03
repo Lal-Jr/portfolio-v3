@@ -1,21 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 import { HERO_COMIC_PANELS } from "@/constants";
 import HandwrittenText from "@/components/ui/HandwrittenText";
 import ComicBubble from "@/components/ui/ComicBubble";
 import ComicActionLines from "@/components/ui/ComicActionLines";
 
 export default function Hero() {
+    const heroRef = useRef<HTMLElement>(null);
+
+    // Track scroll progress through hero section
+    const { scrollYProgress } = useScroll({
+        target: heroRef,
+        offset: ["start start", "end start"]
+    });
+
+    // Parallax effects
+    const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+    const heroTextOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
+    const comicPanelsY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+    const comicPanelsScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.95, 0.8]);
 
     return (
         <section
+            ref={heroRef}
             className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 pt-20 pb-0 select-none touch-none"
         >
 
             {/* Main Content */}
-            <div className="z-20 w-full max-w-7xl flex flex-col items-center text-center space-y-8">
+            <motion.div
+                className="z-20 w-full max-w-7xl flex flex-col items-center text-center space-y-8"
+                style={{ y: heroTextY, opacity: heroTextOpacity }}
+            >
 
                 {/* Top Text */}
                 <motion.div
@@ -149,7 +167,10 @@ export default function Hero() {
                 </motion.div>
 
                 {/* COMIC STRIP SECTION */}
-                <div className="relative w-full overflow-visible pb-16">
+                <motion.div
+                    className="relative w-full overflow-visible pb-16"
+                    style={{ y: comicPanelsY, scale: comicPanelsScale }}
+                >
                     <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 px-4">
                         {HERO_COMIC_PANELS.map((panel, index) => (
                             <motion.div
@@ -196,7 +217,7 @@ export default function Hero() {
                             </motion.div>
                         ))}
                     </div>
-                </div>
+                </motion.div>
 
                 {/* "Here's How" Section matching reference */}
                 <motion.div
@@ -325,7 +346,7 @@ export default function Hero() {
                         </span>
                     </motion.h3>
                 </motion.div>
-            </div>
+            </motion.div>
         </section>
     );
 }

@@ -1,15 +1,27 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
 import { SHELF_PROJECTS } from "@/constants";
 import ProjectItem from "@/components/shelf/ProjectItem";
 import ProjectDetailView from "@/components/shelf/ProjectDetailView";
 
 export default function ProjectShelf() {
 	const [selectedProject, setSelectedProject] = useState<typeof SHELF_PROJECTS[number] | null>(null);
+	const shelfRef = useRef<HTMLDivElement>(null);
+
+	// Track scroll progress through shelf section
+	const { scrollYProgress } = useScroll({
+		target: shelfRef,
+		offset: ["start end", "end start"]
+	});
+
+	// Transform values for transition section
+	const transitionY = useTransform(scrollYProgress, [0.7, 0.9], [50, 0]);
+	const transitionOpacity = useTransform(scrollYProgress, [0.7, 0.85, 1], [0, 1, 0.8]);
+	const transitionScale = useTransform(scrollYProgress, [0.7, 0.85], [0.9, 1]);
 
 	return (
-		<div className="w-full bg-transparent pb-12 pt-12 overflow-visible">
+		<div ref={shelfRef} className="w-full bg-transparent pb-12 pt-12 overflow-visible">
 			<div className="max-w-5xl mx-auto">
 				{SHELF_PROJECTS.map((proj, index) => (
 					<ProjectItem
@@ -52,7 +64,10 @@ export default function ProjectShelf() {
 			</div>
 
 			{/* MORE IN THE WORKS SECTION - HANDWRITTEN COMIC STYLE */}
-			<div className="mt-24 flex flex-col items-center justify-center font-['var(--font-caveat)'] text-white">
+			<motion.div
+				className="mt-24 flex flex-col items-center justify-center font-['var(--font-caveat)'] text-white"
+				style={{ y: transitionY, opacity: transitionOpacity, scale: transitionScale }}
+			>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					whileInView={{ opacity: 1, y: 0 }}
@@ -123,7 +138,7 @@ export default function ProjectShelf() {
 						</motion.div>
 					</div>
 				</motion.div>
-			</div>
+			</motion.div>
 		</div>
 	);
 }

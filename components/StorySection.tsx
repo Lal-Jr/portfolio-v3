@@ -23,12 +23,22 @@ const StorySection = () => {
     // --- Work Experience Logic ---
     const [activeNode, setActiveNode] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    // Track scroll progress through the story section
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start center", "end center"]
+    });
+
+    // Transform scroll progress to path length (0 to 1)
+    const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     // We still use EXPERIENCE_DATA for the popup details
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
-        <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-48">
+        <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-48">
 
             {/* Background Scribbles (Global Decor) */}
             <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none">
@@ -77,16 +87,14 @@ const StorySection = () => {
                             strokeLinecap="round"
                             strokeDasharray="12 12"
                         />
-                        {/* Actual Path */}
+                        {/* Actual Path - Animated based on scroll */}
                         <motion.path
                             d="M50,50 C150,50 800,250 900,420 C1000,600 800,800 200,950 C-50,1100 200,1250 900,1350"
                             fill="none"
                             stroke="white"
                             strokeWidth="6"
                             strokeLinecap="round"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 2.5, ease: "easeInOut" }}
+                            style={{ pathLength }}
                         />
                     </svg>
 

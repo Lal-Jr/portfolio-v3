@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Type } from "lucide-react";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 // --- WIDGETS ---
 
@@ -180,15 +180,47 @@ const ColorPaletteWidget = () => {
 
 // --- MAIN COMPONENT ---
 
-const PhilosophySection = () => {
-    return (
-        <section className="relative w-full flex flex-col items-center justify-center pt-32 pb-32 overflow-visible z-20">
+const ThoughtProcessSection = () => {
+    const sectionRef = useRef<HTMLElement>(null);
 
-            {/* ================= SYSTEMS (DIAMOND LAYOUT) ================= */}
+    // Track scroll progress through this section
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+
+    // Transform values based on scroll progress
+    const widgetScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.8]);
+    const widgetOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.5]);
+
+    const textScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.9]);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
+
+    // Individual widget animations with stagger effect
+    const topWidgetY = useTransform(scrollYProgress, [0, 0.3, 0.7], [-100, 0, 0]);
+    const rightWidgetX = useTransform(scrollYProgress, [0, 0.35, 0.7], [100, 0, 0]);
+    const bottomWidgetY = useTransform(scrollYProgress, [0, 0.4, 0.7], [100, 0, 0]);
+    const leftWidgetX = useTransform(scrollYProgress, [0, 0.45, 0.7], [-100, 0, 0]);
+
+    // SVG path animations
+    const pathLength = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
+    const diamondPathLength = useTransform(scrollYProgress, [0.3, 0.7], [0, 1]);
+
+    return (
+        <section ref={sectionRef} className="relative w-full flex flex-col items-center justify-center pt-32 pb-32 overflow-visible z-20">
+
+            {/* ================= THOUGHT PROCESS (DIAMOND LAYOUT) ================= */}
             <div className="relative w-full max-w-6xl min-h-[800px] flex items-center justify-center mb-0">
 
                 {/* CENTER: The Philosophy Text (The Core) */}
-                <div className="absolute z-30 text-center max-w-xl px-4 pointer-events-none">
+                <motion.div
+                    className="absolute z-30 text-center max-w-2xl px-4 pointer-events-none"
+                    style={{ scale: textScale, opacity: textOpacity }}
+                >
+                    {/* Intro text about thought process */}
+                    <p className="text-xl md:text-2xl font-['var(--font-caveat)'] text-zinc-500 mb-4 italic">
+                        Here's how I think, how I work...
+                    </p>
                     <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
                         I THINK IN <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500">SYSTEMS.</span>
@@ -207,88 +239,81 @@ const PhilosophySection = () => {
 
                     {/* Connector Lines (SVG) from Center to Widgets */}
                     <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20" viewBox="0 0 800 800">
-                        {/* Lines radiating out with flowing animation */}
+                        {/* Lines radiating out with scroll-based animation */}
                         <motion.path
                             d="M400,400 L400,100"
                             stroke="white"
                             strokeWidth="2"
                             strokeDasharray="10,5"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1 }}
-                            animate={{ strokeDashoffset: [0, -15] }}
-                            style={{ strokeDashoffset: 0 }}
+                            style={{ pathLength }}
                         />
                         <motion.path
                             d="M400,400 L700,400"
                             stroke="white"
                             strokeWidth="2"
                             strokeDasharray="10,5"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                            animate={{ strokeDashoffset: [0, -15] }}
-                            style={{ strokeDashoffset: 0 }}
+                            style={{ pathLength }}
                         />
                         <motion.path
                             d="M400,400 L400,700"
                             stroke="white"
                             strokeWidth="2"
                             strokeDasharray="10,5"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1, delay: 0.4 }}
-                            animate={{ strokeDashoffset: [0, -15] }}
-                            style={{ strokeDashoffset: 0 }}
+                            style={{ pathLength }}
                         />
                         <motion.path
                             d="M400,400 L100,400"
                             stroke="white"
                             strokeWidth="2"
                             strokeDasharray="10,5"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1, delay: 0.6 }}
-                            animate={{ strokeDashoffset: [0, -15] }}
-                            style={{ strokeDashoffset: 0 }}
+                            style={{ pathLength }}
                         />
 
-                        {/* Diamond Outline with subtle pulse */}
+                        {/* Diamond Outline with scroll-based animation */}
                         <motion.path
                             d="M400,100 L700,400 L400,700 L100,400 Z"
                             stroke="white"
                             strokeWidth="1"
                             strokeOpacity="0.5"
                             fill="none"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 2 }}
-                            animate={{ strokeOpacity: [0.3, 0.6, 0.3] }}
+                            style={{ pathLength: diamondPathLength }}
                         />
                     </svg>
-                </div>
+                </motion.div>
 
                 {/* ORBITING WIDGETS (Diamond Points) */}
 
                 {/* TOP: Spacing (Structure) */}
-                <div className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                <motion.div
+                    className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    style={{ scale: widgetScale, opacity: widgetOpacity, y: topWidgetY }}
+                >
                     <SpacingWidget />
-                </div>
+                </motion.div>
 
                 {/* RIGHT: Typography (Style) */}
-                <div className="absolute top-1/2 right-4 md:right-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                <motion.div
+                    className="absolute top-1/2 right-4 md:right-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    style={{ scale: widgetScale, opacity: widgetOpacity, x: rightWidgetX }}
+                >
                     <TypographyWidget />
-                </div>
+                </motion.div>
 
                 {/* BOTTOM: Chat Bubble (Component/Func) */}
-                <div className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                <motion.div
+                    className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    style={{ scale: widgetScale, opacity: widgetOpacity, y: bottomWidgetY }}
+                >
                     <ChatBubbleWidget />
-                </div>
+                </motion.div>
 
                 {/* LEFT: Color Palette (Theme) */}
-                <div className="absolute top-1/2 left-4 md:left-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100">
+                <motion.div
+                    className="absolute top-1/2 left-4 md:left-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    style={{ scale: widgetScale, opacity: widgetOpacity, x: leftWidgetX }}
+                >
                     <ColorPaletteWidget />
-                </div>
+                </motion.div>
 
             </div>
 
@@ -296,4 +321,4 @@ const PhilosophySection = () => {
     );
 };
 
-export default PhilosophySection;
+export default ThoughtProcessSection;
