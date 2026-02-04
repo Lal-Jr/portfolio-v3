@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Copy, Check, FileText } from "lucide-react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AVATARS } from "@/constants";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
@@ -9,6 +10,23 @@ import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 const ContactSection = () => {
 	const [copied, setCopied] = useState(false);
 	const email = "harishlal80@gmail.com";
+	const sectionRef = useRef<HTMLDivElement>(null);
+
+	// Apple-style scroll animations
+	const { scrollYProgress } = useScroll({
+		target: sectionRef,
+		offset: ["start end", "end start"]
+	});
+
+	// Smooth transforms with Apple-like easing
+	const leftColumnY = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -20]);
+	const leftColumnScale = useTransform(scrollYProgress, [0, 0.4, 1], [0.92, 1, 1]);
+
+	const rightColumnY = useTransform(scrollYProgress, [0, 0.5, 1], [80, 0, -30]);
+	const rightColumnScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.9, 1, 1]);
+
+	const avatarScale = useTransform(scrollYProgress, [0, 0.5], [0.85, 1]);
+	const avatarRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-5, 0, 2]);
 
 	const copyToClipboard = async () => {
 		try {
@@ -21,12 +39,15 @@ const ContactSection = () => {
 	};
 
 	return (
-		<div className="relative min-h-[80vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10">
+		<div ref={sectionRef} className="relative min-h-[80vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10">
 
 			<div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center">
 
 				{/* LEFT COLUMN: PHILOSOPHY TEXT */}
-				<div className="flex flex-col space-y-8 order-2 md:order-1 relative z-10">
+				<motion.div
+					className="flex flex-col space-y-8 order-2 md:order-1 relative z-10"
+					style={{ y: leftColumnY, scale: leftColumnScale }}
+				>
 					<div className="space-y-4">
 
 						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-white font-['var(--font-caveat)']">
@@ -62,10 +83,13 @@ const ContactSection = () => {
 						for the small details that quietly <br />
 						shape how something feels.
 					</div>
-				</div>
+				</motion.div>
 
 				{/* RIGHT COLUMN: AVATAR & ACTIONS */}
-				<div className="flex flex-col items-center relative gap-4 order-1 md:order-2">
+				<motion.div
+					className="flex flex-col items-center relative gap-4 order-1 md:order-2"
+					style={{ y: rightColumnY, scale: rightColumnScale }}
+				>
 
 					{/* Speech Bubble - Pixel Style */}
 					<div className="relative z-20 translate-y-4 translate-x-12 md:translate-x-20">
@@ -77,7 +101,10 @@ const ContactSection = () => {
 					</div>
 
 					{/* Avatar */}
-					<div className="relative w-[300px] h-[380px] md:w-[380px] md:h-[450px] z-10">
+					<motion.div
+						className="relative w-[300px] h-[380px] md:w-[380px] md:h-[450px] z-10"
+						style={{ scale: avatarScale, rotate: avatarRotate }}
+					>
 						<Image
 							src={AVATARS.WAVE}
 							alt="Harish Waving"
@@ -85,7 +112,7 @@ const ContactSection = () => {
 							className="object-contain"
 							priority
 						/>
-					</div>
+					</motion.div>
 
 					{/* Actions Container - Pixel Retro Style */}
 					<div className="flex flex-col items-center gap-6 mt-[-20px] relative z-20 w-full pl-8 md:pl-0">
@@ -128,7 +155,7 @@ const ContactSection = () => {
 							<div className="w-4 h-4 bg-blue-500 border-2 border-black animate-pulse" style={{ animationDelay: '600ms' }} />
 						</div>
 					</div>
-				</div>
+				</motion.div>
 			</div>
 		</div>
 	);

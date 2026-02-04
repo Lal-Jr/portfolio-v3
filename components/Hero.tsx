@@ -17,11 +17,12 @@ export default function Hero() {
         offset: ["start start", "end start"]
     });
 
-    // Parallax effects
+    // Scroll-based transforms (no opacity fades)
     const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-    const heroTextOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
+    const heroTextScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.98, 0.9]);
     const comicPanelsY = useTransform(scrollYProgress, [0, 1], [0, -150]);
     const comicPanelsScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.95, 0.8]);
+    const comicPanelRotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
 
     return (
         <section
@@ -32,16 +33,11 @@ export default function Hero() {
             {/* Main Content */}
             <motion.div
                 className="z-20 w-full max-w-7xl flex flex-col items-center text-center space-y-8"
-                style={{ y: heroTextY, opacity: heroTextOpacity }}
+                style={{ y: heroTextY, scale: heroTextScale }}
             >
 
                 {/* Top Text */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="space-y-6 relative"
-                >
+                <div className="space-y-6 relative">
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-bold leading-tight tracking-tighter max-w-6xl mx-auto mt-8">
                         {/* "I" with Left Annotation */}
@@ -164,20 +160,18 @@ export default function Hero() {
                         <br className="hidden md:block" />
                         to craft interfaces people instantly understand.
                     </h1>
-                </motion.div>
+                </div>
 
                 {/* COMIC STRIP SECTION */}
                 <motion.div
                     className="relative w-full overflow-visible pb-16"
-                    style={{ y: comicPanelsY, scale: comicPanelsScale }}
+                    style={{ y: comicPanelsY, scale: comicPanelsScale, rotate: comicPanelRotate }}
                 >
                     <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 px-4">
                         {HERO_COMIC_PANELS.map((panel, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, scale: 0, rotate: panel.rotate }}
-                                animate={{ opacity: 1, scale: 1, rotate: panel.rotate }}
-                                transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 200 }}
+                                initial={{ scale: 1, rotate: panel.rotate }}
                                 whileHover={{
                                     scale: 1.15,
                                     rotate: 0,
@@ -220,21 +214,13 @@ export default function Hero() {
                 </motion.div>
 
                 {/* "Here's How" Section matching reference */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                    className="pt-32 pb-0 flex flex-col items-center relative"
-                >
+                <div className="pt-32 pb-0 flex flex-col items-center relative">
                     {/* Sunburst Lines */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] h-[400px] pointer-events-none">
                         {[...Array(12)].map((_, i) => (
-                            <motion.div
+                            <div
                                 key={i}
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 0.5, scale: 1 }}
-                                transition={{ delay: 1.8 + i * 0.1, duration: 0.5 }}
-                                className="absolute top-1/2 left-1/2 w-[2px] h-[100px] bg-gray-600 origin-bottom"
+                                className="absolute top-1/2 left-1/2 w-[2px] h-[100px] bg-gray-600 origin-bottom opacity-50"
                                 style={{
                                     transform: `translate(-50%, -50%) rotate(${i * 30}deg) translateY(-80px)`,
                                 }}
@@ -298,10 +284,7 @@ export default function Hero() {
                     </div>
 
                     {/* "Here's How" Text */}
-                    <motion.h3
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 2.2 }}
+                    <h3
                         className="mt-8 text-5xl md:text-6xl font-sans font-bold text-white relative z-20 bg-[#050505] px-4"
                     >
                         Here&apos;s <span className="relative inline-block text-white">
@@ -344,8 +327,8 @@ export default function Hero() {
                                 />
                             </svg>
                         </span>
-                    </motion.h3>
-                </motion.div>
+                    </h3>
+                </div>
             </motion.div>
         </section>
     );

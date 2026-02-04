@@ -34,6 +34,19 @@ const StorySection = () => {
     // Transform scroll progress to path length (0 to 1)
     const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
+    // Apple-style parallax for photos and text
+    const photo1Y = useTransform(scrollYProgress, [0, 0.3], [40, -20]);
+    const photo1Scale = useTransform(scrollYProgress, [0, 0.2], [0.92, 1]);
+
+    const photo2Y = useTransform(scrollYProgress, [0.2, 0.5], [60, -30]);
+    const photo2Rotate = useTransform(scrollYProgress, [0.2, 0.4], [-8, -4]);
+
+    const photo3Y = useTransform(scrollYProgress, [0.5, 0.7], [50, -25]);
+    const photo3Scale = useTransform(scrollYProgress, [0.5, 0.65], [0.9, 1]);
+
+    const photo4Y = useTransform(scrollYProgress, [0.7, 1], [70, -35]);
+    const photo4Rotate = useTransform(scrollYProgress, [0.7, 0.9], [-10, -5]);
+
     // We still use EXPERIENCE_DATA for the popup details
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
@@ -108,6 +121,7 @@ const StorySection = () => {
                     <motion.div
                         className="absolute top-[1%] left-[5%] md:left-[5%] w-64 rotate-[6deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
+                        style={{ y: photo1Y, scale: photo1Scale }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
@@ -149,6 +163,7 @@ const StorySection = () => {
                     <motion.div
                         className="absolute top-[30%] right-[5%] md:right-[5%] w-64 rotate-[-4deg] z-30 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
+                        style={{ y: photo2Y, rotate: photo2Rotate }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 right-10 z-20">
@@ -170,6 +185,7 @@ const StorySection = () => {
                     <motion.div
                         className="absolute top-[62%] left-[5%] md:left-[10%] w-64 rotate-[3deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
+                        style={{ y: photo3Y, scale: photo3Scale }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-3 left-10 z-20">
@@ -211,6 +227,7 @@ const StorySection = () => {
                     <motion.div
                         className="absolute top-[89%] right-[5%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
+                        style={{ y: photo4Y, rotate: photo4Rotate }}
                     >
                         {/* Paperclip */}
                         <div className="absolute -top-4 right-1/2 translate-x-1/2 z-20">
