@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import { SHELF_PROJECTS } from "@/constants";
 import PixelLabel from "@/components/ui/PixelLabel";
@@ -17,7 +17,15 @@ interface ProjectItemProps {
 
 export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) {
     const [isHovered, setIsHovered] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    // Optimized mouse tracking with useMotionValue to prevent re-renders
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Create derived values for the offset position
+    const labelX = useTransform(mouseX, (x) => x + 20);
+    const labelY = useTransform(mouseY, (y) => y + 20);
+
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -28,7 +36,9 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
     const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        setMousePos({ x: e.clientX, y: e.clientY });
+        // Update motion values directly without triggering component re-render
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
     };
 
     return (
@@ -38,7 +48,11 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            onMouseEnter={() => setIsHovered(true)}
+            onMouseEnter={(e) => {
+                mouseX.set(e.clientX);
+                mouseY.set(e.clientY);
+                setIsHovered(true);
+            }}
             onMouseLeave={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
             onClick={onClick}
@@ -54,8 +68,8 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                         exit={{ opacity: 0, scale: 0.5 }}
                         className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
                         style={{
-                            x: mousePos.x + 20,
-                            y: mousePos.y + 20
+                            x: labelX,
+                            y: labelY
                         }}
                     >
                         <PixelLabel text={proj.time} className="bg-yellow-400 text-black border-black whitespace-nowrap" />
