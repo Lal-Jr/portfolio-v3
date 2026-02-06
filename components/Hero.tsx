@@ -215,18 +215,7 @@ export default function Hero() {
 
                 {/* "Here's How" Section matching reference */}
                 <div className="pt-32 pb-0 flex flex-col items-center relative">
-                    {/* Sunburst Lines */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] h-[400px] pointer-events-none">
-                        {[...Array(12)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="absolute top-1/2 left-1/2 w-[2px] h-[100px] bg-gray-600 origin-bottom opacity-50"
-                                style={{
-                                    transform: `translate(-50%, -50%) rotate(${i * 30}deg) translateY(-80px)`,
-                                }}
-                            />
-                        ))}
-                    </div>
+                    {/* Sunburst Lines Removed for minimal comic feel */}
 
                     {/* Thinking Annotation */}
                     <motion.div
