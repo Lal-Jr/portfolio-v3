@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
+import { Lock } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import { SHELF_PROJECTS } from "@/constants";
@@ -7,7 +8,7 @@ import PixelLabel from "@/components/ui/PixelLabel";
 import SubtleComicSpark from "@/components/ui/SubtleComicSpark";
 import ComicScribble from "@/components/ui/ComicScribble";
 
-type Project = typeof SHELF_PROJECTS[number];
+type Project = typeof SHELF_PROJECTS[number] & { isComingSoon?: boolean };
 
 interface ProjectItemProps {
     proj: Project;
@@ -55,9 +56,13 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
             }}
             onMouseLeave={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
-            onClick={onClick}
+            onClick={() => {
+                if (!proj.isComingSoon) {
+                    onClick();
+                }
+            }}
             className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                } items-center gap-16 md:gap-24 relative group cursor-pointer py-8`}
+                } items-center gap-16 md:gap-24 relative group ${proj.isComingSoon ? "cursor-not-allowed" : "cursor-pointer"} py-8`}
         >
             {/* CURSOR FOLLOWING LABEL */}
             <AnimatePresence>
@@ -72,13 +77,16 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                             y: labelY
                         }}
                     >
-                        <PixelLabel text={proj.time} className="bg-yellow-400 text-black border-black whitespace-nowrap" />
+                        <PixelLabel
+                            text={proj.isComingSoon ? "COMING SOON" : proj.time}
+                            className={`${proj.isComingSoon ? "bg-zinc-700 text-white border-white" : "bg-yellow-400 text-black border-black"} whitespace-nowrap`}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>
 
             {/* PROJECT CONTENT SECTION */}
-            <div className="w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300">
+            <div className={`w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300 ${proj.isComingSoon ? "opacity-50" : ""}`}>
                 <div className="space-y-3">
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-['Press_Start_2P'] leading-tight uppercase text-white">
                         {proj.title}
@@ -93,9 +101,9 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
 
             {/* PROJECT IMAGE SECTION */}
             <div className="w-full md:w-1/2 relative">
-                {/* Decorative Elements on Hover */}
+                {/* Decorative Elements on Hover - Only for active projects */}
                 <AnimatePresence>
-                    {isHovered && (
+                    {isHovered && !proj.isComingSoon && (
                         <>
                             <SubtleComicSpark className={`-top-12 ${index % 2 === 0 ? "-right-12" : "-left-12"} z-50 text-white`} />
                             <SubtleComicSpark className={`-bottom-12 ${index % 2 === 0 ? "-left-12" : "-right-12"} z-50 text-emerald-500`} />
@@ -108,19 +116,27 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                     style={{ y }}
                     className="relative aspect-[4/3] w-full bg-zinc-900 rounded-[2rem] overflow-hidden transition-all duration-500"
                     animate={{
-                        borderColor: isHovered ? proj.color : "#27272a", // zinc-800
+                        borderColor: isHovered ? (proj.isComingSoon ? "#52525b" : proj.color) : "#27272a", // zinc-600 if locked, else project color
                         borderWidth: "12px",
                         borderStyle: "solid",
-                        boxShadow: isHovered
+                        boxShadow: isHovered && !proj.isComingSoon
                             ? `12px 12px 0px 0px ${proj.color}`
                             : "0px 0px 0px 0px rgba(0,0,0,0)",
                         scale: isHovered ? 1.02 : 1,
                         rotate: isHovered ? 0 : initialRotate,
+                        filter: proj.isComingSoon ? "grayscale(100%) brightness(0.7)" : "grayscale(0%) brightness(1)",
                     }}
                 >
+                    {/* Locked Icon Overlay */}
+                    {proj.isComingSoon && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                            <Lock className="w-16 h-16 text-zinc-500 opacity-80" />
+                        </div>
+                    )}
+
                     {/* Static Image / GIF Switch */}
                     <Image
-                        src={isHovered ? proj.gif : proj.image}
+                        src={proj.isComingSoon ? proj.image : (isHovered ? proj.gif : proj.image)}
                         alt={proj.title}
                         fill
                         className={`object-cover transition-all duration-700 ${isHovered ? 'scale-100' : 'scale-110'}`}

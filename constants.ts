@@ -245,6 +245,25 @@ export const SHELF_PROJECTS = [
 		solving: "Implemented OT (Operational Transformation) with a Redis pub/sub backbone.",
 		result: "Zero data loss over 100k+ concurrent sync events with <50ms latency.",
 	},
+	{
+		id: 5,
+		title: "THE SILENT ECHO",
+		year: "2025",
+		category: "Audio Intelligence",
+		tech: ["Python", "TensorFlow"],
+		color: "#ec4899", // Pink-500
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "Coming Soon",
+		shortDesc: "Generative audio landscapes that react to user emotion.",
+		liveUrl: "#",
+		githubUrl: "#",
+		problem: "Audio interfaces are often passive and do not adapt to the user's emotional state.",
+		thought: "Creating a feedback loop between user sentiment and ambient sound generation.",
+		solving: "Utilizing real-time sentiment analysis to modulate generative audio streams.",
+		result: "Pending...",
+		isComingSoon: true,
+	},
 ] as const;
 
 export const EXPERIENCE_DATA = [
