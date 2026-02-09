@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio V3
 
-## Getting Started
+A personal portfolio website built with **Next.js 16**, **Tailwind CSS 4**, and **Framer Motion**.  
+Designed with a unique **"Dark Comic" aesthetic**, featuring handwritten elements, rough borders, and immersive interactive storytelling.
 
-First, run the development server:
+## 🎨 Features
+
+### **1. "Dark Comic" Aesthetic**
+- **Visual Style**: A distinct blend of handwritten fonts (`Caveat`), pixel typography (`Press Start 2P`), rough scribbles, and a dark, moody palette.
+- **Dynamic Elements**: Extensive use of micro-animations, hover effects, and custom SVG paths to create a living, breathing interface.
+
+### **2. Interactive Storytelling**
+- **Parallax Timeline**: A "Curve of Life" section that interleaves photos and text in a winding path, using scroll-triggered animations to reveal chapters of my journey.
+- **Thought Process Section**: A diamond layout visualization of my design philosophy ("Thinking in Systems"), featuring interactive widgets:
+    - **Spacing Widget**: Visualizes layout structure.
+    - **Typography Widget**: Showcases font hierarchy.
+    - **Color Palette Widget**: Displays the theme colors.
+    - **Chat Bubble Widget**: Demonstrates component interactivity.
+
+### **3. Enhanced Project Shelf**
+- **Horizontal Scrolling**: A smooth, gesture-friendly showcase of projects.
+- **Detail View**: An immersive overlay for each project, detailing "The Problem", "The Thinking" (with a free-form draggable canvas), "The Solution", and "The Impact".
+
+### **4. GitHub Snake Game**
+- **Live Contribution Data**: Fetches real-time data from the GitHub API to generate the game grid.
+- **Gamified Experience**:
+    - **Idle Mode**: A smart AI plays the game automatically when you're not interacting.
+    - **Interactive Mode**: Take control with arrow keys to "eat" commits and grow the snake.
+    - **Dynamic Scoring**: Tracks commits eaten and resets on crash.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/) (Scroll, Drag, Layout animations)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Data Fetching**: Native Fetch API
+- **Utilities**: `tailwind-merge`, `clsx`
+
+## 🚀 Getting Started
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/Lal-Jr/portfolio-v3.git
+    cd portfolio-v3
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
+
+3.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open locally**:
+    Visit [http://localhost:3000](http://localhost:3000) to see the portfolio in action.
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+portfolio-v3/
+├── app/                  # Next.js App Router pages and layouts
+│   ├── layout.tsx        # Root layout with fonts and metadata
+│   └── page.tsx          # Main landing page assembling all sections
+├── components/           # Reusable UI components
+│   ├── shelf/            # Project Shelf specific components (DetailView, formatting)
+│   ├── ui/               # Generic UI elements (StickyNote, ComicBubble, etc.)
+│   ├── GitHubGame.tsx    # The contribution graph snake game logic
+│   ├── Hero.tsx          # Initial landing section with comic panels
+│   ├── StorySection.tsx  # The "Curve of Life" timeline
+│   └── ...
+├── public/               # Static assets (images, fonts)
+├── styles/               # Global styles and Tailwind configuration
+└── constants.ts          # Centralized data for projects, timeline, and game config
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎮 The GitHub Game
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The "snake" component in the footer isn't just a static image—it's a playable game that represents my coding journey.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **AI Autoplay**: Watch the snake wander and find the optimal path to the next commit.
+- **Playable**: Press any arrow key to override the AI and play manually.
+- **Real Data**: The grid represents actual contribution days from the past year.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Built by [Lal-Jr](https://github.com/Lal-Jr)*
