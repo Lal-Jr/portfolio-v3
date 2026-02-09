@@ -244,6 +244,7 @@ export const SHELF_PROJECTS = [
 		thought: "A state-first architecture was needed to ensure eventual consistency across all nodes.",
 		solving: "Implemented OT (Operational Transformation) with a Redis pub/sub backbone.",
 		result: "Zero data loss over 100k+ concurrent sync events with <50ms latency.",
+		isComingSoon: true,
 	},
 	{
 		id: 5,
