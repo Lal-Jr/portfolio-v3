@@ -57,32 +57,32 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
 			`}</style>
 
             {/* TOP NAVIGATION BAR - STICKY */}
-            <div className="sticky top-0 z-[10001] px-6 py-4 flex justify-between items-center bg-zinc-950/80 backdrop-blur-xl border-b border-white/5">
+            <div className="sticky top-0 z-[10001] px-6 py-4 flex justify-between items-center bg-transparent pointer-events-none">
                 <button
                     onClick={onClose}
-                    className="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors"
+                    className="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors pointer-events-auto"
                 >
                     {/* RESTORED COMIC BUTTON STYLE */}
-                    <div className="bg-white text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)] sm:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all w-10 h-10 flex items-center justify-center rounded-lg">
+                    <div className="bg-white text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)] sm:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all w-10 h-10 flex items-center justify-center rounded-lg rotate-3 group-hover:rotate-0">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5">
                             <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
                     </div>
-                    <span className="font-['Press_Start_2P'] text-[10px] hidden md:inline font-bold uppercase">Go back</span>
+                    <span className="font-handwriting text-xl font-bold uppercase -rotate-2 group-hover:rotate-0 transition-transform">Go back</span>
                 </button>
 
                 {/* Section Navigation Pills */}
-                <div className="hidden md:flex gap-3">
+                <div className="hidden md:flex gap-3 pointer-events-auto">
                     {[
                         { label: "The Problem", id: "problem" },
                         { label: "My Thinking", id: "strategy" },
                         { label: "The Solution", id: "solution" },
                         { label: "The Impact", id: "impact" },
-                    ].map((item) => (
+                    ].map((item, i) => (
                         <button
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
-                            className="px-4 py-2 rounded-full border border-zinc-800 text-zinc-400 text-xs font-bold uppercase tracking-wider bg-zinc-900/50 hover:bg-zinc-800 hover:text-white hover:border-zinc-700 transition-all cursor-pointer"
+                            className={`px-4 py-2 rounded-full border-2 border-zinc-800 text-zinc-400 font-handwriting text-lg font-bold uppercase tracking-wider bg-zinc-950/80 hover:bg-zinc-800 hover:text-white hover:border-white transition-all cursor-pointer ${i % 2 === 0 ? 'rotate-1' : '-rotate-1'} hover:rotate-0`}
                         >
                             {item.label}
                         </button>
@@ -127,7 +127,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                             <h1 className="text-4xl md:text-6xl font-black text-white leading-[0.9] tracking-tighter uppercase">
                                 {proj.title}
                             </h1>
-                            <p className="text-xl text-zinc-400 font-light leading-relaxed max-w-2xl">
+                            <p className="text-zinc-400 font-handwriting text-2xl md:text-3xl leading-relaxed max-w-2xl">
                                 {proj.shortDesc || "A digital experience crafted for impact."}
                             </p>
                         </div>
@@ -167,7 +167,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                             <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                         </div>
 
-                        <h3 className="font-['Press_Start_2P'] text-xs text-rose-500 uppercase tracking-widest mb-6">
+                        <h3 className="font-handwriting text-2xl text-rose-500 font-bold uppercase tracking-widest mb-6 -rotate-2">
                             Phase 1: The Problem
                         </h3>
 
@@ -176,7 +176,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                         </h2>
 
                         {/* Changed font from Caveat to Standard Sans for consistency */}
-                        <p className="text-xl md:text-2xl text-zinc-300 font-light leading-loose">
+                        <p className="text-xl md:text-2xl text-zinc-300 font-handwriting leading-loose">
                             {proj.problem}
                         </p>
                     </div>
@@ -188,7 +188,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                     <div className="w-full border-y border-white/10 py-8 bg-zinc-900/20 overflow-hidden relative group cursor-grab active:cursor-grabbing">
                         {/* Label */}
                         <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none bg-zinc-950/80 px-4 py-2 rounded-full border border-yellow-500/30">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-500 uppercase tracking-widest flex items-center gap-2">
+                            <h3 className="font-handwriting text-xl text-yellow-500 font-bold uppercase tracking-widest flex items-center gap-2">
                                 <span className="text-lg">🖐️</span> Phase 2: Explore Thoughts
                             </h3>
                         </div>
@@ -232,7 +232,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                                     "I want to see content fast."
                                 </StickyNote>
 
-                                <StickyNote color="lime" rotate={12} className="absolute top-[40%] right-[20%] z-10 shadow-lg opacity-90">
+                                <StickyNote color="yellow" rotate={12} className="absolute top-[40%] right-[20%] z-10 shadow-lg opacity-90">
                                     <span className="font-bold text-sm uppercase mb-2">Tech</span>
                                     Next.js for SSR?
                                 </StickyNote>
@@ -268,26 +268,26 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                             <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                         </div>
 
-                        <h3 className="font-['Press_Start_2P'] text-xs text-indigo-500 uppercase tracking-widest mb-6">
+                        <h3 className="font-handwriting text-2xl text-indigo-400 font-bold uppercase tracking-widest mb-6 -rotate-1">
                             Phase 3: The Solution
                         </h3>
 
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-12 leading-tight">
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-12 leading-tight">
                             Crafted with precision.
                         </h2>
 
                         <div className="grid md:grid-cols-5 gap-12">
                             <div className="md:col-span-3 space-y-8">
-                                <p className="text-xl text-zinc-300 font-light leading-relaxed">
+                                <p className="text-xl text-zinc-300 font-handwriting text-2xl leading-relaxed">
                                     {proj.solving}
                                 </p>
                                 {/* Key Features List */}
                                 <div className="space-y-4">
-                                    <h4 className="text-white font-bold text-lg">Key Features Implemented:</h4>
+                                    <h4 className="text-white font-bold text-lg font-handwriting text-xl">Key Features Implemented:</h4>
                                     <ul className="space-y-3">
                                         {["Performance Optimized", "Responsive Layout", "Accessible Design"].map((feature, i) => (
-                                            <li key={i} className="flex items-center gap-3 text-zinc-400">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                            <li key={i} className="flex items-center gap-3 text-zinc-400 font-handwriting text-lg">
+                                                <div className="w-2 h-2 rounded-full bg-indigo-500" />
                                                 {feature}
                                             </li>
                                         ))}
@@ -295,24 +295,28 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                                 </div>
                             </div>
 
-                            {/* Tech Stack Column - Removed Mono font, using default sans */}
+                            {/* Tech Stack Column - Comic Style */}
                             <div className="md:col-span-2">
-                                <div className="bg-zinc-900/50 rounded-xl p-6 border border-white/5 sticky top-32">
-                                    <h4 className="font-bold text-xs text-zinc-500 uppercase mb-4">Tech Structure</h4>
+                                <div className="relative p-6 rotate-2 hover:rotate-0 transition-transform duration-300">
+                                    {/* Comic Border */}
+                                    <div className="absolute inset-0 border-2 border-white/20 rounded-xl"
+                                        style={{ borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px' }} />
+
+                                    <h4 className="font-bold text-xl text-zinc-400 font-handwriting mb-4">Tech Structure</h4>
                                     <div className="flex flex-wrap gap-2">
                                         {proj.tech.map((t, i) => (
-                                            <span key={i} className="px-3 py-1.5 bg-zinc-800 text-zinc-300 text-xs rounded-md border border-zinc-700/50 hover:border-indigo-500/50 transition-colors cursor-default">
+                                            <span key={i} className="px-3 py-1.5 bg-transparent border-2 border-zinc-700 text-zinc-300 font-handwriting text-lg font-bold rounded-md hover:border-indigo-500 hover:text-white transition-colors cursor-default -rotate-1 hover:rotate-0">
                                                 {t}
                                             </span>
                                         ))}
                                     </div>
 
-                                    <div className="mt-8 pt-8 border-t border-white/5">
-                                        <h4 className="font-bold text-xs text-zinc-500 uppercase mb-4">Deliverables</h4>
-                                        <div className="space-y-2 text-sm text-zinc-400">
-                                            <div className="flex justify-between"><span>Design</span> <span>Figma</span></div>
-                                            <div className="flex justify-between"><span>Frontend</span> <span>React</span></div>
-                                            <div className="flex justify-between"><span>Deploy</span> <span>Vercel</span></div>
+                                    <div className="mt-8 pt-8 border-t-2 border-dashed border-white/10">
+                                        <h4 className="font-bold text-xl text-zinc-400 font-handwriting mb-4">Deliverables</h4>
+                                        <div className="space-y-2 text-lg text-zinc-400 font-handwriting">
+                                            <div className="flex justify-between border-b border-zinc-800/50 pb-1"><span>Design</span> <span className="text-white">Figma</span></div>
+                                            <div className="flex justify-between border-b border-zinc-800/50 pb-1"><span>Frontend</span> <span className="text-white">React</span></div>
+                                            <div className="flex justify-between border-b border-zinc-800/50 pb-1"><span>Deploy</span> <span className="text-white">Vercel</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -326,38 +330,38 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                     <div className="inline-block mb-8">
                         <div className="flex items-center gap-3 justify-center text-emerald-400 mb-4">
                             <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                            <h3 className="font-['Press_Start_2P'] text-xs uppercase tracking-widest">Phase 4: The Impact</h3>
+                            <h3 className="font-handwriting text-2xl uppercase tracking-widest font-bold">Phase 4: The Impact</h3>
                             <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                         </div>
                     </div>
 
                     {/* Removed Serif Font */}
-                    <h2 className="text-3xl md:text-5xl font-black italic text-white leading-tight mb-12">
+                    <h2 className="text-3xl md:text-5xl font-black italic text-white leading-tight mb-12 transform -rotate-1">
                         "{proj.result}"
                     </h2>
 
                     {/* Stats / Metrics Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                        <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-900/10 to-zinc-900 border border-emerald-500/10">
-                            <div className="text-3xl font-bold text-white mb-1">100%</div>
-                            <div className="text-xs text-emerald-400/60 uppercase tracking-widest">Completion</div>
-                        </div>
-                        <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-900/10 to-zinc-900 border border-emerald-500/10">
-                            <div className="text-3xl font-bold text-white mb-1">Fast</div>
-                            <div className="text-xs text-emerald-400/60 uppercase tracking-widest">Performance</div>
-                        </div>
-                        <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-900/10 to-zinc-900 border border-emerald-500/10">
-                            <div className="text-3xl font-bold text-white mb-1">Responsive</div>
-                            <div className="text-xs text-emerald-400/60 uppercase tracking-widest">All Devices</div>
-                        </div>
+                        {[
+                            { value: "100%", label: "Completion", rotate: "rotate-1" },
+                            { value: "Fast", label: "Performance", rotate: "-rotate-1" },
+                            { value: "Fluid", label: "Responsive", rotate: "rotate-2" }
+                        ].map((stat, i) => (
+                            <div key={i} className={`p-6 rounded-2xl bg-transparent border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 transition-colors ${stat.rotate}`}>
+                                <div className="text-4xl font-black text-white mb-2 font-handwriting">{stat.value}</div>
+                                <div className="text-lg text-emerald-400/80 uppercase tracking-widest font-handwriting font-bold">{stat.label}</div>
+                            </div>
+                        ))}
                     </div>
 
-                    <div className="flex justify-center opacity-30 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => scrollToSection('hero')}>
+                    <div className="flex justify-center opacity-50 hover:opacity-100 transition-opacity cursor-pointer group" onClick={() => scrollToSection('hero')}>
                         <div className="flex flex-col items-center gap-2">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                                <path d="M12 19V5M5 12l7-7 7 7" />
-                            </svg>
-                            <span className="text-[10px] text-white uppercase tracking-widest">Back to Top</span>
+                            <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center group-hover:-translate-y-2 transition-transform">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                                    <path d="M12 19V5M5 12l7-7 7 7" />
+                                </svg>
+                            </div>
+                            <span className="text-lg text-white uppercase tracking-widest font-handwriting font-bold">Back to Top</span>
                         </div>
                     </div>
                 </div>
