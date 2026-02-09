@@ -3,6 +3,7 @@ import { useRef } from "react";
 
 import Hero from "@/components/Hero";
 import ProjectShelf from "@/components/ProjectShelf";
+import GitHubGame from "@/components/GitHubGame";
 import StorySection from "@/components/StorySection";
 import ThoughtProcessSection from "@/components/ThoughtProcessSection";
 import ContactSection from "@/components/ContactSection";
