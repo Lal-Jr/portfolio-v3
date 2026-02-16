@@ -1,10 +1,12 @@
 "use client";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useRef } from "react";
 import { SHELF_PROJECTS } from "@/constants";
 import ProjectItem from "@/components/shelf/ProjectItem";
-import ProjectDetailView from "@/components/shelf/ProjectDetailView";
-import GitHubGame from "./GitHubGame";
+
+const ProjectDetailView = dynamic(() => import("@/components/shelf/ProjectDetailView"), { ssr: false });
+const GitHubGame = dynamic(() => import("./GitHubGame"));
 
 export default function ProjectShelf() {
 	const [selectedProject, setSelectedProject] = useState<typeof SHELF_PROJECTS[number] | null>(null);

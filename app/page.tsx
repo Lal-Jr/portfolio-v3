@@ -1,12 +1,13 @@
 "use client";
 import { useRef } from "react";
 
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
-import ProjectShelf from "@/components/ProjectShelf";
-import GitHubGame from "@/components/GitHubGame";
-import StorySection from "@/components/StorySection";
-import ThoughtProcessSection from "@/components/ThoughtProcessSection";
-import ContactSection from "@/components/ContactSection";
+
+const ProjectShelf = dynamic(() => import("@/components/ProjectShelf"));
+const StorySection = dynamic(() => import("@/components/StorySection"));
+const ThoughtProcessSection = dynamic(() => import("@/components/ThoughtProcessSection"));
+const ContactSection = dynamic(() => import("@/components/ContactSection"));
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
