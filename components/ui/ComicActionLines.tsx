@@ -9,7 +9,12 @@ type Line = {
     delay: number;
 };
 
-const ComicActionLines = () => {
+
+interface ComicActionLinesProps {
+    className?: string;
+}
+
+const ComicActionLines = ({ className = "" }: ComicActionLinesProps) => {
     const [lines, setLines] = useState<Line[]>([]);
 
     useEffect(() => {
@@ -25,7 +30,7 @@ const ComicActionLines = () => {
     }, []);
 
     return (
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-visible flex items-center justify-center">
+        <div className={`absolute inset-0 pointer-events-none z-0 overflow-visible flex items-center justify-center ${className}`}>
             <svg className="w-[500px] h-[500px] absolute opacity-30" viewBox="0 0 100 100">
                 {lines.map((line) => (
                     <motion.line

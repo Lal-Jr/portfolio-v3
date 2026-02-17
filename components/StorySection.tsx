@@ -50,7 +50,7 @@ const StorySection = () => {
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-48">
+        <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-32">
 
             {/* Background Scribbles (Global Decor) */}
             <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none">

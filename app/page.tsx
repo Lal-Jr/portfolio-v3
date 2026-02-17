@@ -8,6 +8,7 @@ const ProjectShelf = dynamic(() => import("@/components/ProjectShelf"));
 const StorySection = dynamic(() => import("@/components/StorySection"));
 const ThoughtProcessSection = dynamic(() => import("@/components/ThoughtProcessSection"));
 const ContactSection = dynamic(() => import("@/components/ContactSection"));
+const WorkspaceSection = dynamic(() => import("@/components/WorkspaceSection"));
 
 export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,7 @@ export default function Home() {
 			<ProjectShelf />
 			<ThoughtProcessSection />
 			<StorySection />
+			<WorkspaceSection />
 			<ContactSection />
 		</div>
 	);
