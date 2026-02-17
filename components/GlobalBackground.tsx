@@ -2,15 +2,15 @@
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Retro Pixel Burst Component
-const PixelBurst = ({ x, y, color }: { x: number; y: number; color: string }) => {
-    const particles = Array.from({ length: 8 }).map((_, i) => ({
-        id: i,
-        angle: (i / 8) * Math.PI * 2 + (Math.random() - 0.5) * 0.5,
-        velocity: 50 + Math.random() * 50,
-        size: Math.random() * 8 + 4,
-    }));
+type Particle = {
+    id: number;
+    angle: number;
+    velocity: number;
+    size: number;
+};
 
+// Retro Pixel Burst Component
+const PixelBurst = ({ x, y, color, particles }: { x: number; y: number; color: string; particles: Particle[] }) => {
     return (
         <div className="fixed inset-0 pointer-events-none z-[500]">
             {particles.map((p) => (
@@ -40,16 +40,25 @@ const PixelBurst = ({ x, y, color }: { x: number; y: number; color: string }) =>
 };
 
 export default function GlobalBackground({ children }: { children: React.ReactNode }) {
-    const [drops, setDrops] = useState<{ id: number; x: number; y: number; color: string }[]>([]);
+    const [drops, setDrops] = useState<{ id: number; x: number; y: number; color: string; particles: Particle[] }[]>([]);
 
     const handleClick = useCallback((e: React.MouseEvent) => {
         const colors = ["#00f3ff", "#ff00ea", "#00ff41", "#ffae00", "#ffffff"];
         const color = colors[Math.floor(Math.random() * colors.length)];
+
+        const particles = Array.from({ length: 8 }).map((_, i) => ({
+            id: i,
+            angle: (i / 8) * Math.PI * 2 + (Math.random() - 0.5) * 0.5,
+            velocity: 50 + Math.random() * 50,
+            size: Math.random() * 8 + 4,
+        }));
+
         const newBurst = {
             id: Date.now(),
             x: e.clientX,
             y: e.clientY,
-            color: color
+            color: color,
+            particles
         };
 
         setDrops((prev) => [...prev, newBurst]);
@@ -72,7 +81,7 @@ export default function GlobalBackground({ children }: { children: React.ReactNo
         >
             <AnimatePresence>
                 {drops.map((burst) => (
-                    <PixelBurst key={burst.id} x={burst.x} y={burst.y} color={burst.color} />
+                    <PixelBurst key={burst.id} x={burst.x} y={burst.y} color={burst.color} particles={burst.particles} />
                 ))}
             </AnimatePresence>
 

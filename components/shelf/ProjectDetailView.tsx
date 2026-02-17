@@ -172,7 +172,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                         </h3>
 
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
-                            "What was broken?"
+                            &quot;What was broken?&quot;
                         </h2>
 
                         {/* Changed font from Caveat to Standard Sans for consistency */}
@@ -229,7 +229,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
 
                                 <StickyNote color="orange" rotate={4} className="absolute bottom-[20%] left-[30%] z-20 shadow-xl opacity-90">
                                     <span className="font-bold text-sm uppercase mb-2">User Goal</span>
-                                    "I want to see content fast."
+                                    &quot;I want to see content fast.&quot;
                                 </StickyNote>
 
                                 <StickyNote color="yellow" rotate={12} className="absolute top-[40%] right-[20%] z-10 shadow-lg opacity-90">
@@ -337,7 +337,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
 
                     {/* Removed Serif Font */}
                     <h2 className="text-3xl md:text-5xl font-black italic text-white leading-tight mb-12 transform -rotate-1">
-                        "{proj.result}"
+                        &quot;{proj.result}&quot;
                     </h2>
 
                     {/* Stats / Metrics Grid */}

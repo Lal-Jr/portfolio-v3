@@ -51,7 +51,7 @@ const ContactSection = () => {
 					<div className="space-y-4">
 
 						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-white font-['var(--font-caveat)']">
-							In short, I'm someone who <br />
+							In short, I&apos;m someone who <br />
 							<HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300">
 								enjoys working in messy,
 							</HighlighterSpan>{" "}
@@ -94,7 +94,7 @@ const ContactSection = () => {
 					{/* Speech Bubble - Pixel Style */}
 					<div className="relative z-20 translate-y-4 translate-x-12 md:translate-x-20">
 						<div className="bg-blue-500 border-4 border-black text-white px-6 py-4 text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 max-w-[280px] text-center font-['Press_Start_2P'] leading-relaxed">
-							<span className="text-sm">If this made sense, let's chat!</span>
+							<span className="text-sm">If this made sense, let&apos;s chat!</span>
 							{/* Pointy bit */}
 							<div className="absolute -bottom-2 left-6 w-6 h-6 bg-blue-500 border-l-4 border-b-4 border-black transform rotate-45" />
 						</div>

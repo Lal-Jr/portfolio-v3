@@ -2,10 +2,9 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { HERO_COMIC_PANELS, EXPERIENCE_DATA } from "@/constants";
+import { EXPERIENCE_DATA } from "@/constants";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import ComicScribble from "@/components/ui/ComicScribble";
-import PixelLabel from "@/components/ui/PixelLabel";
 import Paperclip from "@/components/ui/Paperclip";
 import { Globe, Shield, Zap, Bot } from "lucide-react";
 
@@ -154,7 +153,7 @@ const StorySection = () => {
                         <div className="mt-4 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: BREAKTHROUGH</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                The placement journey. Landing my first role at Wayne Enterprises wasn't luck—it was grinding data structures until they made sense.
+                                The placement journey. Landing my first role at Wayne Enterprises wasn&apos;t luck—it was grinding data structures until they made sense.
                             </p>
                         </div>
                     </div>
@@ -203,7 +202,7 @@ const StorySection = () => {
                         <div className="mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: EVOLUTION</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                2.5 years in the corporate trenches. Evolving from "make it work" to "make it scalable". Designing systems that survive the test of time.
+                                2.5 years in the corporate trenches. Evolving from &quot;make it work&quot; to &quot;make it scalable&quot;. Designing systems that survive the test of time.
                             </p>
                         </div>
                     </div>
@@ -291,7 +290,7 @@ const StorySection = () => {
                                                     QUEST LOG:
                                                 </p>
                                                 <p className="font-['var(--font-caveat)'] text-2xl text-white leading-tight">
-                                                    "{activeJob.desc}"
+                                                    &quot;{activeJob.desc}&quot;
                                                 </p>
                                             </div>
                                         </div>

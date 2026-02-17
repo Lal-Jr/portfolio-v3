@@ -1,13 +1,28 @@
 "use client";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+type Line = {
+    id: number;
+    angle: number;
+    length: number;
+    delay: number;
+};
+
 const ComicActionLines = () => {
-    const lines = Array.from({ length: 10 }).map((_, i) => ({
-        id: i,
-        angle: (i / 10) * 360 + (Math.random() - 0.5) * 30,
-        length: 80 + Math.random() * 40,
-        delay: Math.random() * 5,
-    }));
+    const [lines, setLines] = useState<Line[]>([]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLines(Array.from({ length: 10 }).map((_, i) => ({
+                id: i,
+                angle: (i / 10) * 360 + (Math.random() - 0.5) * 30,
+                length: 80 + Math.random() * 40,
+                delay: Math.random() * 5,
+            })));
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-visible flex items-center justify-center">

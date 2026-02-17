@@ -3,11 +3,10 @@ import { motion } from "framer-motion";
 
 interface ScribbleNodeProps {
     color?: string;
-    isActive?: boolean;
     isSpecial?: boolean;
 }
 
-const ScribbleNode = ({ color = "white", isActive = false, isSpecial = false }: ScribbleNodeProps) => (
+const ScribbleNode = ({ color = "white", isSpecial = false }: ScribbleNodeProps) => (
     <div className="relative w-16 h-16 flex items-center justify-center">
         <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
             <motion.path

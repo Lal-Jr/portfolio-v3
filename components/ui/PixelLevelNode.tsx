@@ -7,7 +7,6 @@ interface PixelLevelNodeProps {
     isLocked?: boolean;
     isActive?: boolean;
     isSpecial?: boolean;
-    color?: string;
     onClick?: () => void;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
@@ -18,7 +17,6 @@ const PixelLevelNode = ({
     isLocked = false,
     isActive = false,
     isSpecial = false,
-    color = "bg-sky-500",
     onClick,
     onMouseEnter,
     onMouseLeave

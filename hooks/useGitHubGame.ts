@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // Game Constants
 const GRID_ROWS = 7; // Days in a week
@@ -46,8 +46,9 @@ export const useGitHubGame = () => {
                 }
 
                 // augment with coordinates
-                const mappedContribs = lastYear.map((day: any, index: number) => ({
+                const mappedContribs = lastYear.map((day: { date: string; count: number; level: number }, index: number) => ({
                     ...day,
+                    level: day.level as ContributionLevel,
                     x: Math.floor(index / 7),
                     y: index % 7
                 }));
@@ -73,8 +74,8 @@ export const useGitHubGame = () => {
         fetchData();
     }, []);
 
-    // Active Target
-    const food = targets[currentTargetIndex] || { x: -1, y: -1 }; // Hide if finished
+    // Active Target - Memoized to prevent frequent effect re-runs if it's an object literal
+    const food = useMemo(() => targets[currentTargetIndex] || { x: -1, y: -1 }, [targets, currentTargetIndex]);
 
     // AI MOVE LOGIC (Weighted "Wander" + Greedy)
     const getNextAutoMove = (currentSnake: Point[], currentHead: Point, currentFood: Point, currentDir: Point): Point => {
@@ -146,6 +147,16 @@ export const useGitHubGame = () => {
         });
 
         return bestMove;
+    };
+
+    const resetGame = () => {
+        setSnake([{ x: 10, y: 3 }]);
+        setScore(0);
+        setGameOver(false);
+        setDirection({ x: 1, y: 0 });
+        setIsPlaying(true);
+        setIsAutoPlaying(false);
+        setCurrentTargetIndex(0);
     };
 
     // Game Loop
@@ -237,16 +248,6 @@ export const useGitHubGame = () => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [direction, isPlaying, isAutoPlaying, gameOver]);
-
-    const resetGame = () => {
-        setSnake([{ x: 10, y: 3 }]);
-        setScore(0);
-        setGameOver(false);
-        setDirection({ x: 1, y: 0 });
-        setIsPlaying(true);
-        setIsAutoPlaying(false);
-        setCurrentTargetIndex(0);
-    };
 
     return {
         snake,

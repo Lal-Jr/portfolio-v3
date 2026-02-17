@@ -219,7 +219,7 @@ const ThoughtProcessSection = () => {
                 >
                     {/* Intro text about thought process */}
                     <p className="text-xl md:text-2xl font-['var(--font-caveat)'] text-zinc-500 mb-4 italic">
-                        Here's how I think, how I work...
+                        Here&apos;s how I think, how I work...
                     </p>
                     <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
                         I THINK IN <br />
