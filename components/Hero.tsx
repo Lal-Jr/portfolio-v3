@@ -27,7 +27,7 @@ export default function Hero() {
     return (
         <section
             ref={heroRef}
-            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 pt-20 pb-0 select-none touch-none"
+            className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-white overflow-hidden px-4 pt-20 pb-0"
         >
 
             {/* Main Content */}

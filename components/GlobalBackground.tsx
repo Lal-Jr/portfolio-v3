@@ -72,9 +72,7 @@ export default function GlobalBackground({ children }: { children: React.ReactNo
     return (
         <div
             onClick={handleClick}
-            onMouseDown={(e) => e.preventDefault()}
-            onDragStart={(e) => e.preventDefault()}
-            className="relative min-h-screen w-full bg-[#050505] text-white select-none touch-none"
+            className="relative min-h-screen w-full bg-[#050505] text-white"
             style={{
                 cursor: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='image-rendering:pixelated'><path d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/><path d='M13 13l6 6'/></svg>") 3 3, auto`
             }}

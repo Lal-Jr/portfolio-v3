@@ -25,6 +25,18 @@ export default function WorkspaceSection() {
 
             <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
 
+                {/* Intro Transition */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center max-w-2xl mx-auto mb-8"
+                >
+                    <p className="text-zinc-500 font-handwriting text-2xl md:text-3xl">
+                        I&apos;ve shared the <span className="text-zinc-300 font-bold">how</span> and the <span className="text-zinc-300 font-bold">why</span>.
+                    </p>
+                </motion.div>
+
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -66,7 +78,7 @@ export default function WorkspaceSection() {
 
                             <div className="relative aspect-video bg-zinc-100 overflow-hidden border-2 border-zinc-200 transition-all duration-700">
                                 <Image
-                                    src="/setup.PNG"
+                                    src="/workstation.PNG"
                                     alt="My Evolved Workspace"
                                     fill
                                     className="object-cover"
@@ -91,6 +103,18 @@ export default function WorkspaceSection() {
                     </motion.div>
 
                 </div>
+
+                {/* Concluding Narrative */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center max-w-2xl mx-auto mt-20 mb-20"
+                >
+                    <p className="text-zinc-500 font-handwriting text-2xl md:text-3xl">
+                        A curated space to make sense of the mess.
+                    </p>
+                </motion.div>
             </div>
         </section>
     );
