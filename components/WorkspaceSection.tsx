@@ -78,11 +78,12 @@ export default function WorkspaceSection() {
 
                             <div className="relative aspect-video bg-zinc-100 overflow-hidden border-2 border-zinc-200 transition-all duration-700">
                                 <Image
-                                    src="/workstation.PNG"
+                                    src="/workstation.png"
                                     alt="My Evolved Workspace"
                                     fill
                                     className="object-cover"
                                     sizes="(max-width: 1200px) 100vw, 80vw"
+                                    unoptimized
                                 />
                             </div>
                         </div>

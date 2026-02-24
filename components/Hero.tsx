@@ -264,7 +264,7 @@ export default function Hero() {
                         >
                             {/* Using the "Chill" avatar which looks like a face/headshot */}
                             <Image
-                                src="/Headshot.PNG"
+                                src="/headshot.png"
                                 alt="Me"
                                 fill
                                 className="object-cover"
