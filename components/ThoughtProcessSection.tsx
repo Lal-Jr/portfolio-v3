@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { Type } from "lucide-react";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // --- WIDGETS ---
 
@@ -182,6 +183,7 @@ const ColorPaletteWidget = () => {
 
 const ThoughtProcessSection = () => {
     const sectionRef = useRef<HTMLElement>(null);
+    const isMobile = useIsMobile(1024); // using lg breakpoint to be safe
 
     // Track scroll progress through this section
     const { scrollYProgress } = useScroll({
@@ -197,10 +199,16 @@ const ThoughtProcessSection = () => {
     const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
 
     // Individual widget animations with stagger effect
-    const topWidgetY = useTransform(scrollYProgress, [0, 0.3, 0.7], [-100, 0, 0]);
-    const rightWidgetX = useTransform(scrollYProgress, [0, 0.35, 0.7], [100, 0, 0]);
-    const bottomWidgetY = useTransform(scrollYProgress, [0, 0.4, 0.7], [100, 0, 0]);
-    const leftWidgetX = useTransform(scrollYProgress, [0, 0.45, 0.7], [-100, 0, 0]);
+    const topWidgetYDesktop = useTransform(scrollYProgress, [0, 0.3, 0.7], [-100, 0, 0]);
+    const rightWidgetXDesktop = useTransform(scrollYProgress, [0, 0.35, 0.7], [100, 0, 0]);
+    const bottomWidgetYDesktop = useTransform(scrollYProgress, [0, 0.4, 0.7], [100, 0, 0]);
+    const leftWidgetXDesktop = useTransform(scrollYProgress, [0, 0.45, 0.7], [-100, 0, 0]);
+
+    // Use a flat transform for mobile or desktop dynamic
+    const topWidgetY = isMobile ? 0 : topWidgetYDesktop;
+    const rightWidgetX = isMobile ? 0 : rightWidgetXDesktop;
+    const bottomWidgetY = isMobile ? 0 : bottomWidgetYDesktop;
+    const leftWidgetX = isMobile ? 0 : leftWidgetXDesktop;
 
     // SVG path animations
     const pathLength = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
@@ -221,11 +229,11 @@ const ThoughtProcessSection = () => {
                     <p className="text-xl md:text-2xl font-['var(--font-caveat)'] text-zinc-500 mb-4 italic">
                         Here&apos;s how I think, how I work...
                     </p>
-                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
+                    <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
                         I THINK IN <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500">SYSTEMS.</span>
                     </h2>
-                    <div className="text-lg md:text-xl text-zinc-400 font-medium leading-relaxed max-w-sm mx-auto">
+                    <div className="text-base sm:text-lg md:text-xl text-zinc-400 font-medium leading-relaxed max-w-sm mx-auto">
                         Not just screens. <br />
                         <HighlighterSpan delay={0.2} rotation={-1} color="bg-indigo-500/30">
                             Scalable patterns.
@@ -281,11 +289,11 @@ const ThoughtProcessSection = () => {
                     </svg>
                 </motion.div>
 
-                {/* ORBITING WIDGETS (Diamond Points) */}
+                {/* ORBITING WIDGETS (Diamond Points) - Adjusted for mobile */}
 
                 {/* TOP: Spacing (Structure) */}
                 <motion.div
-                    className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
                     style={{ scale: widgetScale, opacity: widgetOpacity, y: topWidgetY }}
                 >
                     <SpacingWidget />
@@ -293,7 +301,7 @@ const ThoughtProcessSection = () => {
 
                 {/* RIGHT: Typography (Style) */}
                 <motion.div
-                    className="absolute top-1/2 right-4 md:right-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="absolute top-1/4 lg:top-1/2 right-4 md:right-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
                     style={{ scale: widgetScale, opacity: widgetOpacity, x: rightWidgetX }}
                 >
                     <TypographyWidget />
@@ -301,7 +309,7 @@ const ThoughtProcessSection = () => {
 
                 {/* BOTTOM: Chat Bubble (Component/Func) */}
                 <motion.div
-                    className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 lg:translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
                     style={{ scale: widgetScale, opacity: widgetOpacity, y: bottomWidgetY }}
                 >
                     <ChatBubbleWidget />
@@ -309,7 +317,7 @@ const ThoughtProcessSection = () => {
 
                 {/* LEFT: Color Palette (Theme) */}
                 <motion.div
-                    className="absolute top-1/2 left-4 md:left-20 -translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="absolute top-3/4 lg:top-1/2 left-4 md:left-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
                     style={{ scale: widgetScale, opacity: widgetOpacity, x: leftWidgetX }}
                 >
                     <ColorPaletteWidget />

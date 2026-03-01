@@ -64,7 +64,7 @@ export default function ProjectShelf() {
 					{/* Header: Handwritten Font + Comic Pop Lines Only */}
 					<div className="relative">
 						<motion.h4
-							className="text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2 leading-relaxed"
+							className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2 leading-relaxed"
 							animate={{
 								opacity: [0.8, 1, 0.8],
 								y: [0, -4, 0],

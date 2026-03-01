@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function WorkspaceSection() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -10,8 +11,13 @@ export default function WorkspaceSection() {
         offset: ["start end", "end start"],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-    const rotate = useTransform(scrollYProgress, [0, 1], [-2, 2]);
+    const isMobile = useIsMobile(1024);
+
+    const yDesktop = useTransform(scrollYProgress, [0, 1], [50, -50]);
+    const rotateDesktop = useTransform(scrollYProgress, [0, 1], [-2, 2]);
+
+    const y = isMobile ? 0 : yDesktop;
+    const rotate = isMobile ? 0 : rotateDesktop;
 
     return (
         <section ref={containerRef} className="relative pt-32 bg-transparent overflow-hidden">
@@ -49,7 +55,7 @@ export default function WorkspaceSection() {
                     </h2>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center w-full mb-24">
+                <div className="grid lg:grid-cols-12 gap-16 md:gap-12 items-center w-full mb-24">
 
                     {/* Left Text - Evolution */}
                     <motion.div

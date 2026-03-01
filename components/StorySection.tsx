@@ -7,6 +7,7 @@ import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import ComicScribble from "@/components/ui/ComicScribble";
 import Paperclip from "@/components/ui/Paperclip";
 import { Globe, Shield, Zap, Bot } from "lucide-react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const getIcon = (id: string) => {
     switch (id) {
@@ -23,6 +24,7 @@ const StorySection = () => {
     const [activeNode, setActiveNode] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
+    const isMobile = useIsMobile(768);
 
     // Track scroll progress through the story section
     const { scrollYProgress } = useScroll({
@@ -30,21 +32,25 @@ const StorySection = () => {
         offset: ["start center", "end center"]
     });
 
-    // Transform scroll progress to path length (0 to 1)
     const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-    // Apple-style parallax for photos and text
-    const photo1Y = useTransform(scrollYProgress, [0, 0.3], [40, -20]);
+    // Apple-style parallax for photos and text - flat on mobile to prevent overlaps
+    const photo1YDesktop = useTransform(scrollYProgress, [0, 0.3], [40, -20]);
     const photo1Scale = useTransform(scrollYProgress, [0, 0.2], [0.92, 1]);
 
-    const photo2Y = useTransform(scrollYProgress, [0.2, 0.5], [60, -30]);
+    const photo2YDesktop = useTransform(scrollYProgress, [0.2, 0.5], [60, -30]);
     const photo2Rotate = useTransform(scrollYProgress, [0.2, 0.4], [-8, -4]);
 
-    const photo3Y = useTransform(scrollYProgress, [0.5, 0.7], [50, -25]);
+    const photo3YDesktop = useTransform(scrollYProgress, [0.5, 0.7], [50, -25]);
     const photo3Scale = useTransform(scrollYProgress, [0.5, 0.65], [0.9, 1]);
 
-    const photo4Y = useTransform(scrollYProgress, [0.7, 1], [70, -35]);
+    const photo4YDesktop = useTransform(scrollYProgress, [0.7, 1], [70, -35]);
     const photo4Rotate = useTransform(scrollYProgress, [0.7, 0.9], [-10, -5]);
+
+    const photo1Y = isMobile ? 0 : photo1YDesktop;
+    const photo2Y = isMobile ? 0 : photo2YDesktop;
+    const photo3Y = isMobile ? 0 : photo3YDesktop;
+    const photo4Y = isMobile ? 0 : photo4YDesktop;
 
     // We still use EXPERIENCE_DATA for the popup details
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
@@ -118,7 +124,7 @@ const StorySection = () => {
 
                     {/* Photo 1: Fun/Chaos - Left side - w-64 */}
                     <motion.div
-                        className="absolute top-[1%] left-[5%] md:left-[5%] w-64 rotate-[6deg] z-10 origin-top"
+                        className="absolute top-[1%] left-1/2 -translate-x-1/2 md:left-[5%] md:translate-x-0 w-64 rotate-[6deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo1Y, scale: photo1Scale }}
                     >
@@ -134,7 +140,7 @@ const StorySection = () => {
                     </motion.div>
 
                     {/* Text 1: Positioned BELOW the photo - Pushed down to top-[25%] to fix overlap */}
-                    <div className="absolute top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left">
+                    <div className="absolute top-[21%] md:top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
                         <div className="mb-4">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: START</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
@@ -149,7 +155,7 @@ const StorySection = () => {
                     */}
 
                     {/* Text 2 */}
-                    <div className="absolute top-[32%] right-[32%] md:right-[28%] w-full max-w-[250px] z-20 text-right">
+                    <div className="absolute top-[52%] md:top-[32%] right-[2%] md:right-[28%] w-full max-w-[250px] z-20 text-center md:text-right mx-auto left-[2%] md:left-auto md:mx-0">
                         <div className="mt-4 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: BREAKTHROUGH</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
@@ -160,7 +166,7 @@ const StorySection = () => {
 
                     {/* Photo 2 - w-64 */}
                     <motion.div
-                        className="absolute top-[30%] right-[5%] md:right-[5%] w-64 rotate-[-4deg] z-30 origin-top"
+                        className="absolute top-[32%] left-1/2 -translate-x-1/2 md:top-[30%] md:right-[5%] md:left-auto md:translate-x-0 w-64 rotate-[-4deg] z-30 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo2Y, rotate: photo2Rotate }}
                     >
@@ -182,7 +188,7 @@ const StorySection = () => {
 
                     {/* Photo 3 - w-64 */}
                     <motion.div
-                        className="absolute top-[62%] left-[5%] md:left-[10%] w-64 rotate-[3deg] z-10 origin-top"
+                        className="absolute top-[65%] md:top-[62%] left-1/2 -translate-x-1/2 md:left-[10%] md:translate-x-0 w-64 rotate-[3deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo3Y, scale: photo3Scale }}
                     >
@@ -198,8 +204,8 @@ const StorySection = () => {
                     </motion.div>
 
                     {/* Text 3 */}
-                    <div className="absolute top-[67%] left-[32%] md:left-[35%] w-full max-w-[250px] z-20 text-left">
-                        <div className="mr-6">
+                    <div className="absolute top-[82%] md:top-[67%] left-[2%] md:left-[35%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
+                        <div className="mr-0 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: EVOLUTION</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
                                 2.5 years in the corporate trenches. Evolving from &quot;make it work&quot; to &quot;make it scalable&quot;. Designing systems that survive the test of time.
@@ -213,7 +219,7 @@ const StorySection = () => {
                     */}
 
                     {/* Text 4: Positioned ABOVE the Photo - Compacted position top-[80%] */}
-                    <div className="absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
+                    <div className="hidden md:block absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
                         <div className="mb-4">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">CHAPTER 4: HORIZON</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
@@ -224,7 +230,7 @@ const StorySection = () => {
 
                     {/* Photo 4: Growth - Right side - w-64 - Compacted position top-[90%] (almost at end) */}
                     <motion.div
-                        className="absolute top-[89%] right-[5%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
+                        className="hidden md:block absolute top-[89%] right-[5%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo4Y, rotate: photo4Rotate }}
                     >

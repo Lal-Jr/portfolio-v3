@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { AVATARS } from "@/constants";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ContactSection = () => {
 	const [copied, setCopied] = useState(false);
@@ -18,12 +19,17 @@ const ContactSection = () => {
 		offset: ["start end", "end start"]
 	});
 
+	const isMobile = useIsMobile(768);
+
 	// Smooth transforms with Apple-like easing
-	const leftColumnY = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -20]);
+	const leftColumnYDesktop = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, -20]);
 	const leftColumnScale = useTransform(scrollYProgress, [0, 0.4, 1], [0.92, 1, 1]);
 
-	const rightColumnY = useTransform(scrollYProgress, [0, 0.5, 1], [80, 0, -30]);
+	const rightColumnYDesktop = useTransform(scrollYProgress, [0, 0.5, 1], [80, 0, -30]);
 	const rightColumnScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.9, 1, 1]);
+
+	const leftColumnY = isMobile ? 0 : leftColumnYDesktop;
+	const rightColumnY = isMobile ? 0 : rightColumnYDesktop;
 
 	const avatarScale = useTransform(scrollYProgress, [0, 0.5], [0.85, 1]);
 	const avatarRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-5, 0, 2]);
@@ -51,36 +57,36 @@ const ContactSection = () => {
 					<div className="space-y-4">
 
 						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-white font-['var(--font-caveat)']">
-							In short, I&apos;m someone who <br />
+							In short, I&apos;m someone who <br className="hidden sm:block" />
 							<HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300">
 								enjoys working in messy,
 							</HighlighterSpan>{" "}
-							<br />
+							<br className="hidden sm:block" />
 							<HighlighterSpan delay={0.4} rotation={2} color="bg-green-300">
 								complex spaces
 							</HighlighterSpan>{" "}
-							and making <br />
+							and making <br className="hidden sm:block" />
 							them clearer and more human.
 						</div>
 					</div>
 
-					<div className="text-2xl md:text-4xl leading-tight font-bold text-zinc-300 font-['var(--font-caveat)']">
+					<div className="text-2xl md:text-4xl leading-tight font-bold text-zinc-300 font-['var(--font-caveat)'] mt-6 md:mt-0">
 						I do that by{" "}
 						<HighlighterSpan delay={0.6} rotation={-2} color="bg-green-300">
 							experimenting to
 						</HighlighterSpan>{" "}
-						<br />
+						<br className="hidden sm:block" />
 						learn,{" "}
 						<HighlighterSpan delay={0.8} rotation={1} color="bg-green-300">
 							shaping clear stories
 						</HighlighterSpan>{" "}
-						<br />
-						that help people align, and <br />
+						<br className="hidden sm:block" />
+						that help people align, and <br className="hidden sm:block" />
 						<HighlighterSpan delay={1.0} rotation={-1} color="bg-green-300">
 							designing systems with care
 						</HighlighterSpan>{" "}
-						<br />
-						for the small details that quietly <br />
+						<br className="hidden sm:block" />
+						for the small details that quietly <br className="hidden sm:block" />
 						shape how something feels.
 					</div>
 				</motion.div>
@@ -92,11 +98,11 @@ const ContactSection = () => {
 				>
 
 					{/* Speech Bubble - Pixel Style */}
-					<div className="relative z-20 translate-y-4 translate-x-12 md:translate-x-20">
-						<div className="bg-blue-500 border-4 border-black text-white px-6 py-4 text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 max-w-[280px] text-center font-['Press_Start_2P'] leading-relaxed">
-							<span className="text-sm">If this made sense, let&apos;s chat!</span>
+					<div className="relative z-20 translate-y-4 right-8 sm:right-auto sm:translate-x-12 md:translate-x-20">
+						<div className="bg-blue-500 border-4 border-black text-white px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 w-max max-w-[240px] sm:max-w-[280px] text-center font-['Press_Start_2P'] leading-relaxed mx-auto">
+							<span className="text-xs sm:text-sm">If this made sense, let&apos;s chat!</span>
 							{/* Pointy bit */}
-							<div className="absolute -bottom-2 left-6 w-6 h-6 bg-blue-500 border-l-4 border-b-4 border-black transform rotate-45" />
+							<div className="absolute -bottom-2 left-1/2 sm:left-6 -translate-x-1/2 sm:translate-x-0 w-6 h-6 bg-blue-500 border-l-4 border-b-4 border-black transform rotate-45" />
 						</div>
 					</div>
 

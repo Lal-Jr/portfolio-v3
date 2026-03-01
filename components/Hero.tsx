@@ -46,7 +46,7 @@ export default function Hero() {
                             <motion.div
                                 initial="initial"
                                 whileInView="animate"
-                                className="absolute -top-16 left-1/2 -translate-x-1/2 w-[180px] flex flex-col items-center transform -rotate-6 opacity-80 flex pointer-events-none"
+                                className="absolute -top-16 left-1/2 -translate-x-1/2 w-[160px] sm:w-[180px] flex flex-col items-center transform -rotate-6 opacity-80 flex pointer-events-none scale-75 origin-bottom sm:scale-100"
                             >
                                 <div className="font-handwriting text-2xl text-gray-400 whitespace-nowrap mr-2 normal-case tracking-normal font-normal flex items-center">
                                     <HandwrittenText text="Hi, I'm " />
@@ -108,7 +108,7 @@ export default function Hero() {
                                 <motion.div
                                     initial="initial"
                                     whileInView="animate"
-                                    className="absolute -bottom-36 -right-[20px] md:-right-[310px] w-[280px] flex flex-col items-start transform rotate-6 opacity-80 hidden md:flex pointer-events-none z-50"
+                                    className="absolute -bottom-36 right-0 sm:-right-[100px] md:-right-[310px] w-[280px] flex flex-col items-start transform rotate-6 opacity-80 flex pointer-events-none z-50 scale-50 origin-top-right sm:scale-75 md:scale-100 md:origin-top-left"
                                 >
                                     <svg width="150" height="100" viewBox="0 0 150 100" fill="none" className="text-gray-500 absolute -top-20 -left-32">
                                         <motion.path
@@ -260,7 +260,7 @@ export default function Hero() {
                             whileInView={{ scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.5, type: "spring" }}
-                            className="relative w-76 h-76 overflow-hidden z-10 shadow-2xl"
+                            className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden z-10 shadow-2xl"
                         >
                             {/* Using the "Chill" avatar which looks like a face/headshot */}
                             <Image
@@ -274,7 +274,7 @@ export default function Hero() {
 
                     {/* "Here's How" Text */}
                     <h3
-                        className="mt-8 text-5xl md:text-6xl font-sans font-bold text-white relative z-20 bg-[#050505] px-4"
+                        className="mt-8 text-4xl sm:text-5xl md:text-6xl font-sans font-bold text-white relative z-20 bg-[#050505] px-4"
                     >
                         Here&apos;s <span className="relative inline-block text-white">
                             how
