@@ -129,9 +129,13 @@ const StorySection = () => {
                         style={{ y: photo1Y, scale: photo1Scale }}
                     >
                         {/* Paperclip */}
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+                        <motion.div
+                            className="absolute -top-4 left-1/2 -translate-x-1/2 z-20"
+                            animate={{ rotate: [-2, 2, -2] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        >
                             <Paperclip width={50} height={50} color="#38bdf8" className="rotate-[15deg] drop-shadow-md" />
-                        </div>
+                        </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl transform transition-transform">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7740.PNG" alt="Fun" fill className="object-cover" />
@@ -171,9 +175,13 @@ const StorySection = () => {
                         style={{ y: photo2Y, rotate: photo2Rotate }}
                     >
                         {/* Paperclip */}
-                        <div className="absolute -top-4 right-10 z-20">
+                        <motion.div
+                            className="absolute -top-4 right-10 z-20"
+                            animate={{ rotate: [-2, 2, -2] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                        >
                             <Paperclip width={50} height={50} color="#facc15" className="-rotate-12 drop-shadow-md" />
-                        </div>
+                        </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7743.PNG" alt="Travel" fill className="object-cover" />
@@ -193,9 +201,13 @@ const StorySection = () => {
                         style={{ y: photo3Y, scale: photo3Scale }}
                     >
                         {/* Paperclip */}
-                        <div className="absolute -top-3 left-10 z-20">
+                        <motion.div
+                            className="absolute -top-3 left-10 z-20"
+                            animate={{ rotate: [-2, 2, -2] }}
+                            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
                             <Paperclip width={50} height={50} color="#f472b6" className="rotate-[45deg] drop-shadow-md" />
-                        </div>
+                        </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7741.PNG" alt="Bike" fill className="object-cover" />
@@ -235,9 +247,13 @@ const StorySection = () => {
                         style={{ y: photo4Y, rotate: photo4Rotate }}
                     >
                         {/* Paperclip */}
-                        <div className="absolute -top-4 right-1/2 translate-x-1/2 z-20">
+                        <motion.div
+                            className="absolute -top-4 right-1/2 translate-x-1/2 z-20"
+                            animate={{ rotate: [-2, 2, -2] }}
+                            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
                             <Paperclip width={50} height={50} color="#4ade80" className="-rotate-6 drop-shadow-md" />
-                        </div>
+                        </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
                             <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
                                 <Image src="/avatars/IMG_7742.PNG" alt="Growth" fill className="object-cover" />

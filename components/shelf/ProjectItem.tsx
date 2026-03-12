@@ -98,7 +98,13 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
             </AnimatePresence>
 
             {/* PROJECT CONTENT SECTION */}
-            <div className="w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300">
+            <motion.div 
+                className="w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300"
+                animate={{
+                    x: isHovered ? (index % 2 === 0 ? 15 : -15) : 0,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
                 <div className="space-y-3">
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-['Press_Start_2P'] leading-tight uppercase text-white">
                         {proj.title}
@@ -109,7 +115,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                         <span>{proj.category}</span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* PROJECT IMAGE SECTION */}
             <div className="w-full md:w-1/2 relative">
