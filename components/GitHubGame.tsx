@@ -6,22 +6,30 @@ import { useGitHubGame } from "@/hooks/useGitHubGame";
 
 export default function GitHubGame() {
     const {
-        snake,
+        game,
         contributions,
-        food,
-        score,
         gameOver,
         loading,
         isAutoPlaying,
+        isPlaying,
+        PADDLE_WIDTH,
         GRID_ROWS,
         GRID_COLS,
         resetGame
     } = useGitHubGame();
 
-    // Helper to get color based on contribution level
-    const getCellColor = (level: number, isSnake: boolean, isFood: boolean) => {
-        if (isSnake) return "bg-white/60 backdrop-invert"; // Translucent snake
-        if (isFood) return "bg-yellow-400 animate-pulse ring-2 ring-yellow-200"; // Highlight target
+    // Helper to get color based on contribution level and ball/paddle position
+    const getCellColor = (level: number, colIndex: number, rowIndex: number) => {
+        // Ball
+        if (game.ball.x === colIndex && game.ball.y === rowIndex) return "bg-white animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)] z-20 relative";
+
+        // Paddle
+        if (rowIndex === GRID_ROWS - 1 && colIndex >= game.paddleX && colIndex < game.paddleX + PADDLE_WIDTH) {
+            return "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)] z-10 relative";
+        }
+
+        // Broken Contribution Block
+        if (game.brokenBlocks.includes(`${colIndex},${rowIndex}`)) return "bg-white/5";
 
         switch (level) {
             case 1: return "bg-emerald-900/60";
@@ -53,7 +61,7 @@ export default function GitHubGame() {
                                 className="mt-4 flex gap-4 justify-center text-zinc-500 font-handwriting text-xl animate-pulse"
                             >
                                 <span className="flex items-center gap-2">
-                                    <span className="border border-zinc-700 px-2 rounded">TAKE THE WHEEL? PRESS ARROWS</span>
+                                    <span className="border border-zinc-700 px-2 rounded">PRESS LEFT / RIGHT TO PLAY</span>
                                 </span>
                             </motion.div>
                         )}
@@ -77,17 +85,12 @@ export default function GitHubGame() {
                                         // Calculate linear index for data retrieval
                                         const dataIndex = colIndex * GRID_ROWS + rowIndex;
                                         const cellData = contributions[dataIndex] || { level: 0 };
-
-                                        // Check Game Objects
-                                        const isSnake = snake.some(s => s.x === colIndex && s.y === rowIndex);
-                                        const isFood = food.x === colIndex && food.y === rowIndex;
-
                                         return (
                                             <div
                                                 key={`${colIndex}-${rowIndex}`}
                                                 className={`
                                                     w-2 h-2 md:w-3 md:h-3 rounded-[1px] transition-colors duration-200
-                                                    ${getCellColor(cellData.level as number, isSnake, isFood)}
+                                                    ${getCellColor(cellData.level as number, colIndex, rowIndex)}
                                                 `}
                                             />
                                         );
@@ -103,8 +106,8 @@ export default function GitHubGame() {
                     {gameOver && (
                         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
                             <div className="bg-red-500 text-white p-6 -rotate-2 border-4 border-white shadow-[8px_8px_0px_0px_#fff] text-center">
-                                <h3 className="font-['Press_Start_2P'] text-xl mb-4">CRASHED!</h3>
-                                <p className="font-handwriting text-2xl font-bold mb-4">Commits Eaten: {score}</p>
+                                <h3 className="font-['Press_Start_2P'] text-xl mb-4">MISSED!</h3>
+                                <p className="font-handwriting text-2xl font-bold mb-4">Blocks Broken: {game.score}</p>
                                 <button
                                     onClick={resetGame}
                                     className="bg-white text-red-500 py-2 px-4 font-['Press_Start_2P'] text-xs hover:bg-zinc-100"
@@ -117,7 +120,7 @@ export default function GitHubGame() {
 
                     {/* SCORE DISPLAY */}
                     <div className="absolute top-4 right-4 md:right-8 font-['Press_Start_2P'] text-white text-xs md:text-sm bg-black/50 p-2 rounded border border-white/20">
-                        COMMITS: {score}
+                        SCORE: {game.score}
                     </div>
 
                 </div>

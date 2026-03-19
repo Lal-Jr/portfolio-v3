@@ -17,12 +17,18 @@ export interface ContributionDay {
 }
 
 export const useGitHubGame = () => {
-    // Game State
-    const [snake, setSnake] = useState<Point[]>([{ x: 10, y: 3 }]);
-    const [direction, setDirection] = useState<Point>({ x: 1, y: 0 }); // Moving right
+    // Game State (Breakout)
+    const PADDLE_WIDTH = 6;
+    const [game, setGame] = useState({
+        ball: { x: 26, y: 3 },
+        ballDir: { dx: 1, dy: -1 },
+        paddleX: 23,
+        brokenBlocks: [] as string[],
+        score: 0
+    });
+
     const [isPlaying, setIsPlaying] = useState(false); // User controlling?
     const [isAutoPlaying, setIsAutoPlaying] = useState(true); // AI controlling?
-    const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
 
     // Data State
@@ -35,7 +41,11 @@ export const useGitHubGame = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("https://github-contributions-api.jogruber.de/v4/Lal-Jr");
+                // Add timestamp to auto-update daily and bypass cache
+                const timestamp = new Date().toISOString().split('T')[0];
+                const res = await fetch(`https://github-contributions-api.jogruber.de/v4/Lal-Jr?t=${timestamp}`, {
+                    cache: "no-store"
+                });
                 const data = await res.json();
 
                 const allContribs = data.contributions || [];
@@ -74,89 +84,17 @@ export const useGitHubGame = () => {
         fetchData();
     }, []);
 
-    // Active Target - Memoized to prevent frequent effect re-runs if it's an object literal
-    const food = useMemo(() => targets[currentTargetIndex] || { x: -1, y: -1 }, [targets, currentTargetIndex]);
-
-    // AI MOVE LOGIC (Weighted "Wander" + Greedy)
-    const getNextAutoMove = (currentSnake: Point[], currentHead: Point, currentFood: Point, currentDir: Point): Point => {
-        const moves = [
-            { x: 0, y: -1 }, // Up
-            { x: 0, y: 1 },  // Down
-            { x: -1, y: 0 }, // Left
-            { x: 1, y: 0 }   // Right
-        ];
-
-        // 1. Filter Safe Moves
-        const validMoves = moves.filter(move => {
-            const nextX = currentHead.x + move.x;
-            const nextY = currentHead.y + move.y;
-
-            // Check Wall
-            if (nextX < 0 || nextX >= GRID_COLS || nextY < 0 || nextY >= GRID_ROWS) return false;
-
-            // Check Self
-            if (currentSnake.some(s => s.x === nextX && s.y === nextY)) return false;
-
-            // Don't reverse
-            if (move.x === -currentDir.x && move.y === -currentDir.y && currentSnake.length > 1) return false;
-
-            return true;
-        });
-
-        if (validMoves.length === 0) return currentDir; // Die or stall
-
-        // 2. Score Moves
-        // Priority: Safety > Momentum > Target (if close) > Exploration
-
-        let bestMove = validMoves[0];
-        let maxScore = -Infinity;
-
-        // Is food valid?
-        const hasFood = currentFood.x !== -1;
-
-        validMoves.forEach(move => {
-            let score = 0;
-            const nextX = currentHead.x + move.x;
-            const nextY = currentHead.y + move.y;
-
-            // A. Momentum Bonus (Keep going straight is visually smoother)
-            if (move.x === currentDir.x && move.y === currentDir.y) {
-                score += 5;
-            }
-
-            // B. Target Attraction (but don't be obsessive)
-            if (hasFood) {
-                const currentDist = Math.abs(currentHead.x - currentFood.x) + Math.abs(currentHead.y - currentFood.y);
-                const nextDist = Math.abs(nextX - currentFood.x) + Math.abs(nextY - currentFood.y);
-
-                if (nextDist < currentDist) {
-                    score += 8; // Move towards food
-                } else {
-                    score -= 2; // Move away
-                }
-            } else {
-                score += Math.random() * 5; // Wander
-            }
-
-            score += Math.random() * 2; // Random noise
-
-            if (score > maxScore) {
-                maxScore = score;
-                bestMove = move;
-            }
-        });
-
-        return bestMove;
-    };
-
     const resetGame = () => {
-        setSnake([{ x: 10, y: 3 }]);
-        setScore(0);
+        setGame({
+            ball: { x: 26, y: 3 },
+            ballDir: { dx: 1, dy: -1 },
+            paddleX: 23,
+            brokenBlocks: [],
+            score: 0
+        });
         setGameOver(false);
-        setDirection({ x: 1, y: 0 });
         setIsPlaying(true);
         setIsAutoPlaying(false);
-        setCurrentTargetIndex(0);
     };
 
     // Game Loop
@@ -165,100 +103,132 @@ export const useGitHubGame = () => {
         if (!isPlaying && !isAutoPlaying) return;
 
         const interval = setInterval(() => {
-            setSnake((prevSnake) => {
-                const head = prevSnake[0];
-                let moveDir = direction;
+            setGame(prev => {
+                let { ball, ballDir, paddleX, brokenBlocks, score } = prev;
+                let newDx = ballDir.dx;
+                let newDy = ballDir.dy;
+                let nextX = ball.x + newDx;
+                let nextY = ball.y + newDy;
 
-                // Adjust AI direction
-                if (isAutoPlaying && !isPlaying) {
-                    // Pass current direction for momentum logic
-                    moveDir = getNextAutoMove(prevSnake, head, food, direction);
-                    setDirection(moveDir);
+                // Wall Bounds X
+                if (nextX < 0 || nextX >= GRID_COLS) {
+                    newDx = -newDx;
+                    nextX = ball.x + newDx;
                 }
 
-                const newHead = { x: head.x + moveDir.x, y: head.y + moveDir.y };
+                // Wall Bounds Y (Top)
+                if (nextY < 0) {
+                    newDy = -newDy;
+                    nextY = ball.y + newDy;
+                }
 
-                // Collision
-                if (
-                    newHead.x < 0 ||
-                    newHead.x >= GRID_COLS ||
-                    newHead.y < 0 ||
-                    newHead.y >= GRID_ROWS ||
-                    prevSnake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
-                ) {
-                    if (isAutoPlaying) {
-                        setScore(0); // Reset score on auto-crash
-                        return [{ x: 10, y: 3 }]; // Respawn AI
+                // AI Paddle logic
+                let nextPaddleX = paddleX;
+                if (isAutoPlaying) {
+                    const paddleCenter = paddleX + Math.floor(PADDLE_WIDTH / 2);
+                    // Match paddle to ball X
+                    if (paddleCenter < ball.x && paddleX + PADDLE_WIDTH < GRID_COLS) {
+                        nextPaddleX += 1;
+                    } else if (paddleCenter > ball.x && paddleX > 0) {
+                        nextPaddleX -= 1;
                     }
-                    setGameOver(true);
-                    return prevSnake;
                 }
 
-                const newSnake = [newHead, ...prevSnake];
-
-                // Check Food (Target)
-                if (newHead.x === food.x && newHead.y === food.y) {
-                    setScore((s) => s + 1);
-                    // Advance Target
-                    setCurrentTargetIndex(i => (i + 1) % targets.length);
-                    // Grow snake? Maybe limited growth for visual clarity
-                    // if (score % 5 !== 0) newSnake.pop(); // Grow every 5?
-                    // Standard growth
-                } else {
-                    newSnake.pop();
+                // Paddle Collision (Bottom)
+                if (nextY === GRID_ROWS - 1) {
+                    if (nextX >= nextPaddleX - 1 && nextX <= nextPaddleX + PADDLE_WIDTH) {
+                        newDy = -1; // Bounce up!
+                        nextY = ball.y + newDy;
+                        // Slight angle adjustment based on hit location
+                        if (nextX <= nextPaddleX + 1) newDx = -1;
+                        if (nextX >= nextPaddleX + PADDLE_WIDTH - 2) newDx = 1;
+                    }
                 }
 
-                return newSnake;
+                // Drop Out of Bounds
+                if (nextY >= GRID_ROWS) {
+                    if (!isAutoPlaying) {
+                        setGameOver(true);
+                        return prev; // Freezes state
+                    } else {
+                        // AI Respawn
+                        return {
+                            ball: { x: 26, y: 3 },
+                            ballDir: { dx: 1, dy: -1 },
+                            paddleX: 23,
+                            brokenBlocks: [],
+                            score: 0
+                        };
+                    }
+                }
+
+                // Brick (Contribution) Collision
+                const blockKey = `${nextX},${nextY}`;
+                if (nextY < GRID_ROWS - 1 && !brokenBlocks.includes(blockKey)) {
+                    const dataIndex = nextX * GRID_ROWS + nextY;
+                    const cellData = contributions[dataIndex];
+                    if (cellData && cellData.level > 0) {
+                        // Break the block!
+                        brokenBlocks = [...brokenBlocks, blockKey];
+                        score += 1;
+                        newDy = -newDy; // simple bounce
+                        nextY = ball.y + newDy;
+                    }
+                }
+
+                return {
+                    ball: { x: nextX, y: nextY },
+                    ballDir: { dx: newDx, dy: newDy },
+                    paddleX: nextPaddleX,
+                    brokenBlocks,
+                    score
+                };
             });
         }, SPEED);
 
         return () => clearInterval(interval);
-    }, [isPlaying, isAutoPlaying, gameOver, direction, food, targets]);
+    }, [isPlaying, isAutoPlaying, gameOver, contributions]);
 
     // Keyboard Controls
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-                e.preventDefault();
+            if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
+                e.preventDefault(); // prevent scrolling
             }
 
             // User takes control!
-            if (isAutoPlaying && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+            if (isAutoPlaying && ["ArrowLeft", "ArrowRight"].includes(e.key)) {
                 setIsAutoPlaying(false);
                 setIsPlaying(true);
-                setScore(0);
-                setSnake([{ x: 10, y: 3 }]);
-                return;
+                setGame(g => ({ ...g, score: 0, brokenBlocks: [], ball: { x: 26, y: 3 }, ballDir: { dx: 1, dy: -1 } }));
             }
 
             if (isPlaying && !gameOver) {
-                switch (e.key) {
-                    case "ArrowUp": if (direction.y === 0) setDirection({ x: 0, y: -1 }); break;
-                    case "ArrowDown": if (direction.y === 0) setDirection({ x: 0, y: 1 }); break;
-                    case "ArrowLeft": if (direction.x === 0) setDirection({ x: -1, y: 0 }); break;
-                    case "ArrowRight": if (direction.x === 0) setDirection({ x: 1, y: 0 }); break;
+                if (e.key === "ArrowLeft") {
+                    setGame(g => ({ ...g, paddleX: Math.max(0, g.paddleX - 2) }));
+                } else if (e.key === "ArrowRight") {
+                    setGame(g => ({ ...g, paddleX: Math.min(GRID_COLS - PADDLE_WIDTH, g.paddleX + 2) }));
                 }
             }
 
             if (gameOver && e.code === "Space") {
+                e.preventDefault();
                 resetGame();
             }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [direction, isPlaying, isAutoPlaying, gameOver]);
+    }, [isPlaying, isAutoPlaying, gameOver]);
 
     return {
-        snake,
+        game,
         contributions,
-        food,
-        score,
         gameOver,
         loading,
         isAutoPlaying,
         isPlaying,
-
+        PADDLE_WIDTH,
         GRID_ROWS,
         GRID_COLS,
         resetGame
