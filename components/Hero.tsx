@@ -193,10 +193,9 @@ export default function Hero() {
                                         boxShadow: `8px 8px 0px 0px ${panel.color}`,
                                     }}
                                 >
-                                    {/* Background Pop Color (Reveals on Hover) */}
+                                    {/* Background Color (Reveals on Hover) */}
                                     <div
-                                        className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                        style={{ backgroundColor: panel.color }}
+                                        className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white"
                                     />
 
                                     {/* Image */}
@@ -204,7 +203,7 @@ export default function Hero() {
                                         src={panel.src}
                                         alt={panel.alt}
                                         fill
-                                        className="object-cover relative z-10 grayscale group-hover:grayscale-0 mix-blend-normal group-hover:mix-blend-multiply transition-all duration-300"
+                                        className="object-cover relative z-10 grayscale group-hover:grayscale-0 transition-all duration-300"
                                         sizes="(max-width: 768px) 128px, 176px"
                                     />
                                 </div>

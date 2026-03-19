@@ -52,11 +52,17 @@ const StorySection = () => {
     const photo3Y = isMobile ? 0 : photo3YDesktop;
     const photo4Y = isMobile ? 0 : photo4YDesktop;
 
+    // Filters for when the line reaches them
+    const photo1Filter = useTransform(scrollYProgress, [0, 0.15], ["grayscale(100%)", "grayscale(0%)"]);
+    const photo2Filter = useTransform(scrollYProgress, [0.2, 0.35], ["grayscale(100%)", "grayscale(0%)"]);
+    const photo3Filter = useTransform(scrollYProgress, [0.55, 0.65], ["grayscale(100%)", "grayscale(0%)"]);
+    const photo4Filter = useTransform(scrollYProgress, [0.75, 0.9], ["grayscale(100%)", "grayscale(0%)"]);
+
     // We still use EXPERIENCE_DATA for the popup details
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden z-10 bg-transparent pb-32">
+        <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-x-hidden z-10 bg-transparent pb-32 md:pb-48">
 
             {/* Background Scribbles (Global Decor) */}
             <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none">
@@ -88,7 +94,7 @@ const StorySection = () => {
                 </motion.div>
 
                 {/* 2. THE CURVE OF LIFE (Timeline container) - Compacted Height: 1400px (was 1600px) */}
-                <div ref={containerRef} className="relative w-full h-[1400px] mt-0">
+                <div ref={containerRef} className="relative w-full h-[1400px] mt-0 mb-48">
 
                     {/* SVG PATH - Recalculated for 1400px height */}
                     <svg
@@ -137,9 +143,12 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#38bdf8" className="rotate-[15deg] drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl transform transition-transform">
-                            <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
+                            <motion.div
+                                className="relative aspect-square bg-zinc-200 overflow-hidden"
+                                style={{ filter: photo1Filter }}
+                            >
                                 <Image src="/avatars/IMG_7740.PNG" alt="Fun" fill className="object-cover" />
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
 
@@ -148,7 +157,7 @@ const StorySection = () => {
                         <div className="mb-4">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: START</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                This is how everything started... late night coding sessions in college dorms, finding joy in fixing that one broken div.
+                                Everything started during COVID—just me, my laptop, and a lot of boredom. I began with HTML, which led me to CSS, JavaScript, and eventually React.
                             </p>
                         </div>
                     </div>
@@ -163,7 +172,7 @@ const StorySection = () => {
                         <div className="mt-4 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: BREAKTHROUGH</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                The placement journey. Landing my first role at Wayne Enterprises wasn&apos;t luck—it was grinding data structures until they made sense.
+                                The placement journey. Landing my first role at Envestnet wasn&apos;t luck—it was grinding DSA, OOPS, DBMS until they made sense.
                             </p>
                         </div>
                     </div>
@@ -183,9 +192,12 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#facc15" className="-rotate-12 drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
+                            <motion.div
+                                className="relative aspect-square bg-zinc-200 overflow-hidden"
+                                style={{ filter: photo2Filter }}
+                            >
                                 <Image src="/avatars/IMG_7743.PNG" alt="Travel" fill className="object-cover" />
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
 
@@ -209,9 +221,12 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#f472b6" className="rotate-[45deg] drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
+                            <motion.div
+                                className="relative aspect-square bg-zinc-200 overflow-hidden"
+                                style={{ filter: photo3Filter }}
+                            >
                                 <Image src="/avatars/IMG_7741.PNG" alt="Bike" fill className="object-cover" />
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
 
@@ -220,7 +235,7 @@ const StorySection = () => {
                         <div className="mr-0 md:mr-6">
                             <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: EVOLUTION</h3>
                             <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                2.5 years in the corporate trenches. Evolving from &quot;make it work&quot; to &quot;make it scalable&quot;. Designing systems that survive the test of time.
+                                3 years in the corporate trenches. Evolving from &quot;make it work&quot; to &quot;make it scalable&quot;. Designing systems that survive the test of time.
                             </p>
                         </div>
                     </div>
@@ -255,9 +270,12 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#4ade80" className="-rotate-6 drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <div className="relative aspect-square bg-zinc-200 overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-300">
+                            <motion.div
+                                className="relative aspect-square bg-zinc-200 overflow-hidden"
+                                style={{ filter: photo4Filter }}
+                            >
                                 <Image src="/avatars/IMG_7742.PNG" alt="Growth" fill className="object-cover" />
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
 
