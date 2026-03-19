@@ -150,8 +150,8 @@ const ContactSection = () => {
 
 							{/* Resume Button - Pixel Style */}
 							<motion.a
-								href="/resume.pdf"
-								download
+								href="/HarishLal_Resume.pdf"
+								download="HarishLal_Resume.pdf"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								className="group relative px-6 py-4 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
