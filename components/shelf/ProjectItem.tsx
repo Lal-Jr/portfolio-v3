@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import { Lock } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from "framer-motion";
 import Image from "next/image";
@@ -41,6 +41,24 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
         mouseX.set(e.clientX);
         mouseY.set(e.clientY);
     };
+
+    // Calculate a dynamic read time that actually shows variety based on the text length
+    const dynamicReadTime = useMemo(() => {
+        const fullContent = [
+            proj.shortDesc,
+            proj.problem,
+            proj.thought,
+            proj.solving,
+            proj.result
+        ].filter(Boolean).join(" ");
+
+        // Since the current strings are just summaries, standard 200 WPM makes them all "1m read".
+        // To give dynamic, varied times based on the content weight, we scale it.
+        // Let's assume roughly 45 characters equates to a "minute" of deeper reading in their intended full posts.
+        const charCount = fullContent.length;
+        const readTimeMinutes = Math.max(1, Math.ceil(charCount / 45));
+        return `${readTimeMinutes}m read`;
+    }, [proj]);
 
     return (
         <motion.div
@@ -89,7 +107,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                             </div>
                         ) : (
                             <PixelLabel
-                                text={proj.time}
+                                text={dynamicReadTime}
                                 className="bg-yellow-400 text-black border-black whitespace-nowrap"
                             />
                         )}
@@ -98,7 +116,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
             </AnimatePresence>
 
             {/* PROJECT CONTENT SECTION */}
-            <motion.div 
+            <motion.div
                 className="w-full md:w-1/2 space-y-6 z-10 transition-opacity duration-300"
                 animate={{
                     x: isHovered ? (index % 2 === 0 ? 15 : -15) : 0,
