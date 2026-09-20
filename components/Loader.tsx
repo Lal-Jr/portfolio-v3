@@ -80,30 +80,19 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 				>
 					<div className="relative w-16 h-16">
 						<svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(255,255,0,0.3)]">
-							{/* Top Jaw */}
+							{/* The mouth chomps by rotating two half-discs about the centre (animating the path itself breaks arc interpolation) */}
 							<motion.path
-								d="M50,50 L95,20 A45,45 0 1,0 5,50 L50,50"
+								d="M50,50 L5,50 A45,45 0 0,1 95,50 Z"
 								fill="#FFFF00"
-								animate={{
-									d: [
-										"M50,50 L95,15 A45,45 0 1,0 5,50 L50,50",
-										"M50,50 L95,50 A45,45 1 1,0 5,50 L50,50",
-										"M50,50 L95,15 A45,45 0 1,0 5,50 L50,50"
-									]
-								}}
+								style={{ transformOrigin: "50px 50px" }}
+								animate={{ rotate: [-6, -32, -6] }}
 								transition={{ duration: 0.25, repeat: Infinity, ease: "easeInOut" }}
 							/>
-							{/* Bottom Jaw */}
 							<motion.path
-								d="M50,50 L95,80 A45,45 0 0,1 5,50 L50,50"
+								d="M50,50 L95,50 A45,45 0 0,1 5,50 Z"
 								fill="#FFFF00"
-								animate={{
-									d: [
-										"M50,50 L95,85 A45,45 0 0,1 5,50 L50,50",
-										"M50,50 L95,50 A45,45 1 0,1 5,50 L50,50",
-										"M50,50 L95,85 A45,45 0 0,1 5,50 L50,50"
-									]
-								}}
+								style={{ transformOrigin: "50px 50px" }}
+								animate={{ rotate: [6, 32, 6] }}
 								transition={{ duration: 0.25, repeat: Infinity, ease: "easeInOut" }}
 							/>
 						</svg>
