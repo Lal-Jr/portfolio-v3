@@ -238,7 +238,7 @@ export const SHELF_PROJECTS = [
 		tech: ["Next.js", "TypeScript", "Supabase", "PowerSync"],
 		color: "#a855f7",
 		image: "/Placeholder.jpg",
-		gif: "/PlaceholderGIF.webp",
+		gif: "/subtrack-demo.webp",
 		time: "2026",
 		shortDesc: "An offline-first, privacy-focused PWA that tracks subscriptions and forecasts spending, all processed on your device.",
 		liveUrl: "#", // TODO: add the live URL (the "Visit Live" button stays hidden while this is "#")
