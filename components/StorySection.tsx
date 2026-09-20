@@ -194,7 +194,7 @@ const StorySection = () => {
                     {/* Text 1: Positioned BELOW the photo - Pushed down to top-[25%] to fix overlap */}
                     <div className="absolute top-[21%] md:top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
                         <div className="mb-4">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: LEARNING</h3>
+                            <h3 className="font-pixel text-[10px] text-sky-400 mb-2">CHAPTER 1: LEARNING</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
                                 It started during COVID, with just me, my laptop and a lot of boredom. I built everything from scratch: HTML, then CSS, then JavaScript, until React finally clicked.
                             </p>
@@ -209,7 +209,7 @@ const StorySection = () => {
                     {/* Text 2 */}
                     <div className="absolute top-[52%] md:top-[32%] right-[2%] md:right-[28%] w-full max-w-[250px] z-20 text-center md:text-right mx-auto left-[2%] md:left-auto md:mx-0">
                         <div className="mt-4 md:mr-6">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: DISCOVERY</h3>
+                            <h3 className="font-pixel text-[10px] text-yellow-400 mb-2">CHAPTER 2: DISCOVERY</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
                                 Somewhere in the building, I fell in love with it. I ground through DSA, OOPS and DBMS until they made sense, and that love became my first role at Envestnet.
                             </p>
@@ -270,7 +270,7 @@ const StorySection = () => {
                     {/* Text 3 */}
                     <div className="absolute top-[82%] md:top-[67%] left-[2%] md:left-[35%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
                         <div className="mr-0 md:mr-6">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: SUSTENANCE</h3>
+                            <h3 className="font-pixel text-[10px] text-pink-400 mb-2">CHAPTER 3: SUSTENANCE</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
                                 Three years in, I&apos;m still learning: upskilling, building on the side and learning from the people around me. &quot;Make it work&quot; became &quot;make it scale&quot;.
                             </p>
@@ -285,7 +285,7 @@ const StorySection = () => {
                     {/* Text 4: Positioned ABOVE the Photo - Compacted position top-[80%] */}
                     <div className="hidden md:block absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
                         <div className="mb-4">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">CHAPTER 4: WHAT&apos;S NEXT</h3>
+                            <h3 className="font-pixel text-[10px] text-green-400 mb-2">CHAPTER 4: WHAT&apos;S NEXT</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
                                 The future looks like AI and agents in everyday work, deeper architecture and interfaces that feel human. I&apos;m building toward that, one chapter at a time.
                             </p>
@@ -340,10 +340,10 @@ const StorySection = () => {
                                         {/* Header */}
                                         <div className="flex justify-between items-start mb-6 border-b-2 border-dashed border-white/20 pb-4">
                                             <div>
-                                                <h3 className="font-['Press_Start_2P'] text-white text-sm leading-6 uppercase text-yellow-400 shadow-black drop-shadow-md">
+                                                <h3 className="font-pixel text-white text-sm leading-6 uppercase text-yellow-400 shadow-black drop-shadow-md">
                                                     {activeJob.company}
                                                 </h3>
-                                                <p className="font-['Press_Start_2P'] text-[10px] text-zinc-400 mt-2">
+                                                <p className="font-pixel text-[10px] text-zinc-400 mt-2">
                                                     {activeJob.period}
                                                 </p>
                                             </div>
@@ -353,7 +353,7 @@ const StorySection = () => {
                                         {/* Content */}
                                         <div className="space-y-4">
                                             <div>
-                                                <p className="font-['Press_Start_2P'] text-[10px] text-blue-400 mb-2">
+                                                <p className="font-pixel text-[10px] text-blue-400 mb-2">
                                                     CLASS:
                                                 </p>
                                                 <p className="font-bold text-white text-xl font-handwriting">
@@ -362,7 +362,7 @@ const StorySection = () => {
                                             </div>
 
                                             <div className="bg-white/5 p-4 border border-white/10 rounded-sm">
-                                                <p className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">
+                                                <p className="font-pixel text-[10px] text-green-400 mb-2">
                                                     QUEST LOG:
                                                 </p>
                                                 <p className="font-handwriting text-2xl text-white leading-tight">
@@ -373,7 +373,7 @@ const StorySection = () => {
 
                                         {/* Footer Decor */}
                                         <div className="mt-6 flex justify-between items-end">
-                                            <div className="text-[9px] font-['Press_Start_2P'] text-zinc-600 animate-pulse">
+                                            <div className="text-[9px] font-pixel text-zinc-600 animate-pulse">
                                                 PRESS START
                                             </div>
                                             <div className="flex gap-1">

@@ -122,10 +122,10 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 			{/* Progress Text */}
 			<div className="text-center space-y-4">
 				<div className="flex items-baseline justify-center gap-2">
-					<span className="text-6xl md:text-8xl font-['Press_Start_2P'] text-white tracking-tighter">
+					<span className="text-6xl md:text-8xl font-pixel text-white tracking-tighter">
 						{Math.floor(progress)}
 					</span>
-					<span className="text-2xl font-['Press_Start_2P'] text-yellow-400">%</span>
+					<span className="text-2xl font-pixel text-yellow-400">%</span>
 				</div>
 
 				<AnimatePresence mode="wait">

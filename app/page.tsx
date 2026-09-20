@@ -14,7 +14,7 @@ export default function Home() {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<div ref={containerRef} className="relative w-full" style={{ scrollBehavior: 'smooth' }}>
+		<div ref={containerRef} className="relative w-full overflow-x-clip" style={{ scrollBehavior: 'smooth' }}>
 			<Hero />
 			<ProjectShelf />
 			<ThoughtProcessSection />

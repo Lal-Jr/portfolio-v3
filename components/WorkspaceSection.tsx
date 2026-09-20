@@ -58,7 +58,7 @@ export default function WorkspaceSection() {
                     </h2>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-12 gap-16 md:gap-12 items-center w-full mb-24">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-12 items-center w-full mb-24">
 
                     {/* Left Text - Evolution */}
                     <motion.div
@@ -66,7 +66,7 @@ export default function WorkspaceSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="col-span-12 lg:col-span-3 text-center lg:text-right order-2 lg:order-1 space-y-4"
+                        className="lg:col-span-3 text-center lg:text-right order-2 lg:order-1 space-y-4"
                     >
                         <h3 className="text-2xl font-bold text-zinc-200 font-handwriting -rotate-2">The Evolution</h3>
                         <p className="text-zinc-400 text-lg leading-relaxed">
@@ -77,7 +77,7 @@ export default function WorkspaceSection() {
                     {/* Centered Image Container - LARGER (spanning 6 cols) */}
                     <motion.div
                         style={{ y, rotate }}
-                        className="col-span-12 lg:col-span-6 relative perspective-1000 w-full order-1 lg:order-2 flex justify-center"
+                        className="lg:col-span-6 relative perspective-1000 w-full min-w-0 order-1 lg:order-2 flex justify-center"
                     >
                         {/* Polaroid Frame */}
                         <div className="bg-white p-4 pb-20 shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-700 ease-out relative group rounded-sm w-full">
@@ -103,7 +103,7 @@ export default function WorkspaceSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
-                        className="col-span-12 lg:col-span-3 text-center lg:text-left order-3 lg:order-3 space-y-4"
+                        className="lg:col-span-3 text-center lg:text-left order-3 lg:order-3 space-y-4"
                     >
                         <h3 className="text-2xl font-bold text-zinc-200 font-handwriting rotate-1">Pure Joy</h3>
                         <p className="text-zinc-400 text-lg leading-relaxed">

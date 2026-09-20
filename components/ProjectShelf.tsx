@@ -26,7 +26,7 @@ export default function ProjectShelf() {
 
 	return (
 		<div ref={shelfRef} className="w-full bg-transparent pb-12 pt-12 overflow-visible">
-			<div className="relative mx-auto max-w-5xl">
+			<div className="relative mx-auto max-w-5xl px-6 md:px-8">
 				<Doodle shape="squiggle" size={90} color="#86efac" className="-top-6 right-4" />
 				<Doodle shape="cross" size={34} color="#f9a8d4" className="left-2 top-1/3" rotate={8} />
 				{SHELF_PROJECTS.map((proj, index) => (

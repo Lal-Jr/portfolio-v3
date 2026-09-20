@@ -107,7 +107,7 @@ const ContactSection = () => {
 						animate={{ y: [0, -6, 0] }}
 						transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
 					>
-						<div className="bg-blue-500 border-4 border-black text-white px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 w-max max-w-[240px] sm:max-w-[280px] text-center font-['Press_Start_2P'] leading-relaxed mx-auto">
+						<div className="bg-blue-500 border-4 border-black text-white px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-xl md:text-2xl font-bold shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform rotate-3 w-max max-w-[240px] sm:max-w-[280px] text-center font-pixel leading-relaxed mx-auto">
 							<span className="text-xs sm:text-sm">If this made sense, let&apos;s chat!</span>
 							{/* Pointy bit */}
 							<div className="absolute -bottom-2 left-1/2 sm:left-6 -translate-x-1/2 sm:translate-x-0 w-6 h-6 bg-blue-500 border-l-4 border-b-4 border-black transform rotate-45" />
@@ -153,7 +153,7 @@ const ContactSection = () => {
 								aria-label="Copy email address"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								className="group relative px-6 py-4 bg-yellow-400 border-4 border-black text-black transition-all hover:bg-yellow-300 flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+								className="group relative px-6 py-4 bg-yellow-400 border-4 border-black text-black transition-all hover:bg-yellow-300 flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-pixel"
 							>
 								<span className="text-xs md:text-sm leading-relaxed">{email}</span>
 								{copied ? <Check size={20} className="text-green-600" /> : <Copy size={20} className="text-zinc-800 group-hover:text-black" />}
@@ -167,7 +167,7 @@ const ContactSection = () => {
 								download="HarishLal_Resume.pdf"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								className="group relative px-5 py-3 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+								className="group relative px-5 py-3 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-pixel"
 							>
 								<FileText size={18} />
 								<span className="text-[10px] md:text-xs leading-relaxed">Resume</span>
@@ -180,7 +180,7 @@ const ContactSection = () => {
 									rel="noopener noreferrer"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									className="group relative px-5 py-3 bg-sky-400 border-4 border-black text-black hover:bg-sky-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+									className="group relative px-5 py-3 bg-sky-400 border-4 border-black text-black hover:bg-sky-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-pixel"
 								>
 									<Linkedin size={18} />
 									<span className="text-[10px] md:text-xs leading-relaxed">LinkedIn</span>

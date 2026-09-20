@@ -80,7 +80,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                 }
             }}
             className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                } items-center gap-16 md:gap-24 relative group ${proj.isComingSoon ? "cursor-none" : "cursor-pointer"} py-8`}
+                } items-center gap-10 md:gap-24 relative group ${proj.isComingSoon ? "cursor-none" : "cursor-pointer"} py-8`}
         >
             {/* CURSOR FOLLOWING LABEL */}
             <AnimatePresence>
@@ -124,10 +124,10 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
                 <div className="space-y-4">
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-['Press_Start_2P'] leading-tight uppercase text-white">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-pixel leading-tight uppercase text-white">
                         {proj.title}
                     </h3>
-                    <div className="flex items-center gap-3 text-emerald-500/60 font-['Press_Start_2P'] text-[10px] md:text-[12px]">
+                    <div className="flex items-center gap-3 text-emerald-500/60 font-pixel text-[10px] md:text-[12px]">
                         <span>{proj.year}</span>
                         <span className="w-1.5 h-1.5 bg-emerald-500/40 rounded-none transform rotate-45" />
                         <span>{proj.category}</span>
@@ -157,7 +157,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                     className="relative aspect-[4/3] w-full bg-zinc-900 rounded-[2rem] overflow-hidden transition-all duration-500"
                     animate={{
                         borderColor: isHovered ? proj.color : proj.isComingSoon ? "#27272a" : `${proj.color}66`, // zinc-800 when locked
-                        borderWidth: "12px",
+                        borderWidth: "8px",
                         borderStyle: "solid",
                         boxShadow: isHovered
                             ? `12px 12px 0px 0px ${proj.color}`

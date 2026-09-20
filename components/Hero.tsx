@@ -129,18 +129,18 @@ export default function Hero() {
                             </motion.div>
                         </div>
                         bring{" "}
-                        <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46] mx-2">
+                        <span className="font-pixel text-[1.1rem] min-[400px]:text-xl sm:text-3xl md:text-4xl lg:text-5xl text-[#34d399] uppercase tracking-wider md:tracking-widest drop-shadow-[2px_2px_0_#0b6b4a] md:drop-shadow-[4px_4px_0_#0b6b4a] mx-1 md:mx-2">
                             engineering
                         </span>
                         depth, <br className="hidden md:block" />
-                        <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46] mx-2">
+                        <span className="font-pixel text-[1.1rem] min-[400px]:text-xl sm:text-3xl md:text-4xl lg:text-5xl text-[#34d399] uppercase tracking-wider md:tracking-widest drop-shadow-[2px_2px_0_#0b6b4a] md:drop-shadow-[4px_4px_0_#0b6b4a] mx-1 md:mx-2">
                             architecture
                         </span>
                         thinking and <br className="hidden md:block" /> <span className="whitespace-nowrap">imaginative{" "}
 
                             {/* "design" with Right Annotation */}
                             <div className="relative inline-block mx-2">
-                                <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46]">
+                                <span className="font-pixel text-[1.1rem] min-[400px]:text-xl sm:text-3xl md:text-4xl lg:text-5xl text-[#34d399] uppercase tracking-wider md:tracking-widest drop-shadow-[2px_2px_0_#0b6b4a] md:drop-shadow-[4px_4px_0_#0b6b4a]">
                                     design
                                 </span>
                                 {/* Role note to the right of "design", with an arrow pointing back at the word.
