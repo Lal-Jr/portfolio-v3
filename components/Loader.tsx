@@ -52,9 +52,9 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 	}, [onComplete, cherryEaten]);
 
 	return (
-		<div className="flex flex-col items-center justify-center w-full max-w-2xl px-8">
+		<div className="relative w-full max-w-2xl px-8">
 			{/* THE TRACK */}
-			<div className="relative w-full h-32 mb-8 flex items-center">
+			<div className="relative w-full h-32 flex items-center">
 				{/* Pellets - Classic Small Dots */}
 				<div className="absolute inset-0 flex items-center justify-between px-8">
 					{[...Array(12)].map((_, i) => (
@@ -74,12 +74,12 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 				<motion.div
 					className="absolute z-10"
 					style={{
-						left: `${progress}%`,
+						left: `${4 + progress * 0.92}%`,
 						x: "-50%"
 					}}
 				>
 					<div className="relative w-16 h-16">
-						<svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(255,255,0,0.3)]">
+						<svg viewBox="0 0 100 100" overflow="visible" className="w-full h-full drop-shadow-[0_0_8px_rgba(255,255,0,0.3)]">
 							{/* The mouth chomps by rotating two half-discs about the centre (animating the path itself breaks arc interpolation) */}
 							<motion.path
 								d="M50,50 L5,50 A45,45 0 0,1 95,50 Z"
@@ -108,13 +108,13 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 				</div>
 			</div>
 
-			{/* Progress Text */}
-			<div className="text-center space-y-4">
-				<div className="flex items-baseline justify-center gap-2">
-					<span className="text-6xl md:text-8xl font-pixel text-white tracking-tighter">
+			{/* Progress text hangs below the track, so the track itself sits on the exact screen centre */}
+			<div className="absolute left-0 right-0 top-full mt-4 px-8 text-center space-y-4">
+				<div className="flex justify-center">
+					<span className="relative inline-block text-6xl md:text-8xl font-pixel text-white tracking-tighter">
 						{Math.floor(progress)}
+						<span className="absolute bottom-2 left-full ml-2 text-2xl font-pixel tracking-normal text-yellow-400">%</span>
 					</span>
-					<span className="text-2xl font-pixel text-yellow-400">%</span>
 				</div>
 
 				<AnimatePresence mode="wait">
