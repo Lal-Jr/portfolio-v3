@@ -134,7 +134,7 @@ const PacmanLoader: React.FC<Props> = ({ onComplete }) => {
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -10 }}
-						className="text-3xl md:text-4xl font-['var(--font-caveat)'] text-zinc-400"
+						className="text-3xl md:text-4xl font-handwriting text-zinc-400"
 					>
 						{progress === 100 ? (
 							<span className="text-green-400">ready to play!</span>

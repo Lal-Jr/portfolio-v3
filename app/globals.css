@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/*
+  Tailwind 4 reads theme tokens from CSS, not tailwind.config.ts.
+  The fonts are next/font variables (see app/layout.tsx); `inline` makes the utilities
+  reference those variables directly, so font-sans / font-handwriting / font-pixel work.
+*/
+@theme inline {
+	--font-sans: var(--font-outfit), var(--font-inter), sans-serif;
+	--font-handwriting: var(--font-caveat), cursive;
+	--font-pixel: var(--font-press-start), monospace;
+}
+
 /* globals.css */
 
 * {

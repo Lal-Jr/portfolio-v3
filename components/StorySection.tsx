@@ -1,9 +1,9 @@
 "use client";
+import Doodle from "@/components/ui/Doodle";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { EXPERIENCE_DATA } from "@/constants";
-import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import ComicScribble from "@/components/ui/ComicScribble";
 import Paperclip from "@/components/ui/Paperclip";
 import { Globe, Shield, Zap, Bot } from "lucide-react";
@@ -52,17 +52,26 @@ const StorySection = () => {
     const photo3Y = isMobile ? 0 : photo3YDesktop;
     const photo4Y = isMobile ? 0 : photo4YDesktop;
 
-    // Filters for when the line reaches them
-    const photo1Filter = useTransform(scrollYProgress, [0, 0.15], ["grayscale(100%)", "grayscale(0%)"]);
-    const photo2Filter = useTransform(scrollYProgress, [0.2, 0.35], ["grayscale(100%)", "grayscale(0%)"]);
-    const photo3Filter = useTransform(scrollYProgress, [0.55, 0.65], ["grayscale(100%)", "grayscale(0%)"]);
-    const photo4Filter = useTransform(scrollYProgress, [0.75, 0.9], ["grayscale(100%)", "grayscale(0%)"]);
+    // Photos turn from grayscale to color as the line reaches them. Toggled at a
+    // threshold with a CSS transition instead of scrubbing `filter` every scroll
+    // frame (a per-frame filter forces a repaint of each photo).
+    const PHOTO_COLOR_AT = [0.075, 0.275, 0.6, 0.825];
+    const [colored, setColored] = useState<boolean[]>(PHOTO_COLOR_AT.map(() => false));
+    useMotionValueEvent(scrollYProgress, "change", (v) => {
+        setColored((prev) => {
+            const next = PHOTO_COLOR_AT.map((t) => v >= t);
+            return next.every((c, i) => c === prev[i]) ? prev : next;
+        });
+    });
 
     // We still use EXPERIENCE_DATA for the popup details
     const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
         <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-x-clip z-10 bg-transparent pb-12 md:pb-16">
+            <Doodle shape="spiral" size={52} color="#f9a8d4" className="left-[6%] top-24" rotate={10} />
+            <Doodle shape="burst" size={44} color="#fde047" className="right-[8%] top-40" />
+            <Doodle shape="zigzag" size={70} color="#86efac" className="right-[5%] bottom-40" rotate={-8} />
 
             {/* Background Scribbles (Global Decor) */}
             <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none">
@@ -81,16 +90,47 @@ const StorySection = () => {
                     viewport={{ once: true }}
                     className="text-center mb-32 relative"
                 >
-                    <h2 className="text-3xl md:text-5xl font-['var(--font-caveat)'] text-zinc-300 font-bold transform -rotate-1">
+                    <h2 className="text-3xl md:text-5xl font-handwriting text-zinc-300 font-bold transform -rotate-1">
                         But all this comes from the <br className="hidden md:block" />
                         <span className="relative inline-block px-3 py-1">
                             <span className="absolute inset-0 bg-blue-500 rounded-full transform -rotate-1 opacity-90"></span>
                             <span className="relative text-white">journey</span>
-                        </span> that shaped how I think...
+                        </span>{" "}
+                        <span className="relative inline-block">
+                            that shaped how I think...
+                            {/* Hand-drawn arrow: leaves the end of the sentence and curls down toward the journey */}
+                            <svg
+                                width="120"
+                                height="110"
+                                viewBox="0 0 120 110"
+                                fill="none"
+                                className="pointer-events-none absolute left-full top-1/2 ml-2 hidden text-zinc-400 md:block"
+                                aria-hidden
+                            >
+                                <motion.path
+                                    d="M6 16 C 60 10, 100 30, 92 62 C 88 78, 70 90, 52 100"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 1, delay: 0.8, ease: "easeInOut" }}
+                                />
+                                <motion.path
+                                    d="M64 100.2 L52 100 L58.2 89.7"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.3, delay: 1.7 }}
+                                />
+                            </svg>
+                        </span>
                     </h2>
-                    <div className="absolute -right-8 -bottom-4 hidden md:block opacity-60">
-                        <HandDrawnArrow type="curved-down" width={40} height={40} color="#a1a1aa" rotation={-10} />
-                    </div>
                 </motion.div>
 
                 {/* 2. THE CURVE OF LIFE (Timeline container) - Compacted Height: 1400px (was 1600px) */}
@@ -143,21 +183,20 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#38bdf8" className="rotate-[15deg] drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl transform transition-transform">
-                            <motion.div
-                                className="relative aspect-square bg-zinc-200 overflow-hidden"
-                                style={{ filter: photo1Filter }}
+                            <div
+                                className={`relative aspect-square bg-zinc-200 overflow-hidden transition-[filter] duration-700 ${colored[0] ? "grayscale-0" : "grayscale"}`}
                             >
-                                <Image src="/avatars/IMG_7740.PNG" alt="Fun" fill className="object-cover" />
-                            </motion.div>
+                                <Image src="/avatars/IMG_7740.PNG" alt="Fun" fill sizes="256px" className="object-cover" />
+                            </div>
                         </div>
                     </motion.div>
 
                     {/* Text 1: Positioned BELOW the photo - Pushed down to top-[25%] to fix overlap */}
                     <div className="absolute top-[21%] md:top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
                         <div className="mb-4">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: START</h3>
-                            <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                Everything started during COVID—just me, my laptop, and a lot of boredom. I began with HTML, which led me to CSS, JavaScript, and eventually React.
+                            <h3 className="font-['Press_Start_2P'] text-[10px] text-sky-400 mb-2">CHAPTER 1: LEARNING</h3>
+                            <p className="font-handwriting text-xl text-zinc-300">
+                                It started during COVID, with just me, my laptop and a lot of boredom. I built everything from scratch: HTML, then CSS, then JavaScript, until React finally clicked.
                             </p>
                         </div>
                     </div>
@@ -170,9 +209,9 @@ const StorySection = () => {
                     {/* Text 2 */}
                     <div className="absolute top-[52%] md:top-[32%] right-[2%] md:right-[28%] w-full max-w-[250px] z-20 text-center md:text-right mx-auto left-[2%] md:left-auto md:mx-0">
                         <div className="mt-4 md:mr-6">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: BREAKTHROUGH</h3>
-                            <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                The placement journey. Landing my first role at Envestnet wasn&apos;t luck—it was grinding DSA, OOPS, DBMS until they made sense.
+                            <h3 className="font-['Press_Start_2P'] text-[10px] text-yellow-400 mb-2">CHAPTER 2: DISCOVERY</h3>
+                            <p className="font-handwriting text-xl text-zinc-300">
+                                Somewhere in the building, I fell in love with it. I ground through DSA, OOPS and DBMS until they made sense, and that love became my first role at Envestnet.
                             </p>
                         </div>
                     </div>
@@ -192,12 +231,11 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#facc15" className="-rotate-12 drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <motion.div
-                                className="relative aspect-square bg-zinc-200 overflow-hidden"
-                                style={{ filter: photo2Filter }}
+                            <div
+                                className={`relative aspect-square bg-zinc-200 overflow-hidden transition-[filter] duration-700 ${colored[1] ? "grayscale-0" : "grayscale"}`}
                             >
-                                <Image src="/avatars/IMG_7743.PNG" alt="Travel" fill className="object-cover" />
-                            </motion.div>
+                                <Image src="/avatars/IMG_7743.PNG" alt="Travel" fill sizes="256px" className="object-cover" />
+                            </div>
                         </div>
                     </motion.div>
 
@@ -221,21 +259,20 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#f472b6" className="rotate-[45deg] drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <motion.div
-                                className="relative aspect-square bg-zinc-200 overflow-hidden"
-                                style={{ filter: photo3Filter }}
+                            <div
+                                className={`relative aspect-square bg-zinc-200 overflow-hidden transition-[filter] duration-700 ${colored[2] ? "grayscale-0" : "grayscale"}`}
                             >
-                                <Image src="/avatars/IMG_7741.PNG" alt="Bike" fill className="object-cover" />
-                            </motion.div>
+                                <Image src="/avatars/IMG_7741.PNG" alt="Bike" fill sizes="256px" className="object-cover" />
+                            </div>
                         </div>
                     </motion.div>
 
                     {/* Text 3 */}
                     <div className="absolute top-[82%] md:top-[67%] left-[2%] md:left-[35%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
                         <div className="mr-0 md:mr-6">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: EVOLUTION</h3>
-                            <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                3 years in the corporate trenches. Evolving from &quot;make it work&quot; to &quot;make it scalable&quot;. Designing systems that survive the test of time.
+                            <h3 className="font-['Press_Start_2P'] text-[10px] text-pink-400 mb-2">CHAPTER 3: SUSTENANCE</h3>
+                            <p className="font-handwriting text-xl text-zinc-300">
+                                Three years in, I&apos;m still learning: upskilling, building on the side and learning from the people around me. &quot;Make it work&quot; became &quot;make it scale&quot;.
                             </p>
                         </div>
                     </div>
@@ -248,9 +285,9 @@ const StorySection = () => {
                     {/* Text 4: Positioned ABOVE the Photo - Compacted position top-[80%] */}
                     <div className="hidden md:block absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
                         <div className="mb-4">
-                            <h3 className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">CHAPTER 4: HORIZON</h3>
-                            <p className="font-['var(--font-caveat)'] text-xl text-zinc-300">
-                                And now? Building for the future. AI, Agents, and whatever comes next. The story is just getting started.
+                            <h3 className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">CHAPTER 4: WHAT&apos;S NEXT</h3>
+                            <p className="font-handwriting text-xl text-zinc-300">
+                                The future looks like AI and agents in everyday work, deeper architecture and interfaces that feel human. I&apos;m building toward that, one chapter at a time.
                             </p>
                         </div>
                     </div>
@@ -270,12 +307,11 @@ const StorySection = () => {
                             <Paperclip width={50} height={50} color="#4ade80" className="-rotate-6 drop-shadow-md" />
                         </motion.div>
                         <div className="bg-white p-3 pb-8 shadow-xl">
-                            <motion.div
-                                className="relative aspect-square bg-zinc-200 overflow-hidden"
-                                style={{ filter: photo4Filter }}
+                            <div
+                                className={`relative aspect-square bg-zinc-200 overflow-hidden transition-[filter] duration-700 ${colored[3] ? "grayscale-0" : "grayscale"}`}
                             >
-                                <Image src="/avatars/IMG_7742.PNG" alt="Growth" fill className="object-cover" />
-                            </motion.div>
+                                <Image src="/avatars/IMG_7742.PNG" alt="Growth" fill sizes="256px" className="object-cover" />
+                            </div>
                         </div>
                     </motion.div>
 
@@ -320,7 +356,7 @@ const StorySection = () => {
                                                 <p className="font-['Press_Start_2P'] text-[10px] text-blue-400 mb-2">
                                                     CLASS:
                                                 </p>
-                                                <p className="font-bold text-white text-xl font-['var(--font-caveat)']">
+                                                <p className="font-bold text-white text-xl font-handwriting">
                                                     {activeJob.role}
                                                 </p>
                                             </div>
@@ -329,7 +365,7 @@ const StorySection = () => {
                                                 <p className="font-['Press_Start_2P'] text-[10px] text-green-400 mb-2">
                                                     QUEST LOG:
                                                 </p>
-                                                <p className="font-['var(--font-caveat)'] text-2xl text-white leading-tight">
+                                                <p className="font-handwriting text-2xl text-white leading-tight">
                                                     &quot;{activeJob.desc}&quot;
                                                 </p>
                                             </div>

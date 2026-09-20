@@ -1,23 +1,34 @@
 "use client";
 import { motion } from "framer-motion";
 
-const HandwrittenText = ({ text, className = "" }: { text: string; className?: string }) => {
+interface HandwrittenTextProps {
+    text: string;
+    className?: string;
+    /** seconds before the first character appears (to chain text after another line) */
+    delay?: number;
+    /** seconds between characters */
+    speed?: number;
+}
+
+// Characters fade in one by one. They only change opacity, never `display`, so the full
+// text takes up its final space from the first frame and surrounding content never shifts.
+const HandwrittenText = ({ text, className = "", delay = 0, speed = 0.05 }: HandwrittenTextProps) => {
     const characters = Array.from(text);
 
     const containerVariants = {
         initial: {},
         animate: {
             transition: {
-                staggerChildren: 0.05,
+                staggerChildren: speed,
+                delayChildren: delay,
             },
         },
     };
 
     const characterVariants = {
-        initial: { opacity: 0, display: "none" },
+        initial: { opacity: 0 },
         animate: {
             opacity: 1,
-            display: "inline",
             transition: {
                 duration: 0.01,
             },

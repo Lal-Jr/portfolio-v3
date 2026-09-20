@@ -235,19 +235,20 @@ export const SHELF_PROJECTS = [
 		title: "SubTrack",
 		year: "2026",
 		category: "Finance",
-		tech: ["Next.js"],
+		tech: ["Next.js", "TypeScript", "Supabase", "PowerSync"],
 		color: "#a855f7",
-		image: "/coming_soon.png",
-		gif: "/coming_soon.png",
-		time: "Coming Soon",
-		shortDesc: "Real-time state synchronization for distributed minds.",
-		liveUrl: "#",
-		githubUrl: "#",
-		problem: "Collaborative tools often suffer from sync conflicts and high latency in distributed teams.",
-		thought: "A state-first architecture was needed to ensure eventual consistency across all nodes.",
-		solving: "Implemented OT (Operational Transformation) with a Redis pub/sub backbone.",
-		result: "Zero data loss over 100k+ concurrent sync events with <50ms latency.",
-		isComingSoon: true,
+		image: "/Placeholder.jpg",
+		gif: "/PlaceholderGIF.webp",
+		time: "2026",
+		shortDesc: "An offline-first, privacy-focused PWA that tracks subscriptions and forecasts spending, all processed on your device.",
+		liveUrl: "#", // TODO: add the live URL (the "Visit Live" button stays hidden while this is "#")
+		githubUrl: "https://github.com/Lal-Jr/SubTrack",
+		// Draft copy from the README: refine in your own words.
+		problem: "Personal finance tools ask you to hand over bank credentials or upload statements to a server, and most stop working the moment you go offline.",
+		thought: "Keep the data on the device. If parsing, categorising and forecasting all run locally, privacy stops being a promise and becomes how the app works.",
+		solving: "Statements (CSV and PDF) are parsed in the browser, stored in local SQLite and synced through PowerSync and Supabase. Subscriptions are detected from recurring charges, and the projection charts react instantly when one is cancelled.",
+		result: "An installable, fully offline PWA with a 6-month spending forecast, rule-based categorisation and no statement data leaving the device.",
+		isComingSoon: false,
 	},
 	{
 		id: 5,
@@ -325,3 +326,12 @@ export const EXPERIENCE_DATA = [
 		isSpecial: true,
 	},
 ] as const;
+
+// sessionStorage flag: set once the Pac-Man intro has played in this tab.
+export const INTRO_SEEN_KEY = "intro-seen";
+
+// Contact links.
+// TODO: replace the LinkedIn placeholder with the real profile URL.
+export const SOCIAL_LINKS = {
+	linkedin: "https://www.linkedin.com/",
+} as const;

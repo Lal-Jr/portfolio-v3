@@ -8,6 +8,41 @@ import HandwrittenText from "@/components/ui/HandwrittenText";
 import ComicBubble from "@/components/ui/ComicBubble";
 import ComicActionLines from "@/components/ui/ComicActionLines";
 
+// Envestnet logo: a transparent, light-on-dark variant of the official SVG, sitting on the
+// same green highlighter stroke that is drawn behind "Harish Lal".
+function EnvestnetMark({ width }: { width: number }) {
+    return (
+        <span className="relative inline-block px-2.5 py-1.5">
+            <svg
+                aria-hidden
+                className="absolute -left-1 -top-1 h-[calc(100%+8px)] w-[calc(100%+8px)] -rotate-1 opacity-40 pointer-events-none"
+                viewBox="0 0 100 20"
+                preserveAspectRatio="none"
+            >
+                <motion.path
+                    d="M 2,10 Q 50,8 98,11"
+                    stroke="#10b981"
+                    strokeWidth="14"
+                    strokeLinecap="round"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 2 }}
+                />
+            </svg>
+            <Image
+                src="/logos/envestnet-on-dark.svg"
+                alt="Envestnet"
+                width={width}
+                height={Math.round((width * 48.2) / 161.5)}
+                className="relative h-auto"
+                style={{ width }}
+            />
+        </span>
+    );
+}
+
 export default function Hero() {
     const heroRef = useRef<HTMLElement>(null);
 
@@ -93,26 +128,31 @@ export default function Hero() {
                                 </svg>
                             </motion.div>
                         </div>
-                        mix{" "}
+                        bring{" "}
                         <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46] mx-2">
                             engineering
                         </span>
-                        thinking <br className="hidden md:block" /> with <span className="whitespace-nowrap">imaginative{" "}
+                        depth, <br className="hidden md:block" />
+                        <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46] mx-2">
+                            architecture
+                        </span>
+                        thinking and <br className="hidden md:block" /> <span className="whitespace-nowrap">imaginative{" "}
 
                             {/* "design" with Right Annotation */}
                             <div className="relative inline-block mx-2">
                                 <span className="font-['Press_Start_2P'] text-2xl md:text-4xl lg:text-5xl text-emerald-400 uppercase tracking-widest drop-shadow-[4px_4px_0_#065f46]">
                                     design
                                 </span>
-                                {/* Right Annotation anchored to 'N' in Design */}
+                                {/* Role note to the right of "design", with an arrow pointing back at the word.
+                                    xl+ only: below that there's no room beside the word, so a plain line is used instead. */}
                                 <motion.div
                                     initial="initial"
                                     whileInView="animate"
-                                    className="absolute -bottom-36 right-0 sm:-right-[100px] md:-right-[310px] w-[280px] flex flex-col items-start transform rotate-6 opacity-80 flex pointer-events-none z-50 scale-50 origin-top-right sm:scale-75 md:scale-100 md:origin-top-left"
+                                    className="absolute left-full top-1/2 ml-20 w-[240px] -translate-y-1/2 hidden xl:flex flex-col items-start rotate-6 opacity-80 pointer-events-none z-50 origin-left"
                                 >
-                                    <svg width="150" height="100" viewBox="0 0 150 100" fill="none" className="text-gray-500 absolute -top-20 -left-32">
+                                    <svg width="72" height="56" viewBox="0 0 72 56" fill="none" className="text-gray-500 absolute -left-[72px] top-0" aria-hidden>
                                         <motion.path
-                                            d="M140 70 Q 90 10 20 20"
+                                            d="M66 14 C 50 10, 28 18, 12 36"
                                             stroke="currentColor"
                                             strokeWidth="2"
                                             strokeLinecap="round"
@@ -122,37 +162,22 @@ export default function Hero() {
                                             }}
                                         />
                                         <motion.path
-                                            d="M30 15 L20 20 L25 32"
+                                            d="M22.5 32.5 L12 36 L14.2 25.2"
                                             stroke="currentColor"
                                             strokeWidth="2"
                                             strokeLinecap="round"
+                                            strokeLinejoin="round"
                                             variants={{
                                                 initial: { pathLength: 0 },
                                                 animate: { pathLength: 1, transition: { duration: 0.3, delay: 1.3, repeat: Infinity, repeatDelay: 2.7, repeatType: "reverse" } }
                                             }}
                                         />
                                     </svg>
-                                    <div className="font-handwriting text-xl text-gray-400 leading-tight text-left mt-2 ml-0 normal-case tracking-normal font-normal flex flex-col gap-1">
-                                        <HandwrittenText text="I'm working on Frontend" />
-                                        <div className="flex items-center justify-start">
-                                            <span className="relative inline-block">
-                                                <HandwrittenText text="@ ENVESTNET" className="text-blue-400" />
-                                                {/* Highlighter Stroke */}
-                                                <svg className="absolute -inset-1 w-full h-full rotate-1 opacity-20 pointer-events-none" viewBox="0 0 100 20" preserveAspectRatio="none">
-                                                    <motion.path
-                                                        d="M 5,12 Q 50,15 95,10"
-                                                        stroke="#dddaddff"
-                                                        strokeWidth="18"
-                                                        strokeLinecap="round"
-                                                        initial={{ pathLength: 0 }}
-                                                        animate={{ pathLength: 1 }}
-                                                        transition={{
-                                                            duration: 1.0,
-                                                            delay: 2.0
-                                                        }}
-                                                    />
-                                                </svg>
-                                            </span>
+                                    <div className="font-handwriting text-xl text-gray-400 leading-tight text-left ml-0 normal-case tracking-normal font-normal flex flex-col gap-1">
+                                        <HandwrittenText text="I'm a Software Engineer" />
+                                        <div className="flex items-center gap-2">
+                                            <HandwrittenText text="@" className="text-gray-400" />
+                                            <EnvestnetMark width={118} />
                                         </div>
                                     </div>
                                 </motion.div>
@@ -162,9 +187,34 @@ export default function Hero() {
                     </h1>
                 </div>
 
+                {/* Role + employer below xl, where the floating note beside "design" would run off-screen */}
+                <div className="xl:hidden -mt-4 flex items-center justify-center gap-2 font-handwriting text-2xl text-gray-400 -rotate-2">
+                    <span>I&apos;m a Software Engineer @</span>
+                    <EnvestnetMark width={84} />
+                </div>
+
+                {/* Quick link to the blog, written like one of the hero's margin notes.
+                    Plain <a>: /blog is a proxied separate app. */}
+                <a
+                    href="/blog"
+                    className="group relative z-30 -mt-2 inline-block max-w-xl font-handwriting text-2xl md:text-3xl text-gray-400 hover:text-white transition-colors -rotate-1"
+                >
+                    <HandwrittenText text="psst... the messier, unfiltered version of me? " speed={0.03} />
+                    <span className="relative inline-block px-1 text-emerald-300 font-bold">
+                        <HandwrittenText text="It lives on my blog" speed={0.03} delay={1.45} />
+                        <motion.span
+                            aria-hidden
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.7, delay: 1.5 }}
+                            className="absolute inset-x-0 bottom-0 h-2/5 bg-emerald-400/30 origin-left -rotate-1 -z-10"
+                        />
+                    </span>
+                </a>
+
                 {/* COMIC STRIP SECTION */}
                 <motion.div
-                    className="relative w-full overflow-visible pb-16"
+                    className="relative z-[60] w-full overflow-visible pb-16"
                     style={{ y: comicPanelsY, scale: comicPanelsScale, rotate: comicPanelRotate }}
                 >
                     <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 px-4">
@@ -277,41 +327,42 @@ export default function Hero() {
                     >
                         Here&apos;s <span className="relative inline-block text-white">
                             how
-                            {/* Thick Orange Underline */}
-                            <svg className="absolute w-full h-3 -bottom-1 left-0" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                {/* Outer Glow */}
+                            {/* Hand-drawn underline: a soft underlay + marker stroke sweep in together, then a
+                                quick second scribble underneath. Draws once, when scrolled into view. */}
+                            <svg className="absolute left-[-3%] -bottom-3 h-auto w-[106%] overflow-visible pointer-events-none" viewBox="0 0 100 14" aria-hidden>
                                 <motion.path
-                                    d="M0 5 Q 50 12 100 5"
+                                    d="M2 6 C 22 1, 40 11, 60 5.5 S 90 3.5, 98 6.5"
                                     stroke="#DD5E25"
-                                    strokeWidth="8"
+                                    strokeOpacity={0.28}
+                                    strokeWidth={8}
                                     strokeLinecap="round"
-                                    initial={{ pathLength: 0, opacity: 0 }}
-                                    animate={{
-                                        pathLength: 1,
-                                        opacity: [0.6, 1, 0.6],
-                                    }}
-                                    transition={{
-                                        duration: 1.2,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut",
-                                    }}
-                                    style={{ filter: "blur(2px)" }}
-                                />
-                                {/* Inner Core */}
-                                <motion.path
-                                    d="M0 5 Q 50 12 100 5"
-                                    stroke="#DD5E25"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
+                                    fill="none"
                                     initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{
-                                        duration: 1.2,
-                                        repeat: Infinity,
-                                        repeatType: "reverse",
-                                        ease: "easeInOut",
-                                    }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true, margin: "-60px" }}
+                                    transition={{ duration: 0.75, ease: [0.65, 0, 0.35, 1] }}
+                                />
+                                <motion.path
+                                    d="M2 6 C 22 1, 40 11, 60 5.5 S 90 3.5, 98 6.5"
+                                    stroke="#DD5E25"
+                                    strokeWidth={3.6}
+                                    strokeLinecap="round"
+                                    fill="none"
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true, margin: "-60px" }}
+                                    transition={{ duration: 0.75, ease: [0.65, 0, 0.35, 1] }}
+                                />
+                                <motion.path
+                                    d="M14 11.5 Q 50 8 88 11"
+                                    stroke="#DD5E25"
+                                    strokeWidth={2.2}
+                                    strokeLinecap="round"
+                                    fill="none"
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true, margin: "-60px" }}
+                                    transition={{ duration: 0.4, delay: 0.7, ease: "easeOut" }}
                                 />
                             </svg>
                         </span>

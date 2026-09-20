@@ -38,7 +38,7 @@ export default function StickyNote({
             className={`
                 relative p-4 md:p-6 w-[180px] md:w-[220px] aspect-square 
                 shadow-[4px_4px_10px_rgba(0,0,0,0.3)] 
-                text-black font-['var(--font-caveat)'] text-lg md:text-xl leading-tight
+                text-black font-handwriting text-lg md:text-xl leading-tight
                 ${COLORS[color]} ${className}
                 flex flex-col items-center justify-center text-center
             `}

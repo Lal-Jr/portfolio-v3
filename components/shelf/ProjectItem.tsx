@@ -123,7 +123,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-                <div className="space-y-3">
+                <div className="space-y-4">
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-['Press_Start_2P'] leading-tight uppercase text-white">
                         {proj.title}
                     </h3>
@@ -132,6 +132,10 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                         <span className="w-1.5 h-1.5 bg-emerald-500/40 rounded-none transform rotate-45" />
                         <span>{proj.category}</span>
                     </div>
+
+                    {!proj.isComingSoon && (
+                        <p className="max-w-md font-handwriting text-2xl leading-snug text-zinc-400">{proj.shortDesc}</p>
+                    )}
                 </div>
             </motion.div>
 
@@ -152,7 +156,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                     style={{ y }}
                     className="relative aspect-[4/3] w-full bg-zinc-900 rounded-[2rem] overflow-hidden transition-all duration-500"
                     animate={{
-                        borderColor: isHovered ? proj.color : "#27272a", // zinc-800
+                        borderColor: isHovered ? proj.color : proj.isComingSoon ? "#27272a" : `${proj.color}66`, // zinc-800 when locked
                         borderWidth: "12px",
                         borderStyle: "solid",
                         boxShadow: isHovered
@@ -167,6 +171,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
                         src={proj.isComingSoon ? proj.image : (isHovered ? proj.gif : proj.image)}
                         alt={proj.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className={`object-cover transition-all duration-700 ${isHovered ? 'scale-100' : 'scale-110'}`}
                     />
 

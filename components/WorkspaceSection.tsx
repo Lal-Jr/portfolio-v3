@@ -1,4 +1,5 @@
 "use client";
+import Doodle from "@/components/ui/Doodle";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -21,6 +22,8 @@ export default function WorkspaceSection() {
 
     return (
         <section ref={containerRef} className="relative pt-32 bg-transparent overflow-hidden">
+            <Doodle shape="circle" size={48} color="#93c5fd" className="left-[5%] top-24" />
+            <Doodle shape="squiggle" size={84} color="#f9a8d4" className="right-[6%] top-28" rotate={6} />
             {/* Background Texture */}
             <div className="absolute inset-0 opacity-10 pointer-events-none"
                 style={{
@@ -88,8 +91,7 @@ export default function WorkspaceSection() {
                                     alt="My Evolved Workspace"
                                     fill
                                     className="object-cover"
-                                    sizes="(max-width: 1200px) 100vw, 80vw"
-                                    unoptimized
+                                    sizes="(max-width: 1024px) 100vw, 640px"
                                 />
                             </div>
                         </div>

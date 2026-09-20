@@ -100,7 +100,7 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
                     <div className="w-full relative rounded-[2rem] overflow-hidden border-b-4 border-zinc-800 shadow-2xl group bg-zinc-900">
                         <div className="relative w-full">
                             <Image
-                                src={proj.gif || proj.image}
+                                src={(proj.gif as string) || proj.image}
                                 alt={proj.title}
                                 width={1920}
                                 height={1080}
@@ -134,17 +134,19 @@ export default function ProjectDetailView({ proj, onClose }: ProjectDetailViewPr
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto shrink-0 mt-2">
-                            <a
-                                href={proj.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-white text-black px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-emerald-400 transition-colors flex items-center justify-center gap-3 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none translate-x-0 hover:translate-x-1 hover:translate-y-1 block"
-                            >
-                                <span>Visit Live</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                                </svg>
-                            </a>
+                            {proj.liveUrl && proj.liveUrl !== "#" && (
+                                <a
+                                    href={proj.liveUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-white text-black px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-emerald-400 transition-colors flex items-center justify-center gap-3 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none translate-x-0 hover:translate-x-1 hover:translate-y-1 block"
+                                >
+                                    <span>Visit Live</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                        <path d="M7 17L17 7M17 7H7M17 7V17" />
+                                    </svg>
+                                </a>
+                            )}
                             <a
                                 href={proj.githubUrl}
                                 target="_blank"

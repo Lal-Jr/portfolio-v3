@@ -1,9 +1,10 @@
 "use client";
+import Doodle from "@/components/ui/Doodle";
 import React, { useState, useRef } from "react";
-import { Copy, Check, FileText } from "lucide-react";
+import { Copy, Check, FileText, Linkedin } from "lucide-react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { AVATARS } from "@/constants";
+import { AVATARS, SOCIAL_LINKS } from "@/constants";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
 import HandDrawnArrow from "@/components/ui/HandDrawnArrow";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -46,6 +47,8 @@ const ContactSection = () => {
 
 	return (
 		<div ref={sectionRef} className="relative min-h-[80vh] w-full bg-transparent overflow-hidden flex items-center justify-center p-6 md:p-10">
+			<Doodle shape="burst" size={46} color="#86efac" className="left-[6%] top-16" />
+			<Doodle shape="cross" size={30} color="#f9a8d4" className="right-[7%] bottom-20" rotate={-6} />
 
 			<div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center">
 
@@ -56,38 +59,39 @@ const ContactSection = () => {
 				>
 					<div className="space-y-4">
 
-						<div className="text-3xl md:text-5xl leading-tight font-bold tracking-tight text-white font-['var(--font-caveat)']">
-							In short, I&apos;m someone who <br className="hidden sm:block" />
+						<div className="text-4xl md:text-6xl leading-tight font-bold tracking-tight text-white font-handwriting">
+							I&apos;m a software engineer <br className="hidden sm:block" />
+							who{" "}
 							<HighlighterSpan delay={0.2} rotation={-1} color="bg-green-300">
-								enjoys working in messy,
+								specializes in frontend
 							</HighlighterSpan>{" "}
 							<br className="hidden sm:block" />
+							and loves the{" "}
 							<HighlighterSpan delay={0.4} rotation={2} color="bg-green-300">
-								complex spaces
+								whole stack
 							</HighlighterSpan>{" "}
-							and making <br className="hidden sm:block" />
-							them clearer and more human.
+							<br className="hidden sm:block" />
+							that makes it work.
 						</div>
 					</div>
 
-					<div className="text-2xl md:text-4xl leading-tight font-bold text-zinc-300 font-['var(--font-caveat)'] mt-6 md:mt-0">
-						I do that by{" "}
+					<div className="text-3xl md:text-5xl leading-tight font-bold text-zinc-300 font-handwriting mt-6 md:mt-0">
+						I turn{" "}
 						<HighlighterSpan delay={0.6} rotation={-2} color="bg-green-300">
-							experimenting to
+							messy, complex
 						</HighlighterSpan>{" "}
-						<br className="hidden sm:block" />
-						learn,{" "}
+						problems <br className="hidden sm:block" />
+						into interfaces that{" "}
 						<HighlighterSpan delay={0.8} rotation={1} color="bg-green-300">
-							shaping clear stories
-						</HighlighterSpan>{" "}
-						<br className="hidden sm:block" />
-						that help people align, and <br className="hidden sm:block" />
+							feel simple
+						</HighlighterSpan>
+						, <br className="hidden sm:block" />
+						and sweat the{" "}
 						<HighlighterSpan delay={1.0} rotation={-1} color="bg-green-300">
-							designing systems with care
+							small details
 						</HighlighterSpan>{" "}
 						<br className="hidden sm:block" />
-						for the small details that quietly <br className="hidden sm:block" />
-						shape how something feels.
+						that quietly shape how it feels.
 					</div>
 				</motion.div>
 
@@ -119,50 +123,73 @@ const ContactSection = () => {
 							src={AVATARS.WAVE}
 							alt="Harish Waving"
 							fill
+							sizes="(max-width: 768px) 300px, 380px"
 							className="object-contain"
-							priority
 						/>
 					</motion.div>
 
 					{/* Actions Container - Pixel Retro Style */}
-					<div className="flex flex-col items-center gap-6 mt-[-20px] relative z-20 w-full pl-8 md:pl-0">
+					<div className="flex flex-col items-center gap-8 mt-[-20px] relative z-20 w-full pl-8 md:pl-0">
 
-						<div className="flex flex-col md:flex-row items-center gap-6">
-							{/* Email Button - Arcade Style */}
-							<div className="flex flex-col items-center gap-2 relative">
-								{/* Arrows pointing at email button */}
-								<div className="flex gap-4 mb-2 opacity-60">
-									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
-									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
-									<HandDrawnArrow type="default" width={30} height={40} rotation={0} />
-								</div>
-								<motion.button
-									onClick={copyToClipboard}
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									className="group relative px-6 py-4 bg-yellow-400 border-4 border-black text-black transition-all hover:bg-yellow-300 flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
-								>
-									<span className="text-xs md:text-sm leading-relaxed">{email}</span>
-									{copied ? <Check size={20} className="text-green-600" /> : <Copy size={20} className="text-zinc-800 group-hover:text-black" />}
-								</motion.button>
-								<span className="text-sm text-zinc-400 italic font-['var(--font-caveat)'] animate-pulse">← tap to copy</span>
+						{/* Email: copy-only. One hand-drawn hint points at it and reacts to the copy. */}
+						<div className="relative mt-12">
+							<div
+								aria-hidden
+								className="pointer-events-none absolute -top-[3.25rem] left-0 md:-left-16 flex items-start gap-1 -rotate-6"
+							>
+								<span className={`font-handwriting text-2xl md:text-3xl font-bold leading-none whitespace-nowrap transition-colors -mt-1 ${copied ? "text-green-400" : "text-yellow-300"}`}>
+									{copied ? "copied! ✓" : "tap to copy"}
+								</span>
+								<HandDrawnArrow
+									type="curved-down"
+									width={72}
+									height={72}
+									color={copied ? "#4ade80" : "#fde047"}
+									className="-ml-1"
+								/>
 							</div>
+							<motion.button
+								onClick={copyToClipboard}
+								aria-label="Copy email address"
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+								className="group relative px-6 py-4 bg-yellow-400 border-4 border-black text-black transition-all hover:bg-yellow-300 flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+							>
+								<span className="text-xs md:text-sm leading-relaxed">{email}</span>
+								{copied ? <Check size={20} className="text-green-600" /> : <Copy size={20} className="text-zinc-800 group-hover:text-black" />}
+							</motion.button>
+						</div>
 
-							{/* Resume Button - Pixel Style */}
+						{/* Resume + profiles */}
+						<div className="flex flex-wrap items-center justify-center gap-4">
 							<motion.a
 								href="/HarishLal_Resume.pdf"
 								download="HarishLal_Resume.pdf"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								className="group relative px-6 py-4 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all flex items-center gap-3 text-base font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+								className="group relative px-5 py-3 bg-green-400 border-4 border-black text-black hover:bg-green-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
 							>
-								<FileText size={20} />
-								<span className="text-xs md:text-sm leading-relaxed">Resume</span>
+								<FileText size={18} />
+								<span className="text-[10px] md:text-xs leading-relaxed">Resume</span>
 							</motion.a>
+
+							{SOCIAL_LINKS.linkedin && (
+								<motion.a
+									href={SOCIAL_LINKS.linkedin}
+									target="_blank"
+									rel="noopener noreferrer"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									className="group relative px-5 py-3 bg-sky-400 border-4 border-black text-black hover:bg-sky-300 transition-all flex items-center gap-3 font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] font-['Press_Start_2P']"
+								>
+									<Linkedin size={18} />
+									<span className="text-[10px] md:text-xs leading-relaxed">LinkedIn</span>
+								</motion.a>
+							)}
 						</div>
 
 						{/* Pixel Decoration */}
-						<div className="flex gap-2 mt-4">
+						<div className="flex gap-2">
 							<div className="w-4 h-4 bg-red-500 border-2 border-black animate-pulse" />
 							<div className="w-4 h-4 bg-yellow-500 border-2 border-black animate-pulse" style={{ animationDelay: '200ms' }} />
 							<div className="w-4 h-4 bg-green-500 border-2 border-black animate-pulse" style={{ animationDelay: '400ms' }} />

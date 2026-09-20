@@ -1,4 +1,5 @@
 "use client";
+import Doodle from "@/components/ui/Doodle";
 import React, { useState, useRef } from "react";
 import { Type } from "lucide-react";
 import HighlighterSpan from "@/components/ui/HighlighterSpan";
@@ -210,12 +211,21 @@ const ThoughtProcessSection = () => {
     const bottomWidgetY = isMobile ? 0 : bottomWidgetYDesktop;
     const leftWidgetX = isMobile ? 0 : leftWidgetXDesktop;
 
-    // SVG path animations
-    const pathLength = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
-    const diamondPathLength = useTransform(scrollYProgress, [0.3, 0.7], [0, 1]);
+    // Connector lines: drawn on a timer as soon as the section is in view (not tied to scroll
+    // progress, which only finished them after the section had already scrolled away)
+    const lineVariants = {
+        hidden: { pathLength: 0 },
+        show: (i: number) => ({ pathLength: 1, transition: { duration: 0.9, delay: 0.15 + i * 0.12, ease: "easeOut" as const } }),
+    };
+    const diamondVariants = {
+        hidden: { pathLength: 0 },
+        show: { pathLength: 1, transition: { duration: 1.4, delay: 0.7, ease: "easeInOut" as const } },
+    };
 
     return (
         <section ref={sectionRef} className="relative w-full flex flex-col items-center justify-center pt-32 pb-32 overflow-visible z-20">
+            <Doodle shape="star" size={40} color="#fde047" className="left-[7%] top-16" rotate={12} />
+            <Doodle shape="loop" size={96} color="#86efac" className="right-[6%] bottom-20" />
 
             {/* ================= THOUGHT PROCESS (DIAMOND LAYOUT) ================= */}
             <div className="relative w-full max-w-6xl min-h-[800px] flex items-center justify-center mb-0">
@@ -226,7 +236,7 @@ const ThoughtProcessSection = () => {
                     style={{ scale: textScale, opacity: textOpacity }}
                 >
                     {/* Intro text about thought process */}
-                    <p className="text-xl md:text-2xl font-['var(--font-caveat)'] text-zinc-500 mb-4 italic">
+                    <p className="text-xl md:text-2xl font-handwriting text-zinc-500 mb-4 italic">
                         Here&apos;s how I think, how I work...
                     </p>
                     <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.9] mb-6 drop-shadow-2xl">
@@ -246,47 +256,26 @@ const ThoughtProcessSection = () => {
                     </div>
 
                     {/* Connector Lines (SVG) from Center to Widgets */}
-                    <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20" viewBox="0 0 800 800">
-                        {/* Lines radiating out with scroll-based animation */}
-                        <motion.path
-                            d="M400,400 L400,100"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeDasharray="10,5"
-                            style={{ pathLength }}
-                        />
-                        <motion.path
-                            d="M400,400 L700,400"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeDasharray="10,5"
-                            style={{ pathLength }}
-                        />
-                        <motion.path
-                            d="M400,400 L400,700"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeDasharray="10,5"
-                            style={{ pathLength }}
-                        />
-                        <motion.path
-                            d="M400,400 L100,400"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeDasharray="10,5"
-                            style={{ pathLength }}
-                        />
-
-                        {/* Diamond Outline with scroll-based animation */}
+                    <motion.svg
+                        className="absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20"
+                        viewBox="0 0 800 800"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        aria-hidden
+                    >
+                        {["M400,400 L400,100", "M400,400 L700,400", "M400,400 L400,700", "M400,400 L100,400"].map((d, i) => (
+                            <motion.path key={d} d={d} custom={i} variants={lineVariants} stroke="white" strokeWidth="2" strokeDasharray="10,5" />
+                        ))}
                         <motion.path
                             d="M400,100 L700,400 L400,700 L100,400 Z"
+                            variants={diamondVariants}
                             stroke="white"
                             strokeWidth="1"
                             strokeOpacity="0.5"
                             fill="none"
-                            style={{ pathLength: diamondPathLength }}
                         />
-                    </svg>
+                    </motion.svg>
                 </motion.div>
 
                 {/* ORBITING WIDGETS (Diamond Points) - Adjusted for mobile */}

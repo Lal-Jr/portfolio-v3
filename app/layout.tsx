@@ -3,6 +3,7 @@ import { Press_Start_2P, Inter, Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 import LoadingProvider from "@/components/LoadingProvider";
 import GlobalBackground from "@/components/GlobalBackground";
+import { INTRO_SEEN_KEY } from "@/constants";
 
 const pressStart = Press_Start_2P({
 	weight: "400",
@@ -36,7 +37,15 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="h-full">
+		<html lang="en" className="h-full" suppressHydrationWarning>
+			<head>
+				{/* Runs before first paint: flag returning visitors so CSS can show the skeleton, not a blank screen */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `try{if(sessionStorage.getItem(${JSON.stringify(INTRO_SEEN_KEY)})==="1")document.documentElement.dataset.intro="seen"}catch(e){}`,
+					}}
+				/>
+			</head>
 			<body
 				className={`${pressStart.variable} ${inter.variable} ${outfit.variable} ${caveat.variable} 
                 bg-[#050505] font-sans antialiased text-white

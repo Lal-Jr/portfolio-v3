@@ -1,4 +1,5 @@
 "use client";
+import Doodle from "@/components/ui/Doodle";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useRef } from "react";
@@ -6,7 +7,7 @@ import { SHELF_PROJECTS } from "@/constants";
 import ProjectItem from "@/components/shelf/ProjectItem";
 
 const ProjectDetailView = dynamic(() => import("@/components/shelf/ProjectDetailView"), { ssr: false });
-const GitHubGame = dynamic(() => import("./GitHubGame"));
+const GraphBreakout = dynamic(() => import("./GraphBreakout"));
 
 export default function ProjectShelf() {
 	const [selectedProject, setSelectedProject] = useState<typeof SHELF_PROJECTS[number] | null>(null);
@@ -25,7 +26,9 @@ export default function ProjectShelf() {
 
 	return (
 		<div ref={shelfRef} className="w-full bg-transparent pb-12 pt-12 overflow-visible">
-			<div className="max-w-5xl mx-auto">
+			<div className="relative mx-auto max-w-5xl">
+				<Doodle shape="squiggle" size={90} color="#86efac" className="-top-6 right-4" />
+				<Doodle shape="cross" size={34} color="#f9a8d4" className="left-2 top-1/3" rotate={8} />
 				{SHELF_PROJECTS.map((proj, index) => (
 					<ProjectItem
 						key={proj.id}
@@ -45,14 +48,16 @@ export default function ProjectShelf() {
 				)}
 			</AnimatePresence>
 
-			{/* GitHub Game Section - Replaces Archives Button */}
-			<div className="mt-24 mb-12">
-				<GitHubGame />
+			{/* Retro game showpiece */}
+			<div className="relative mt-24 mb-12">
+				<Doodle shape="star" size={44} color="#fde047" className="-top-8 left-[8%]" rotate={-12} />
+				<Doodle shape="loop" size={100} color="#93c5fd" className="right-[6%] -top-6" />
+				<GraphBreakout />
 			</div>
 
 			{/* MORE IN THE WORKS SECTION - HANDWRITTEN COMIC STYLE */}
 			<motion.div
-				className="mt-24 flex flex-col items-center justify-center font-['var(--font-caveat)'] text-white"
+				className="mt-24 flex flex-col items-center justify-center font-handwriting text-white"
 				style={{ y: transitionY, opacity: transitionOpacity, scale: transitionScale }}
 			>
 				<motion.div
