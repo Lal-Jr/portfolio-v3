@@ -154,7 +154,7 @@ export default function ProjectItem({ proj, index, onClick }: ProjectItemProps) 
 
                 <motion.div
                     style={{ y }}
-                    className="relative aspect-[4/3] w-full bg-zinc-900 rounded-[2rem] overflow-hidden transition-all duration-500"
+                    className={`relative w-full bg-zinc-900 rounded-[2rem] overflow-hidden transition-all duration-500 ${proj.isComingSoon ? "aspect-[16/8] md:aspect-[4/3]" : "aspect-[4/3]"}`}
                     animate={{
                         borderColor: isHovered ? proj.color : proj.isComingSoon ? "#27272a" : `${proj.color}66`, // zinc-800 when locked
                         borderWidth: "8px",

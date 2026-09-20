@@ -57,7 +57,7 @@ export default function ProjectShelf() {
 
 			{/* MORE IN THE WORKS SECTION - HANDWRITTEN COMIC STYLE */}
 			<motion.div
-				className="mt-24 flex flex-col items-center justify-center font-handwriting text-white"
+				className="mt-16 md:mt-24 flex flex-col items-center justify-center overflow-hidden px-2 font-handwriting text-white"
 				style={{ y: transitionY, opacity: transitionOpacity, scale: transitionScale }}
 			>
 				<motion.div
@@ -69,7 +69,7 @@ export default function ProjectShelf() {
 					{/* Header: Handwritten Font + Comic Pop Lines Only */}
 					<div className="relative">
 						<motion.h4
-							className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2 leading-relaxed"
+							className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-wide relative z-10 transform -rotate-2 leading-relaxed px-4"
 							animate={{
 								opacity: [0.8, 1, 0.8],
 								y: [0, -4, 0],

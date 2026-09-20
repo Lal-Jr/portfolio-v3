@@ -193,11 +193,17 @@ const ThoughtProcessSection = () => {
     });
 
     // Transform values based on scroll progress
-    const widgetScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.8]);
-    const widgetOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.5]);
+    const widgetScaleD = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.8]);
+    const widgetOpacityD = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.5]);
 
-    const textScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.9]);
-    const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
+    const textScaleD = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.9]);
+    const textOpacityD = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
+
+    // On phones the section is a plain stacked column: no scroll-driven scale/fade
+    const widgetScale = isMobile ? 1 : widgetScaleD;
+    const widgetOpacity = isMobile ? 1 : widgetOpacityD;
+    const textScale = isMobile ? 1 : textScaleD;
+    const textOpacity = isMobile ? 1 : textOpacityD;
 
     // Individual widget animations with stagger effect
     const topWidgetYDesktop = useTransform(scrollYProgress, [0, 0.3, 0.7], [-100, 0, 0]);
@@ -228,11 +234,11 @@ const ThoughtProcessSection = () => {
             <Doodle shape="loop" size={96} color="#86efac" className="right-[6%] bottom-20" />
 
             {/* ================= THOUGHT PROCESS (DIAMOND LAYOUT) ================= */}
-            <div className="relative w-full max-w-6xl min-h-[800px] flex items-center justify-center mb-0">
+            <div className="relative w-full max-w-6xl md:min-h-[800px] flex flex-col md:flex-row items-center justify-center gap-10 md:gap-0 px-4 md:px-0 mb-0">
 
                 {/* CENTER: The Philosophy Text (The Core) */}
                 <motion.div
-                    className="absolute z-30 text-center max-w-2xl px-4 pointer-events-none"
+                    className="md:absolute z-30 text-center max-w-2xl px-4 pointer-events-none"
                     style={{ scale: textScale, opacity: textOpacity }}
                 >
                     {/* Intro text about thought process */}
@@ -257,7 +263,7 @@ const ThoughtProcessSection = () => {
 
                     {/* Connector Lines (SVG) from Center to Widgets */}
                     <motion.svg
-                        className="absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20"
+                        className="hidden md:block absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none opacity-20"
                         viewBox="0 0 800 800"
                         initial="hidden"
                         whileInView="show"
@@ -282,7 +288,7 @@ const ThoughtProcessSection = () => {
 
                 {/* TOP: Spacing (Structure) */}
                 <motion.div
-                    className="absolute top-0 md:top-10 left-1/2 -translate-x-1/2 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="relative md:absolute md:top-10 md:left-1/2 md:-translate-x-1/2 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300"
                     style={{ scale: widgetScale, opacity: widgetOpacity, y: topWidgetY }}
                 >
                     <SpacingWidget />
@@ -290,7 +296,7 @@ const ThoughtProcessSection = () => {
 
                 {/* RIGHT: Typography (Style) */}
                 <motion.div
-                    className="absolute top-1/4 lg:top-1/2 right-4 md:right-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="relative md:absolute md:top-1/4 lg:top-1/2 md:right-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300"
                     style={{ scale: widgetScale, opacity: widgetOpacity, x: rightWidgetX }}
                 >
                     <TypographyWidget />
@@ -298,7 +304,7 @@ const ThoughtProcessSection = () => {
 
                 {/* BOTTOM: Chat Bubble (Component/Func) */}
                 <motion.div
-                    className="absolute bottom-20 md:bottom-20 left-1/2 -translate-x-1/2 lg:translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="relative md:absolute md:bottom-20 md:left-1/2 md:-translate-x-1/2 lg:translate-y-1/2 z-20 hover:z-40 transition-all duration-300"
                     style={{ scale: widgetScale, opacity: widgetOpacity, y: bottomWidgetY }}
                 >
                     <ChatBubbleWidget />
@@ -306,7 +312,7 @@ const ThoughtProcessSection = () => {
 
                 {/* LEFT: Color Palette (Theme) */}
                 <motion.div
-                    className="absolute top-3/4 lg:top-1/2 left-4 md:left-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300 scale-75 md:scale-100"
+                    className="relative md:absolute md:top-3/4 lg:top-1/2 md:left-20 lg:-translate-y-1/2 z-20 hover:z-40 transition-all duration-300"
                     style={{ scale: widgetScale, opacity: widgetOpacity, x: leftWidgetX }}
                 >
                     <ColorPaletteWidget />

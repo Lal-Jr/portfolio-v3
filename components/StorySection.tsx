@@ -134,12 +134,12 @@ const StorySection = () => {
                 </motion.div>
 
                 {/* 2. THE CURVE OF LIFE (Timeline container) - Compacted Height: 1400px (was 1600px) */}
-                <div ref={containerRef} className="relative w-full h-[1400px] mt-0 mb-32">
+                <div ref={containerRef} className="relative w-full mt-0 mb-24 md:mb-32 flex flex-col items-center gap-14 px-6 md:px-0 md:block md:h-[1400px]">
 
                     {/* SVG PATH - Recalculated for 1400px height */}
                     <svg
                         viewBox="0 0 1000 1400"
-                        className="absolute inset-0 w-full h-full pointer-events-none"
+                        className="hidden md:block absolute inset-0 w-full h-full pointer-events-none"
                         preserveAspectRatio="none"
                     >
                         {/* Dashed guide line */}
@@ -170,7 +170,7 @@ const StorySection = () => {
 
                     {/* Photo 1: Fun/Chaos - Left side - w-64 */}
                     <motion.div
-                        className="absolute top-[1%] left-1/2 -translate-x-1/2 md:left-[5%] md:translate-x-0 w-64 rotate-[6deg] z-10 origin-top"
+                        className="max-md:order-1 relative md:absolute md:top-[1%] md:left-[5%] w-64 rotate-[6deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo1Y, scale: photo1Scale }}
                     >
@@ -192,7 +192,7 @@ const StorySection = () => {
                     </motion.div>
 
                     {/* Text 1: Positioned BELOW the photo - Pushed down to top-[25%] to fix overlap */}
-                    <div className="absolute top-[21%] md:top-[25%] left-[2%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
+                    <div className="max-md:order-2 relative md:absolute md:top-[25%] md:left-[2%] w-full max-w-[250px] z-20 text-center md:text-left md:mx-0">
                         <div className="mb-4">
                             <h3 className="font-pixel text-[10px] text-sky-400 mb-2">CHAPTER 1: LEARNING</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
@@ -207,7 +207,7 @@ const StorySection = () => {
                     */}
 
                     {/* Text 2 */}
-                    <div className="absolute top-[52%] md:top-[32%] right-[2%] md:right-[28%] w-full max-w-[250px] z-20 text-center md:text-right mx-auto left-[2%] md:left-auto md:mx-0">
+                    <div className="max-md:order-4 relative md:absolute md:top-[32%] md:right-[28%] w-full max-w-[250px] z-20 text-center md:text-right md:mx-0">
                         <div className="mt-4 md:mr-6">
                             <h3 className="font-pixel text-[10px] text-yellow-400 mb-2">CHAPTER 2: DISCOVERY</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
@@ -218,7 +218,7 @@ const StorySection = () => {
 
                     {/* Photo 2 - w-64 */}
                     <motion.div
-                        className="absolute top-[32%] left-1/2 -translate-x-1/2 md:top-[30%] md:right-[5%] md:left-auto md:translate-x-0 w-64 rotate-[-4deg] z-30 origin-top"
+                        className="max-md:order-3 relative md:absolute md:top-[30%] md:right-[5%] w-64 rotate-[-4deg] z-30 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo2Y, rotate: photo2Rotate }}
                     >
@@ -246,7 +246,7 @@ const StorySection = () => {
 
                     {/* Photo 3 - w-64 */}
                     <motion.div
-                        className="absolute top-[65%] md:top-[62%] left-1/2 -translate-x-1/2 md:left-[10%] md:translate-x-0 w-64 rotate-[3deg] z-10 origin-top"
+                        className="max-md:order-5 relative md:absolute md:top-[62%] md:left-[10%] w-64 rotate-[3deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo3Y, scale: photo3Scale }}
                     >
@@ -268,7 +268,7 @@ const StorySection = () => {
                     </motion.div>
 
                     {/* Text 3 */}
-                    <div className="absolute top-[82%] md:top-[67%] left-[2%] md:left-[35%] w-full max-w-[250px] z-20 text-center md:text-left mx-auto right-[2%] md:right-auto md:mx-0">
+                    <div className="max-md:order-6 relative md:absolute md:top-[67%] md:left-[35%] w-full max-w-[250px] z-20 text-center md:text-left md:mx-0">
                         <div className="mr-0 md:mr-6">
                             <h3 className="font-pixel text-[10px] text-pink-400 mb-2">CHAPTER 3: SUSTENANCE</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
@@ -283,7 +283,7 @@ const StorySection = () => {
                     */}
 
                     {/* Text 4: Positioned ABOVE the Photo - Compacted position top-[80%] */}
-                    <div className="hidden md:block absolute top-[78%] right-[3%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
+                    <div className="max-md:order-8 relative md:absolute md:top-[78%] md:right-[5%] w-full max-w-[300px] z-20 text-center md:text-right">
                         <div className="mb-4">
                             <h3 className="font-pixel text-[10px] text-green-400 mb-2">CHAPTER 4: WHAT&apos;S NEXT</h3>
                             <p className="font-handwriting text-xl text-zinc-300">
@@ -294,7 +294,7 @@ const StorySection = () => {
 
                     {/* Photo 4: Growth - Right side - w-64 - Compacted position top-[90%] (almost at end) */}
                     <motion.div
-                        className="hidden md:block absolute top-[89%] right-[5%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
+                        className="max-md:order-7 relative md:absolute md:top-[89%] md:right-[5%] w-64 rotate-[-5deg] z-10 origin-top"
                         whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
                         style={{ y: photo4Y, rotate: photo4Rotate }}
                     >
