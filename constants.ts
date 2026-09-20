@@ -235,19 +235,19 @@ export const SHELF_PROJECTS = [
 		title: "SubTrack",
 		year: "2026",
 		category: "Finance",
-		tech: ["Next.js", "TypeScript", "Supabase", "PowerSync"],
+		tech: ["Next.js", "TypeScript", "SQLite", "PowerSync", "Supabase"],
 		color: "#a855f7",
-		image: "/Placeholder.jpg",
+		image: "/subtrack-runway.jpg",
 		gif: "/subtrack-demo.webp",
 		time: "2026",
-		shortDesc: "An offline-first, privacy-focused PWA that tracks subscriptions and forecasts spending, all processed on your device.",
+		shortDesc: "A private, offline-first subscription tracker. It reads your bank statements in the browser, finds the recurring charges and shows what is about to leave your account, and when.",
 		liveUrl: "#", // TODO: add the live URL (the "Visit Live" button stays hidden while this is "#")
 		githubUrl: "https://github.com/Lal-Jr/SubTrack",
-		// Draft copy from the README: refine in your own words.
-		problem: "Personal finance tools ask you to hand over bank credentials or upload statements to a server, and most stop working the moment you go offline.",
-		thought: "Keep the data on the device. If parsing, categorising and forecasting all run locally, privacy stops being a promise and becomes how the app works.",
-		solving: "Statements (CSV and PDF) are parsed in the browser, stored in local SQLite and synced through PowerSync and Supabase. Subscriptions are detected from recurring charges, and the projection charts react instantly when one is cancelled.",
-		result: "An installable, fully offline PWA with a 6-month spending forecast, rule-based categorisation and no statement data leaving the device.",
+		// Copy reflects the current app; see the README for the full feature list.
+		problem: "Subscription trackers either want your bank login or a statement upload, or bury you in a flat list of charges. You still cannot tell what is coming next, which charge will hurt, or which subscriptions are quietly piling up.",
+		thought: "Keep every byte on the device, and build the app around one question: what is about to leave my account, and when? If that answer is instant and private, the rest is detail.",
+		solving: "Statements (CSV and PDF) are parsed in the browser into a local SQLite database, with duplicate-safe re-imports. One detection engine groups charges by merchant, works out the billing cycle from the gaps between them, and flags price changes and lapsed subscriptions. The home screen is a runway timeline where each charge is sized by its amount, next to plain-language insights such as a large annual charge coming up. Opt-in sync through PowerSync and Supabase sits behind a provider layer, so local-only stays the default.",
+		result: "An installable, offline-capable PWA with a dense dashboard, a 12-month schedule built from real charge dates, backup and restore, and unit-tested parsing and detection. It loads with sample data, so anyone can try it in seconds.",
 		isComingSoon: false,
 	},
 	{
