@@ -261,7 +261,7 @@ export const SHELF_PROJECTS = [
 		gif: "/archflow-demo.webp",
 		time: "2026",
 		shortDesc: "A visual distributed-systems simulator. Draw a backend architecture, push simulated traffic through it, and watch latency, queues and failures play out live.",
-		liveUrl: "#", // TODO: add the Vercel URL once deployed (the "Visit Live" button stays hidden while this is "#")
+		liveUrl: "https://archflow-sim.vercel.app",
 		githubUrl: "https://github.com/Lal-Jr/ArchFlow",
 		problem: "System design is taught on whiteboards, and a whiteboard never pushes back. You can draw a cache, a queue and three replicas, but you never see what happens at 3,000 requests a second, which box fails first, or why a slow database turns into a slow page.",
 		thought: "Make the diagram run. If every box has a capacity and every arrow carries traffic, the design can answer its own questions: where the bottleneck is, what a traffic spike does to a queue, and what breaks when a node dies.",
