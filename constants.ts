@@ -220,7 +220,7 @@ export const SHELF_PROJECTS = [
 		tech: ["React", "TypeScript", "Leaflet", "OSRM", "Vitest"],
 		color: "#3b82f6",
 		image: "/routewise-plan.jpg",
-		gif: "/routewise-plan.jpg",
+		gif: "/routewise-demo.webp",
 		time: "2026",
 		shortDesc: "A day-trip planner with its own constraint solver. It orders your stops around opening hours, visit lengths and priorities using real road, bike or walking times, and repairs the schedule on the fly when you run late.",
 		liveUrl: "#", // TODO: add the live URL once deployed (the "Visit Live" button stays hidden while this is "#")
@@ -261,7 +261,7 @@ export const SHELF_PROJECTS = [
 		gif: "/subtrack-demo.webp",
 		time: "2026",
 		shortDesc: "A private, offline-first subscription tracker. It parses bank statements entirely in the browser, detects recurring charges and their billing cycles, and shows what is about to leave your account, and when.",
-		liveUrl: "#", // TODO: add the live URL (the "Visit Live" button stays hidden while this is "#")
+		liveUrl: "https://sub-track-psi.vercel.app",
 		githubUrl: "https://github.com/Lal-Jr/SubTrack",
 		// Copy reflects the current app; see the README for the full feature list.
 		problem: "Subscription trackers either want your bank login or a statement upload to their servers, or bury you in a flat list of charges. You still can't tell what is coming next, which charge will hurt, or which subscriptions are quietly piling up.",
@@ -277,9 +277,9 @@ export const SHELF_PROJECTS = [
 		category: "Productivity",
 		tech: ["TypeScript", "React", "Chrome MV3", "Vite"],
 		color: "#ec4899", // Pink-500
-		image: "/coming_soon.png", // TODO: swap for a real screenshot and demo once it has been tried in Chrome
-		gif: "/coming_soon.png",
-		time: "Coming Soon",
+		image: "/whyiopened-prompt.jpg",
+		gif: "/whyiopened-demo.webp",
+		time: "2026",
 		shortDesc: "A Chrome extension that asks why you opened a tab, in one keypress, so you know what every tab is for when you come back to it.",
 		liveUrl: "#",
 		githubUrl: "https://github.com/Lal-Jr/WhyIOpened",
@@ -287,7 +287,7 @@ export const SHELF_PROJECTS = [
 		thought: "Capture the reason at the moment the tab is opened, when it costs nothing to remember. For that to work the question has to be almost frictionless, and the answer still has to be useful later.",
 		solving: "A small card appears when you first look at a new tab. Press 1 to 6 to pick Read, Research, To-do, Reference, Buy or Watch, or add an optional note with #tags. A tab opened from a link offers its parent tab's reason, which Enter accepts, and every tab records which tab it came from, so even a skipped prompt keeps some context. A background service worker tracks the tab lifecycle and re-attaches reasons to restored tabs after a browser restart.",
 		result: "In progress. The prompt, a new tab page, a popup with fuzzy search, and a dashboard filterable by reason are built. Next up: snooze, auto-archive, and Chrome Tab Groups sync.",
-		isComingSoon: true,
+		isComingSoon: false,
 	},
 ] as const;
 
