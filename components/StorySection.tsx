@@ -2,26 +2,12 @@
 import Doodle from "@/components/ui/Doodle";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { EXPERIENCE_DATA } from "@/constants";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import ComicScribble from "@/components/ui/ComicScribble";
 import Paperclip from "@/components/ui/Paperclip";
-import { Globe, Shield, Zap, Bot } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-const getIcon = (id: string) => {
-    switch (id) {
-        case "daily-planet": return <Globe className="w-10 h-10 text-sky-400" />;
-        case "wayne": return <Shield className="w-10 h-10 text-slate-400" />;
-        case "stark": return <Zap className="w-10 h-10 text-rose-400" />;
-        case "ai": return <Bot className="w-10 h-10 text-green-400" />;
-        default: return null;
-    }
-};
-
 const StorySection = () => {
-    // --- Work Experience Logic ---
-    const [activeNode, setActiveNode] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
     const isMobile = useIsMobile(768);
@@ -63,9 +49,6 @@ const StorySection = () => {
             return next.every((c, i) => c === prev[i]) ? prev : next;
         });
     });
-
-    // We still use EXPERIENCE_DATA for the popup details
-    const activeJob = EXPERIENCE_DATA.find(n => n.id === activeNode);
 
     return (
         <section ref={sectionRef} className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-x-clip z-10 bg-transparent pb-12 md:pb-16">
@@ -316,77 +299,6 @@ const StorySection = () => {
                     </motion.div>
 
 
-                    {/* UI OVERLAY: Pixel Style Popup Card */}
-                    <AnimatePresence>
-                        {activeNode && activeJob && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none"
-                            >
-                                {/* Backdrop for focus */}
-                                <div className="absolute inset-0 bg-black/60 pointer-events-auto" onClick={() => setActiveNode(null)} />
-
-                                <div className="bg-zinc-900 border-4 border-white shadow-[12px_12px_0_0_#000] p-1 relative z-10 max-w-sm pointer-events-auto">
-                                    {/* Comic Spike Burst behind title */}
-                                    <div className="absolute -top-6 -left-6 z-0 pointer-events-none">
-                                        <svg width="60" height="60" viewBox="0 0 100 100" className="text-yellow-400 fill-current animate-spin-slow">
-                                            <path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z" />
-                                        </svg>
-                                    </div>
-
-                                    <div className="border-2 border-white/20 p-5 bg-zinc-900 relative z-10">
-                                        {/* Header */}
-                                        <div className="flex justify-between items-start mb-6 border-b-2 border-dashed border-white/20 pb-4">
-                                            <div>
-                                                <h3 className="font-pixel text-white text-sm leading-6 uppercase text-yellow-400 shadow-black drop-shadow-md">
-                                                    {activeJob.company}
-                                                </h3>
-                                                <p className="font-pixel text-[10px] text-zinc-400 mt-2">
-                                                    {activeJob.period}
-                                                </p>
-                                            </div>
-                                            <div className="text-4xl filter drop-shadow-lg grayscale-0">{getIcon(activeJob.id)}</div>
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="space-y-4">
-                                            <div>
-                                                <p className="font-pixel text-[10px] text-blue-400 mb-2">
-                                                    CLASS:
-                                                </p>
-                                                <p className="font-bold text-white text-xl font-handwriting">
-                                                    {activeJob.role}
-                                                </p>
-                                            </div>
-
-                                            <div className="bg-white/5 p-4 border border-white/10 rounded-sm">
-                                                <p className="font-pixel text-[10px] text-green-400 mb-2">
-                                                    QUEST LOG:
-                                                </p>
-                                                <p className="font-handwriting text-2xl text-white leading-tight">
-                                                    &quot;{activeJob.desc}&quot;
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        {/* Footer Decor */}
-                                        <div className="mt-6 flex justify-between items-end">
-                                            <div className="text-[9px] font-pixel text-zinc-600 animate-pulse">
-                                                PRESS START
-                                            </div>
-                                            <div className="flex gap-1">
-                                                <div className="w-3 h-3 bg-red-500 border border-black" />
-                                                <div className="w-3 h-3 bg-yellow-500 border border-black" />
-                                                <div className="w-3 h-3 bg-green-500 border border-black" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
 
                 </div>
 
