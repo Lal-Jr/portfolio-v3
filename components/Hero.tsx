@@ -212,6 +212,26 @@ export default function Hero() {
                     </span>
                 </a>
 
+                {/* Resume link, a second margin note under the blog one. */}
+                <a
+                    href="/HarishLal_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative z-30 -mt-4 inline-block max-w-xl font-handwriting text-xl md:text-2xl text-gray-400 hover:text-white transition-colors rotate-1"
+                >
+                    <HandwrittenText text="...or the tidy one-pager? " speed={0.03} delay={2.1} />
+                    <span className="relative inline-block px-1 text-sky-300 font-bold">
+                        <HandwrittenText text="Grab my resume" speed={0.03} delay={2.85} />
+                        <motion.span
+                            aria-hidden
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.7, delay: 2.9 }}
+                            className="absolute inset-x-0 bottom-0 h-2/5 bg-sky-400/30 origin-left rotate-1 -z-10"
+                        />
+                    </span>
+                </a>
+
                 {/* COMIC STRIP SECTION */}
                 <motion.div
                     className="relative z-[60] w-full overflow-visible pb-16"

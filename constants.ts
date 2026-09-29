@@ -351,7 +351,6 @@ export const EXPERIENCE_DATA = [
 export const INTRO_SEEN_KEY = "intro-seen";
 
 // Contact links.
-// TODO: replace the LinkedIn placeholder with the real profile URL.
 export const SOCIAL_LINKS = {
-	linkedin: "https://www.linkedin.com/",
+	linkedin: "https://www.linkedin.com/in/laljr-harish",
 } as const;
